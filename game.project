@@ -1,0 +1,9 @@
+[project]
+title = Wavedash
+
+[bootstrap]
+main_collection = /example/example.collectionc
+
+[library]
+include_dirs = wavedash
+

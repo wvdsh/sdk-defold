@@ -1,0 +1,4 @@
+game_id = "j97989gqedyfgf675pyh21478d86866a"
+upload_dir = "bundle/wasm-web/Wavedash"
+
+entrypoint = "index.html"

@@ -1,0 +1,3015 @@
+{
+  "source": "/Users/bjornritzl/projects/sdk-defold/codegen/index.d.ts",
+  "classes": [
+    {
+      "class_name": "WavedashManager",
+      "methods": [
+        {
+          "method_name": "constructor",
+          "arguments": [
+            {
+              "argument_name": "sdk",
+              "type": "WavedashSDK",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": null,
+          "signature": "constructor(sdk: WavedashSDK);"
+        },
+        {
+          "method_name": "destroy",
+          "arguments": [],
+          "returnType": "void",
+          "signature": "destroy(): void;"
+        }
+      ]
+    },
+    {
+      "class_name": "LobbyManager",
+      "methods": [
+        {
+          "method_name": "constructor",
+          "arguments": [
+            {
+              "argument_name": "sdk",
+              "type": "WavedashSDK",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": null,
+          "signature": "constructor(sdk: WavedashSDK);"
+        },
+        {
+          "method_name": "createLobby",
+          "arguments": [
+            {
+              "argument_name": "visibility",
+              "type": "LobbyVisibility",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "maxPlayers",
+              "type": "number",
+              "optional": true,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "Promise<GenericId<\"lobbies\">>",
+          "signature": "createLobby(visibility: LobbyVisibility, maxPlayers?: number): Promise<GenericId<\"lobbies\">>;"
+        },
+        {
+          "method_name": "joinLobby",
+          "arguments": [
+            {
+              "argument_name": "lobbyId",
+              "type": "number",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "Promise<boolean>",
+          "signature": "joinLobby(lobbyId: GenericId<\"lobbies\">): Promise<boolean>;"
+        },
+        {
+          "method_name": "getLobbyUsers",
+          "arguments": [
+            {
+              "argument_name": "lobbyId",
+              "type": "number",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "LobbyUser[]",
+          "signature": "getLobbyUsers(lobbyId: GenericId<\"lobbies\">): LobbyUser[];"
+        },
+        {
+          "method_name": "getHostId",
+          "arguments": [
+            {
+              "argument_name": "lobbyId",
+              "type": "number",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "GenericId<\"users\"> | null",
+          "signature": "getHostId(lobbyId: GenericId<\"lobbies\">): GenericId<\"users\"> | null;"
+        },
+        {
+          "method_name": "getLobbyData",
+          "arguments": [
+            {
+              "argument_name": "lobbyId",
+              "type": "number",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "key",
+              "type": "string",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "string | number | null",
+          "signature": "getLobbyData(lobbyId: GenericId<\"lobbies\">, key: string): string | number | null;"
+        },
+        {
+          "method_name": "deleteLobbyData",
+          "arguments": [
+            {
+              "argument_name": "lobbyId",
+              "type": "number",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "key",
+              "type": "string",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "boolean",
+          "signature": "deleteLobbyData(lobbyId: GenericId<\"lobbies\">, key: string): boolean;"
+        },
+        {
+          "method_name": "setLobbyData",
+          "arguments": [
+            {
+              "argument_name": "lobbyId",
+              "type": "number",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "key",
+              "type": "string",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "value",
+              "type": "string | number | null",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "boolean",
+          "signature": "setLobbyData(lobbyId: GenericId<\"lobbies\">, key: string, value: string | number | null): boolean;"
+        },
+        {
+          "method_name": "getLobbyMaxPlayers",
+          "arguments": [
+            {
+              "argument_name": "lobbyId",
+              "type": "number",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "number",
+          "signature": "getLobbyMaxPlayers(lobbyId: GenericId<\"lobbies\">): number;"
+        },
+        {
+          "method_name": "getNumLobbyUsers",
+          "arguments": [
+            {
+              "argument_name": "lobbyId",
+              "type": "number",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "number",
+          "signature": "getNumLobbyUsers(lobbyId: GenericId<\"lobbies\">): number;"
+        },
+        {
+          "method_name": "leaveLobby",
+          "arguments": [
+            {
+              "argument_name": "lobbyId",
+              "type": "number",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "Promise<GenericId<\"lobbies\">>",
+          "signature": "leaveLobby(lobbyId: GenericId<\"lobbies\">): Promise<GenericId<\"lobbies\">>;"
+        },
+        {
+          "method_name": "listAvailableLobbies",
+          "arguments": [
+            {
+              "argument_name": "friendsOnly",
+              "type": "boolean",
+              "optional": true,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "Promise<Lobby[]>",
+          "signature": "listAvailableLobbies(friendsOnly?: boolean): Promise<Lobby[]>;"
+        },
+        {
+          "method_name": "sendLobbyMessage",
+          "arguments": [
+            {
+              "argument_name": "lobbyId",
+              "type": "number",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "message",
+              "type": "string",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "boolean",
+          "signature": "sendLobbyMessage(lobbyId: GenericId<\"lobbies\">, message: string): boolean;"
+        },
+        {
+          "method_name": "inviteUserToLobby",
+          "arguments": [
+            {
+              "argument_name": "lobbyId",
+              "type": "number",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "userId",
+              "type": "number",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "Promise<boolean>",
+          "signature": "inviteUserToLobby(lobbyId: GenericId<\"lobbies\">, userId: GenericId<\"users\">): Promise<boolean>;"
+        },
+        {
+          "method_name": "getLobbyInviteLink",
+          "arguments": [
+            {
+              "argument_name": "copyToClipboard",
+              "type": "boolean",
+              "optional": true,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "Promise<string>",
+          "signature": "getLobbyInviteLink(copyToClipboard?: boolean): Promise<string>;"
+        },
+        {
+          "method_name": "unsubscribeFromCurrentLobby",
+          "arguments": [],
+          "returnType": "void",
+          "signature": "unsubscribeFromCurrentLobby(): void;"
+        },
+        {
+          "method_name": "destroy",
+          "arguments": [],
+          "returnType": "void",
+          "signature": "destroy(): void;"
+        }
+      ]
+    },
+    {
+      "class_name": "FileSystemManager",
+      "methods": [
+        {
+          "method_name": "constructor",
+          "arguments": [
+            {
+              "argument_name": "sdk",
+              "type": "WavedashSDK",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": null,
+          "signature": "constructor(sdk: WavedashSDK);"
+        },
+        {
+          "method_name": "uploadRemoteFile",
+          "arguments": [
+            {
+              "argument_name": "filePath",
+              "type": "string",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "Promise<string>",
+          "signature": "uploadRemoteFile(filePath: string): Promise<string>;"
+        },
+        {
+          "method_name": "deleteRemoteFile",
+          "arguments": [
+            {
+              "argument_name": "filePath",
+              "type": "string",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "Promise<string>",
+          "signature": "deleteRemoteFile(filePath: string): Promise<string>;"
+        },
+        {
+          "method_name": "downloadRemoteFile",
+          "arguments": [
+            {
+              "argument_name": "filePath",
+              "type": "string",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "Promise<string>",
+          "signature": "downloadRemoteFile(filePath: string): Promise<string>;"
+        },
+        {
+          "method_name": "listRemoteDirectory",
+          "arguments": [
+            {
+              "argument_name": "path",
+              "type": "string",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "Promise<RemoteFileMetadata[]>",
+          "signature": "listRemoteDirectory(path: string): Promise<RemoteFileMetadata[]>;"
+        },
+        {
+          "method_name": "downloadRemoteDirectory",
+          "arguments": [
+            {
+              "argument_name": "path",
+              "type": "string",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "Promise<string>",
+          "signature": "downloadRemoteDirectory(path: string): Promise<string>;"
+        },
+        {
+          "method_name": "writeLocalFile",
+          "arguments": [
+            {
+              "argument_name": "filePath",
+              "type": "string",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "data",
+              "type": "Uint8Array",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "Promise<boolean>",
+          "signature": "writeLocalFile(filePath: string, data: Uint8Array): Promise<boolean>;"
+        },
+        {
+          "method_name": "readLocalFile",
+          "arguments": [
+            {
+              "argument_name": "filePath",
+              "type": "string",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "Promise<Uint8Array | null>",
+          "signature": "readLocalFile(filePath: string): Promise<Uint8Array | null>;"
+        },
+        {
+          "method_name": "upload",
+          "arguments": [
+            {
+              "argument_name": "presignedUploadUrl",
+              "type": "string",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "filePath",
+              "type": "string",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "Promise<boolean>",
+          "signature": "upload(presignedUploadUrl: string, filePath: string): Promise<boolean>;"
+        },
+        {
+          "method_name": "download",
+          "arguments": [
+            {
+              "argument_name": "url",
+              "type": "string",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "filePath",
+              "type": "string",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "Promise<boolean>",
+          "signature": "download(url: string, filePath: string): Promise<boolean>;"
+        }
+      ]
+    },
+    {
+      "class_name": "UGCManager",
+      "methods": [
+        {
+          "method_name": "constructor",
+          "arguments": [
+            {
+              "argument_name": "sdk",
+              "type": "WavedashSDK",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": null,
+          "signature": "constructor(sdk: WavedashSDK);"
+        },
+        {
+          "method_name": "createUGCItem",
+          "arguments": [
+            {
+              "argument_name": "ugcType",
+              "type": "UGCType",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "title",
+              "type": "string",
+              "optional": true,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "description",
+              "type": "string",
+              "optional": true,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "visibility",
+              "type": "UGCVisibility",
+              "optional": true,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "filePath",
+              "type": "string",
+              "optional": true,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "Promise<GenericId<\"userGeneratedContent\">>",
+          "signature": "createUGCItem(ugcType: UGCType, title?: string, description?: string, visibility?: UGCVisibility, filePath?: string): Promise<GenericId<\"userGeneratedContent\">>;"
+        },
+        {
+          "method_name": "updateUGCItem",
+          "arguments": [
+            {
+              "argument_name": "ugcId",
+              "type": "number",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "title",
+              "type": "string",
+              "optional": true,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "description",
+              "type": "string",
+              "optional": true,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "visibility",
+              "type": "UGCVisibility",
+              "optional": true,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "filePath",
+              "type": "string",
+              "optional": true,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "Promise<GenericId<\"userGeneratedContent\">>",
+          "signature": "updateUGCItem(ugcId: GenericId<\"userGeneratedContent\">, title?: string, description?: string, visibility?: UGCVisibility, filePath?: string): Promise<GenericId<\"userGeneratedContent\">>;"
+        },
+        {
+          "method_name": "downloadUGCItem",
+          "arguments": [
+            {
+              "argument_name": "ugcId",
+              "type": "number",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "filePath",
+              "type": "string",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "Promise<GenericId<\"userGeneratedContent\">>",
+          "signature": "downloadUGCItem(ugcId: GenericId<\"userGeneratedContent\">, filePath: string): Promise<GenericId<\"userGeneratedContent\">>;"
+        }
+      ]
+    },
+    {
+      "class_name": "LeaderboardManager",
+      "methods": [
+        {
+          "method_name": "constructor",
+          "arguments": [
+            {
+              "argument_name": "sdk",
+              "type": "WavedashSDK",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": null,
+          "signature": "constructor(sdk: WavedashSDK);"
+        },
+        {
+          "method_name": "getLeaderboard",
+          "arguments": [
+            {
+              "argument_name": "name",
+              "type": "string",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "Promise<Leaderboard>",
+          "signature": "getLeaderboard(name: string): Promise<Leaderboard>;"
+        },
+        {
+          "method_name": "getOrCreateLeaderboard",
+          "arguments": [
+            {
+              "argument_name": "name",
+              "type": "string",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "sortOrder",
+              "type": "LeaderboardSortOrder",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "displayType",
+              "type": "LeaderboardDisplayType",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "Promise<Leaderboard>",
+          "signature": "getOrCreateLeaderboard(name: string, sortOrder: LeaderboardSortOrder, displayType: LeaderboardDisplayType): Promise<Leaderboard>;"
+        },
+        {
+          "method_name": "getLeaderboardEntryCount",
+          "arguments": [
+            {
+              "argument_name": "leaderboardId",
+              "type": "number",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "number",
+          "signature": "getLeaderboardEntryCount(leaderboardId: GenericId<\"leaderboards\">): number;"
+        },
+        {
+          "method_name": "getMyLeaderboardEntries",
+          "arguments": [
+            {
+              "argument_name": "leaderboardId",
+              "type": "number",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "Promise<LeaderboardEntries>",
+          "signature": "getMyLeaderboardEntries(leaderboardId: GenericId<\"leaderboards\">): Promise<LeaderboardEntries>;"
+        },
+        {
+          "method_name": "listLeaderboardEntriesAroundUser",
+          "arguments": [
+            {
+              "argument_name": "leaderboardId",
+              "type": "number",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "countAhead",
+              "type": "number",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "countBehind",
+              "type": "number",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "friendsOnly",
+              "type": "boolean",
+              "optional": true,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "Promise<LeaderboardEntries>",
+          "signature": "listLeaderboardEntriesAroundUser(leaderboardId: GenericId<\"leaderboards\">, countAhead: number, countBehind: number, friendsOnly?: boolean): Promise<LeaderboardEntries>;"
+        },
+        {
+          "method_name": "listLeaderboardEntries",
+          "arguments": [
+            {
+              "argument_name": "leaderboardId",
+              "type": "number",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "offset",
+              "type": "number",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "limit",
+              "type": "number",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "friendsOnly",
+              "type": "boolean",
+              "optional": true,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "Promise<LeaderboardEntries>",
+          "signature": "listLeaderboardEntries(leaderboardId: GenericId<\"leaderboards\">, offset: number, limit: number, friendsOnly?: boolean): Promise<LeaderboardEntries>;"
+        },
+        {
+          "method_name": "uploadLeaderboardScore",
+          "arguments": [
+            {
+              "argument_name": "leaderboardId",
+              "type": "number",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "score",
+              "type": "number",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "keepBest",
+              "type": "boolean",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "ugcId",
+              "type": "number",
+              "optional": true,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "Promise<UpsertedLeaderboardEntry>",
+          "signature": "uploadLeaderboardScore(leaderboardId: GenericId<\"leaderboards\">, score: number, keepBest: boolean, ugcId?: GenericId<\"userGeneratedContent\">): Promise<UpsertedLeaderboardEntry>;"
+        }
+      ]
+    },
+    {
+      "class_name": "P2PManager",
+      "methods": [
+        {
+          "method_name": "constructor",
+          "arguments": [
+            {
+              "argument_name": "sdk",
+              "type": "WavedashSDK",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": null,
+          "signature": "constructor(sdk: WavedashSDK);"
+        },
+        {
+          "method_name": "destroy",
+          "arguments": [],
+          "returnType": "void",
+          "signature": "destroy(): void;"
+        },
+        {
+          "method_name": "init",
+          "arguments": [
+            {
+              "argument_name": "config",
+              "type": "Partial<P2PConfig>",
+              "optional": true,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "void",
+          "signature": "init(config?: Partial<P2PConfig>): void;"
+        },
+        {
+          "method_name": "initializeP2PForCurrentLobby",
+          "arguments": [
+            {
+              "argument_name": "lobbyId",
+              "type": "number",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "members",
+              "type": "SDKUser[]",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "Promise<P2PConnection>",
+          "signature": "initializeP2PForCurrentLobby(lobbyId: GenericId<\"lobbies\">, members: SDKUser[]): Promise<P2PConnection>;"
+        },
+        {
+          "method_name": "sendP2PMessage",
+          "arguments": [
+            {
+              "argument_name": "toUserId",
+              "type": "number",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "appChannel",
+              "type": "number | undefined",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "reliable",
+              "type": "boolean | undefined",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "payload",
+              "type": "Uint8Array",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "payloadSize",
+              "type": "number",
+              "optional": true,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "boolean",
+          "signature": "sendP2PMessage(toUserId: GenericId<\"users\"> | undefined, appChannel: number | undefined, reliable: boolean | undefined, payload: Uint8Array, payloadSize?: number): boolean;"
+        },
+        {
+          "method_name": "disconnectP2P",
+          "arguments": [],
+          "returnType": "void",
+          "signature": "disconnectP2P(): void;"
+        },
+        {
+          "method_name": "isPeerReady",
+          "arguments": [
+            {
+              "argument_name": "userId",
+              "type": "number",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "boolean",
+          "signature": "isPeerReady(userId: GenericId<\"users\">): boolean;"
+        },
+        {
+          "method_name": "isBroadcastReady",
+          "arguments": [],
+          "returnType": "boolean",
+          "signature": "isBroadcastReady(): boolean;"
+        },
+        {
+          "method_name": "getPeerStatuses",
+          "arguments": [],
+          "returnType": "Record<GenericId<\"users\">, { reliable?: string; unreliable?: string; ready: boolean; }>",
+          "signature": "getPeerStatuses(): Record<GenericId<\"users\">, { reliable?: string; unreliable?: string; ready: boolean; }>;"
+        },
+        {
+          "method_name": "getMaxPayloadSize",
+          "arguments": [],
+          "returnType": "number",
+          "signature": "getMaxPayloadSize(): number;"
+        },
+        {
+          "method_name": "getMaxIncomingMessages",
+          "arguments": [],
+          "returnType": "number",
+          "signature": "getMaxIncomingMessages(): number;"
+        },
+        {
+          "method_name": "getOutgoingMessageBuffer",
+          "arguments": [],
+          "returnType": "Uint8Array",
+          "signature": "getOutgoingMessageBuffer(): Uint8Array;"
+        },
+        {
+          "method_name": "readMessageFromChannel",
+          "arguments": [
+            {
+              "argument_name": "appChannel",
+              "type": "number",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "P2PMessage | null",
+          "signature": "readMessageFromChannel(appChannel: number): P2PMessage | null;"
+        },
+        {
+          "method_name": "drainChannelToBuffer",
+          "arguments": [
+            {
+              "argument_name": "appChannel",
+              "type": "number",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "buffer",
+              "type": "Uint8Array",
+              "optional": true,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "Uint8Array",
+          "signature": "drainChannelToBuffer(appChannel: number, buffer?: Uint8Array): Uint8Array;"
+        }
+      ]
+    },
+    {
+      "class_name": "StatsManager",
+      "methods": [
+        {
+          "method_name": "constructor",
+          "arguments": [
+            {
+              "argument_name": "sdk",
+              "type": "WavedashSDK",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": null,
+          "signature": "constructor(sdk: WavedashSDK);"
+        },
+        {
+          "method_name": "destroy",
+          "arguments": [],
+          "returnType": "void",
+          "signature": "destroy(): void;"
+        },
+        {
+          "method_name": "requestStats",
+          "arguments": [],
+          "returnType": "Promise<boolean>",
+          "signature": "requestStats(): Promise<boolean>;"
+        },
+        {
+          "method_name": "storeStats",
+          "arguments": [],
+          "returnType": "boolean",
+          "signature": "storeStats(): boolean;"
+        },
+        {
+          "method_name": "getStat",
+          "arguments": [
+            {
+              "argument_name": "identifier",
+              "type": "string",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "number",
+          "signature": "getStat(identifier: string): number;"
+        },
+        {
+          "method_name": "setStat",
+          "arguments": [
+            {
+              "argument_name": "identifier",
+              "type": "string",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "value",
+              "type": "number",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "storeNow",
+              "type": "boolean",
+              "optional": true,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "boolean",
+          "signature": "setStat(identifier: string, value: number, storeNow?: boolean): boolean;"
+        },
+        {
+          "method_name": "getAchievement",
+          "arguments": [
+            {
+              "argument_name": "identifier",
+              "type": "string",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "boolean",
+          "signature": "getAchievement(identifier: string): boolean;"
+        },
+        {
+          "method_name": "setAchievement",
+          "arguments": [
+            {
+              "argument_name": "identifier",
+              "type": "string",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "storeNow",
+              "type": "boolean",
+              "optional": true,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "boolean",
+          "signature": "setAchievement(identifier: string, storeNow?: boolean): boolean;"
+        },
+        {
+          "method_name": "getPendingData",
+          "arguments": [],
+          "returnType": "{ stats: StatEntry[]; achievements: string[]; } | null",
+          "signature": "getPendingData(): { stats: StatEntry[]; achievements: string[]; } | null;"
+        }
+      ]
+    },
+    {
+      "class_name": "HeartbeatManager",
+      "methods": [
+        {
+          "method_name": "constructor",
+          "arguments": [
+            {
+              "argument_name": "sdk",
+              "type": "WavedashSDK",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": null,
+          "signature": "constructor(sdk: WavedashSDK);"
+        },
+        {
+          "method_name": "start",
+          "arguments": [],
+          "returnType": "void",
+          "signature": "start(): void;"
+        },
+        {
+          "method_name": "stop",
+          "arguments": [],
+          "returnType": "void",
+          "signature": "stop(): void;"
+        },
+        {
+          "method_name": "destroy",
+          "arguments": [],
+          "returnType": "void",
+          "signature": "destroy(): void;"
+        },
+        {
+          "method_name": "updateUserPresence",
+          "arguments": [
+            {
+              "argument_name": "data",
+              "type": "Record<string, unknown>",
+              "optional": true,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "Promise<boolean>",
+          "signature": "updateUserPresence(data?: Record<string, unknown>): Promise<boolean>;"
+        },
+        {
+          "method_name": "isCurrentlyConnected",
+          "arguments": [],
+          "returnType": "boolean",
+          "signature": "isCurrentlyConnected(): boolean;"
+        }
+      ]
+    },
+    {
+      "class_name": "GameEventManager",
+      "methods": [
+        {
+          "method_name": "constructor",
+          "arguments": [
+            {
+              "argument_name": "sdk",
+              "type": "WavedashSDK",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": null,
+          "signature": "constructor(sdk: WavedashSDK);"
+        },
+        {
+          "method_name": "notifyGame",
+          "arguments": [
+            {
+              "argument_name": "event",
+              "type": "WavedashEvent",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "payload",
+              "type": "string | number | object",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "void",
+          "signature": "notifyGame(event: WavedashEvent, payload: string | number | object): void;"
+        },
+        {
+          "method_name": "flushEventQueue",
+          "arguments": [],
+          "returnType": "void",
+          "signature": "flushEventQueue(): void;"
+        }
+      ]
+    },
+    {
+      "class_name": "FullscreenManager",
+      "methods": [
+        {
+          "method_name": "constructor",
+          "arguments": [
+            {
+              "argument_name": "sdk",
+              "type": "WavedashSDK",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": null,
+          "signature": "constructor(sdk: WavedashSDK);"
+        },
+        {
+          "method_name": "isFullscreen",
+          "arguments": [],
+          "returnType": "boolean",
+          "signature": "isFullscreen(): boolean;"
+        },
+        {
+          "method_name": "requestFullscreen",
+          "arguments": [
+            {
+              "argument_name": "fullscreen",
+              "type": "boolean",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "Promise<boolean>",
+          "signature": "requestFullscreen(fullscreen: boolean): Promise<boolean>;"
+        },
+        {
+          "method_name": "toggleFullscreen",
+          "arguments": [],
+          "returnType": "Promise<boolean>",
+          "signature": "toggleFullscreen(): Promise<boolean>;"
+        },
+        {
+          "method_name": "subscribe",
+          "arguments": [
+            {
+              "argument_name": "listener",
+              "type": "(isFullscreen: boolean)",
+              "optional": false,
+              "rest": false,
+              "default": "> void",
+              "last": true
+            }
+          ],
+          "returnType": "() => void",
+          "signature": "subscribe(listener: (isFullscreen: boolean) => void): () => void;"
+        }
+      ]
+    },
+    {
+      "class_name": "OverlayManager",
+      "methods": [
+        {
+          "method_name": "constructor",
+          "arguments": [
+            {
+              "argument_name": "sdk",
+              "type": "WavedashSDK",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": null,
+          "signature": "constructor(sdk: WavedashSDK);"
+        },
+        {
+          "method_name": "toggleOverlay",
+          "arguments": [],
+          "returnType": "void",
+          "signature": "toggleOverlay(): void;"
+        },
+        {
+          "method_name": "takeFocus",
+          "arguments": [],
+          "returnType": "void",
+          "signature": "takeFocus(): void;"
+        }
+      ]
+    },
+    {
+      "class_name": "FriendsManager",
+      "methods": [
+        {
+          "method_name": "constructor",
+          "arguments": [
+            {
+              "argument_name": "sdk",
+              "type": "WavedashSDK",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": null,
+          "signature": "constructor(sdk: WavedashSDK);"
+        },
+        {
+          "method_name": "cacheUsers",
+          "arguments": [
+            {
+              "argument_name": "users",
+              "type": "array",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "void",
+          "signature": "cacheUsers(users: Array<{ userId: GenericId<\"users\">; username: string; avatarUrl?: string; userAvatarUrl?: string; }>): void;"
+        },
+        {
+          "method_name": "getUserAvatarUrl",
+          "arguments": [
+            {
+              "argument_name": "userId",
+              "type": "number",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "size",
+              "type": "number",
+              "optional": true,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "string | null",
+          "signature": "getUserAvatarUrl(userId: GenericId<\"users\">, size?: number): string | null;"
+        },
+        {
+          "method_name": "getUsername",
+          "arguments": [
+            {
+              "argument_name": "userId",
+              "type": "number",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "string | null",
+          "signature": "getUsername(userId: GenericId<\"users\">): string | null;"
+        },
+        {
+          "method_name": "listFriends",
+          "arguments": [],
+          "returnType": "Promise<Friend[]>",
+          "signature": "listFriends(): Promise<Friend[]>;"
+        }
+      ]
+    },
+    {
+      "class_name": "WavedashLogger",
+      "methods": [
+        {
+          "method_name": "constructor",
+          "arguments": [
+            {
+              "argument_name": "logLevel",
+              "type": "number",
+              "optional": true,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": null,
+          "signature": "constructor(logLevel?: number);"
+        },
+        {
+          "method_name": "setLogLevel",
+          "arguments": [
+            {
+              "argument_name": "level",
+              "type": "number",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "void",
+          "signature": "setLogLevel(level: number): void;"
+        },
+        {
+          "method_name": "debug",
+          "arguments": [
+            {
+              "argument_name": "message",
+              "type": "string",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "args",
+              "type": "unknown[]",
+              "optional": false,
+              "rest": true,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "void",
+          "signature": "debug(message: string, ...args: unknown[]): void;"
+        },
+        {
+          "method_name": "info",
+          "arguments": [
+            {
+              "argument_name": "message",
+              "type": "string",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "args",
+              "type": "unknown[]",
+              "optional": false,
+              "rest": true,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "void",
+          "signature": "info(message: string, ...args: unknown[]): void;"
+        },
+        {
+          "method_name": "warn",
+          "arguments": [
+            {
+              "argument_name": "message",
+              "type": "string",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "args",
+              "type": "unknown[]",
+              "optional": false,
+              "rest": true,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "void",
+          "signature": "warn(message: string, ...args: unknown[]): void;"
+        },
+        {
+          "method_name": "error",
+          "arguments": [
+            {
+              "argument_name": "message",
+              "type": "string",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "args",
+              "type": "unknown[]",
+              "optional": false,
+              "rest": true,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "void",
+          "signature": "error(message: string, ...args: unknown[]): void;"
+        }
+      ]
+    },
+    {
+      "class_name": "IFrameMessenger",
+      "methods": [
+        {
+          "method_name": "constructor",
+          "arguments": [],
+          "returnType": null,
+          "signature": "constructor();"
+        },
+        {
+          "method_name": "addEventListener",
+          "arguments": [
+            {
+              "argument_name": "type",
+              "type": "T",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "listener",
+              "type": "PushListener<T>",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "void",
+          "signature": "addEventListener<T extends PushType>(type: T, listener: PushListener<T>): void;"
+        },
+        {
+          "method_name": "removeEventListener",
+          "arguments": [
+            {
+              "argument_name": "type",
+              "type": "T",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "listener",
+              "type": "PushListener<T>",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "void",
+          "signature": "removeEventListener<T extends PushType>(type: T, listener: PushListener<T>): void;"
+        },
+        {
+          "method_name": "postToParent",
+          "arguments": [
+            {
+              "argument_name": "requestType",
+              "type": "(typeof IFRAME_MESSAGE_TYPE)[keyof typeof IFRAME_MESSAGE_TYPE]",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "data",
+              "type": "Record<string, string | number | boolean>",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "boolean",
+          "signature": "postToParent(requestType: (typeof IFRAME_MESSAGE_TYPE)[keyof typeof IFRAME_MESSAGE_TYPE], data: Record<string, string | number | boolean>): boolean;"
+        },
+        {
+          "method_name": "requestFromParent",
+          "arguments": [
+            {
+              "argument_name": "requestType",
+              "type": "T",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "data",
+              "type": "Record<string, unknown>",
+              "optional": true,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "Promise<IFrameEventPayloadMap[T]>",
+          "signature": "requestFromParent<T extends keyof IFrameEventPayloadMap>(requestType: T, data?: Record<string, unknown>): Promise<IFrameEventPayloadMap[T]>;"
+        }
+      ]
+    },
+    {
+      "class_name": "WavedashSDK",
+      "methods": [
+        {
+          "method_name": "constructor",
+          "arguments": [
+            {
+              "argument_name": "sdkConfig",
+              "type": "SDKConfig",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": null,
+          "signature": "constructor(sdkConfig: SDKConfig);"
+        },
+        {
+          "method_name": "init",
+          "arguments": [
+            {
+              "argument_name": "config",
+              "type": "WavedashConfig",
+              "optional": true,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "boolean",
+          "signature": "init(config?: WavedashConfig): boolean;"
+        },
+        {
+          "method_name": "readyForEvents",
+          "arguments": [],
+          "returnType": "void",
+          "signature": "readyForEvents(): void;"
+        },
+        {
+          "method_name": "on",
+          "arguments": [
+            {
+              "argument_name": "event",
+              "type": "K",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "listener",
+              "type": "(payload: WavedashEventMap[K])",
+              "optional": false,
+              "rest": false,
+              "default": "> void",
+              "last": true
+            }
+          ],
+          "returnType": "() => void",
+          "signature": "on<K extends keyof WavedashEventMap>(event: K, listener: (payload: WavedashEventMap[K]) => void): () => void;"
+        },
+        {
+          "method_name": "off",
+          "arguments": [
+            {
+              "argument_name": "event",
+              "type": "K",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "listener",
+              "type": "(payload: WavedashEventMap[K])",
+              "optional": false,
+              "rest": false,
+              "default": "> void",
+              "last": true
+            }
+          ],
+          "returnType": "void",
+          "signature": "off<K extends keyof WavedashEventMap>(event: K, listener: (payload: WavedashEventMap[K]) => void): void;"
+        },
+        {
+          "method_name": "addEventListener",
+          "arguments": [
+            {
+              "argument_name": "type",
+              "type": "K",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "listener",
+              "type": "(ev: CustomEvent<WavedashEventMap[K]>)",
+              "optional": false,
+              "rest": false,
+              "default": "> void"
+            },
+            {
+              "argument_name": "options",
+              "type": "boolean | AddEventListenerOptions",
+              "optional": true,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "void",
+          "signature": "addEventListener<K extends keyof WavedashEventMap>(type: K, listener: (ev: CustomEvent<WavedashEventMap[K]>) => void, options?: boolean | AddEventListenerOptions): void;"
+        },
+        {
+          "method_name": "addEventListener",
+          "arguments": [
+            {
+              "argument_name": "type",
+              "type": "string",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "listener",
+              "type": "EventListenerOrEventListenerObject | null",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "options",
+              "type": "boolean | AddEventListenerOptions",
+              "optional": true,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "void",
+          "signature": "addEventListener(type: string, listener: EventListenerOrEventListenerObject | null, options?: boolean | AddEventListenerOptions): void;"
+        },
+        {
+          "method_name": "removeEventListener",
+          "arguments": [
+            {
+              "argument_name": "type",
+              "type": "K",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "listener",
+              "type": "(ev: CustomEvent<WavedashEventMap[K]>)",
+              "optional": false,
+              "rest": false,
+              "default": "> void"
+            },
+            {
+              "argument_name": "options",
+              "type": "boolean | EventListenerOptions",
+              "optional": true,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "void",
+          "signature": "removeEventListener<K extends keyof WavedashEventMap>(type: K, listener: (ev: CustomEvent<WavedashEventMap[K]>) => void, options?: boolean | EventListenerOptions): void;"
+        },
+        {
+          "method_name": "removeEventListener",
+          "arguments": [
+            {
+              "argument_name": "type",
+              "type": "string",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "listener",
+              "type": "EventListenerOrEventListenerObject | null",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "options",
+              "type": "boolean | EventListenerOptions",
+              "optional": true,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "void",
+          "signature": "removeEventListener(type: string, listener: EventListenerOrEventListenerObject | null, options?: boolean | EventListenerOptions): void;"
+        },
+        {
+          "method_name": "loadScript",
+          "arguments": [
+            {
+              "argument_name": "src",
+              "type": "string",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "Promise<unknown>",
+          "signature": "loadScript(src: string): Promise<unknown>;"
+        },
+        {
+          "method_name": "updateLoadProgressZeroToOne",
+          "arguments": [
+            {
+              "argument_name": "progress",
+              "type": "number",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "void",
+          "signature": "updateLoadProgressZeroToOne(progress: number): void;"
+        },
+        {
+          "method_name": "loadComplete",
+          "arguments": [],
+          "returnType": "void",
+          "signature": "loadComplete(): void;"
+        },
+        {
+          "method_name": "toggleOverlay",
+          "arguments": [],
+          "returnType": "void",
+          "signature": "toggleOverlay(): void;"
+        },
+        {
+          "method_name": "isFullscreen",
+          "arguments": [],
+          "returnType": "boolean",
+          "signature": "isFullscreen(): boolean;"
+        },
+        {
+          "method_name": "requestFullscreen",
+          "arguments": [
+            {
+              "argument_name": "fullscreen",
+              "type": "boolean",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "Promise<boolean>",
+          "signature": "requestFullscreen(fullscreen: boolean): Promise<boolean>;"
+        },
+        {
+          "method_name": "toggleFullscreen",
+          "arguments": [],
+          "returnType": "Promise<boolean>",
+          "signature": "toggleFullscreen(): Promise<boolean>;"
+        },
+        {
+          "method_name": "getUser",
+          "arguments": [],
+          "returnType": "SDKUser",
+          "signature": "getUser(): SDKUser;"
+        },
+        {
+          "method_name": "getUsername",
+          "arguments": [],
+          "returnType": "string",
+          "signature": "getUsername(): string;"
+        },
+        {
+          "method_name": "getUsername",
+          "arguments": [
+            {
+              "argument_name": "userId",
+              "type": "number",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "string | null",
+          "signature": "getUsername(userId: GenericId<\"users\">): string | null;"
+        },
+        {
+          "method_name": "getUserId",
+          "arguments": [],
+          "returnType": "GenericId<\"users\">",
+          "signature": "getUserId(): GenericId<\"users\">;"
+        },
+        {
+          "method_name": "getUserJwt",
+          "arguments": [],
+          "returnType": "Promise<WavedashResponse<string>>",
+          "signature": "getUserJwt(): Promise<WavedashResponse<string>>;"
+        },
+        {
+          "method_name": "getLaunchParams",
+          "arguments": [],
+          "returnType": "GameLaunchParams",
+          "signature": "getLaunchParams(): GameLaunchParams;"
+        },
+        {
+          "method_name": "listFriends",
+          "arguments": [],
+          "returnType": "Promise<WavedashResponse<Friend[]>>",
+          "signature": "listFriends(): Promise<WavedashResponse<Friend[]>>;"
+        },
+        {
+          "method_name": "getUserAvatarUrl",
+          "arguments": [
+            {
+              "argument_name": "userId",
+              "type": "number",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "size",
+              "type": "number",
+              "optional": true,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "string | null",
+          "signature": "getUserAvatarUrl(userId: GenericId<\"users\">, size?: number): string | null;"
+        },
+        {
+          "method_name": "getLeaderboard",
+          "arguments": [
+            {
+              "argument_name": "name",
+              "type": "string",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "Promise<WavedashResponse<Leaderboard>>",
+          "signature": "getLeaderboard(name: string): Promise<WavedashResponse<Leaderboard>>;"
+        },
+        {
+          "method_name": "getOrCreateLeaderboard",
+          "arguments": [
+            {
+              "argument_name": "name",
+              "type": "string",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "sortOrder",
+              "type": "LeaderboardSortOrder",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "displayType",
+              "type": "LeaderboardDisplayType",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "Promise<WavedashResponse<Leaderboard>>",
+          "signature": "getOrCreateLeaderboard(name: string, sortOrder: LeaderboardSortOrder, displayType: LeaderboardDisplayType): Promise<WavedashResponse<Leaderboard>>;"
+        },
+        {
+          "method_name": "getLeaderboardEntryCount",
+          "arguments": [
+            {
+              "argument_name": "leaderboardId",
+              "type": "number",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "number",
+          "signature": "getLeaderboardEntryCount(leaderboardId: GenericId<\"leaderboards\">): number;"
+        },
+        {
+          "method_name": "getMyLeaderboardEntries",
+          "arguments": [
+            {
+              "argument_name": "leaderboardId",
+              "type": "number",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "Promise<WavedashResponse<LeaderboardEntries>>",
+          "signature": "getMyLeaderboardEntries(leaderboardId: GenericId<\"leaderboards\">): Promise<WavedashResponse<LeaderboardEntries>>;"
+        },
+        {
+          "method_name": "listLeaderboardEntriesAroundUser",
+          "arguments": [
+            {
+              "argument_name": "leaderboardId",
+              "type": "number",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "countAhead",
+              "type": "number",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "countBehind",
+              "type": "number",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "friendsOnly",
+              "type": "boolean",
+              "optional": true,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "Promise<WavedashResponse<LeaderboardEntries>>",
+          "signature": "listLeaderboardEntriesAroundUser(leaderboardId: GenericId<\"leaderboards\">, countAhead: number, countBehind: number, friendsOnly?: boolean): Promise<WavedashResponse<LeaderboardEntries>>;"
+        },
+        {
+          "method_name": "listLeaderboardEntries",
+          "arguments": [
+            {
+              "argument_name": "leaderboardId",
+              "type": "number",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "offset",
+              "type": "number",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "limit",
+              "type": "number",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "friendsOnly",
+              "type": "boolean",
+              "optional": true,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "Promise<WavedashResponse<LeaderboardEntries>>",
+          "signature": "listLeaderboardEntries(leaderboardId: GenericId<\"leaderboards\">, offset: number, limit: number, friendsOnly?: boolean): Promise<WavedashResponse<LeaderboardEntries>>;"
+        },
+        {
+          "method_name": "uploadLeaderboardScore",
+          "arguments": [
+            {
+              "argument_name": "leaderboardId",
+              "type": "number",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "score",
+              "type": "number",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "keepBest",
+              "type": "boolean",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "ugcId",
+              "type": "number",
+              "optional": true,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "Promise<WavedashResponse<UpsertedLeaderboardEntry>>",
+          "signature": "uploadLeaderboardScore(leaderboardId: GenericId<\"leaderboards\">, score: number, keepBest: boolean, ugcId?: GenericId<\"userGeneratedContent\">): Promise<WavedashResponse<UpsertedLeaderboardEntry>>;"
+        },
+        {
+          "method_name": "createUGCItem",
+          "arguments": [
+            {
+              "argument_name": "ugcType",
+              "type": "UGCType",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "title",
+              "type": "string",
+              "optional": true,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "description",
+              "type": "string",
+              "optional": true,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "visibility",
+              "type": "UGCVisibility",
+              "optional": true,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "filePath",
+              "type": "string",
+              "optional": true,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "Promise<WavedashResponse<GenericId<\"userGeneratedContent\">>>",
+          "signature": "createUGCItem(ugcType: UGCType, title?: string, description?: string, visibility?: UGCVisibility, filePath?: string): Promise<WavedashResponse<GenericId<\"userGeneratedContent\">>>;"
+        },
+        {
+          "method_name": "updateUGCItem",
+          "arguments": [
+            {
+              "argument_name": "ugcId",
+              "type": "number",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "title",
+              "type": "string",
+              "optional": true,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "description",
+              "type": "string",
+              "optional": true,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "visibility",
+              "type": "UGCVisibility",
+              "optional": true,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "filePath",
+              "type": "string",
+              "optional": true,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "Promise<WavedashResponse<GenericId<\"userGeneratedContent\">>>",
+          "signature": "updateUGCItem(ugcId: GenericId<\"userGeneratedContent\">, title?: string, description?: string, visibility?: UGCVisibility, filePath?: string): Promise<WavedashResponse<GenericId<\"userGeneratedContent\">>>;"
+        },
+        {
+          "method_name": "downloadUGCItem",
+          "arguments": [
+            {
+              "argument_name": "ugcId",
+              "type": "number",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "filePath",
+              "type": "string",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "Promise<WavedashResponse<GenericId<\"userGeneratedContent\">>>",
+          "signature": "downloadUGCItem(ugcId: GenericId<\"userGeneratedContent\">, filePath: string): Promise<WavedashResponse<GenericId<\"userGeneratedContent\">>>;"
+        },
+        {
+          "method_name": "deleteRemoteFile",
+          "arguments": [
+            {
+              "argument_name": "filePath",
+              "type": "string",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "Promise<WavedashResponse<string>>",
+          "signature": "deleteRemoteFile(filePath: string): Promise<WavedashResponse<string>>;"
+        },
+        {
+          "method_name": "downloadRemoteFile",
+          "arguments": [
+            {
+              "argument_name": "filePath",
+              "type": "string",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "Promise<WavedashResponse<string>>",
+          "signature": "downloadRemoteFile(filePath: string): Promise<WavedashResponse<string>>;"
+        },
+        {
+          "method_name": "uploadRemoteFile",
+          "arguments": [
+            {
+              "argument_name": "filePath",
+              "type": "string",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "Promise<WavedashResponse<string>>",
+          "signature": "uploadRemoteFile(filePath: string): Promise<WavedashResponse<string>>;"
+        },
+        {
+          "method_name": "listRemoteDirectory",
+          "arguments": [
+            {
+              "argument_name": "path",
+              "type": "string",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "Promise<WavedashResponse<RemoteFileMetadata[]>>",
+          "signature": "listRemoteDirectory(path: string): Promise<WavedashResponse<RemoteFileMetadata[]>>;"
+        },
+        {
+          "method_name": "downloadRemoteDirectory",
+          "arguments": [
+            {
+              "argument_name": "path",
+              "type": "string",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "Promise<WavedashResponse<string>>",
+          "signature": "downloadRemoteDirectory(path: string): Promise<WavedashResponse<string>>;"
+        },
+        {
+          "method_name": "writeLocalFile",
+          "arguments": [
+            {
+              "argument_name": "filePath",
+              "type": "string",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "data",
+              "type": "Uint8Array",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "Promise<boolean>",
+          "signature": "writeLocalFile(filePath: string, data: Uint8Array): Promise<boolean>;"
+        },
+        {
+          "method_name": "readLocalFile",
+          "arguments": [
+            {
+              "argument_name": "filePath",
+              "type": "string",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "Promise<Uint8Array | null>",
+          "signature": "readLocalFile(filePath: string): Promise<Uint8Array | null>;"
+        },
+        {
+          "method_name": "getAchievement",
+          "arguments": [
+            {
+              "argument_name": "identifier",
+              "type": "string",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "boolean",
+          "signature": "getAchievement(identifier: string): boolean;"
+        },
+        {
+          "method_name": "getStat",
+          "arguments": [
+            {
+              "argument_name": "identifier",
+              "type": "string",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "number",
+          "signature": "getStat(identifier: string): number;"
+        },
+        {
+          "method_name": "setAchievement",
+          "arguments": [
+            {
+              "argument_name": "identifier",
+              "type": "string",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "storeNow",
+              "type": "boolean",
+              "optional": true,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "boolean",
+          "signature": "setAchievement(identifier: string, storeNow?: boolean): boolean;"
+        },
+        {
+          "method_name": "setStat",
+          "arguments": [
+            {
+              "argument_name": "identifier",
+              "type": "string",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "value",
+              "type": "number",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "storeNow",
+              "type": "boolean",
+              "optional": true,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "boolean",
+          "signature": "setStat(identifier: string, value: number, storeNow?: boolean): boolean;"
+        },
+        {
+          "method_name": "requestStats",
+          "arguments": [],
+          "returnType": "Promise<WavedashResponse<boolean>>",
+          "signature": "requestStats(): Promise<WavedashResponse<boolean>>;"
+        },
+        {
+          "method_name": "storeStats",
+          "arguments": [],
+          "returnType": "boolean",
+          "signature": "storeStats(): boolean;"
+        },
+        {
+          "method_name": "getP2PMaxPayloadSize",
+          "arguments": [],
+          "returnType": "number",
+          "signature": "getP2PMaxPayloadSize(): number;"
+        },
+        {
+          "method_name": "getP2PMaxIncomingMessages",
+          "arguments": [],
+          "returnType": "number",
+          "signature": "getP2PMaxIncomingMessages(): number;"
+        },
+        {
+          "method_name": "getP2POutgoingMessageBuffer",
+          "arguments": [],
+          "returnType": "Uint8Array",
+          "signature": "getP2POutgoingMessageBuffer(): Uint8Array;"
+        },
+        {
+          "method_name": "sendP2PMessage",
+          "arguments": [
+            {
+              "argument_name": "toUserId",
+              "type": "number",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "appChannel",
+              "type": "number | undefined",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "reliable",
+              "type": "boolean | undefined",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "payload",
+              "type": "Uint8Array",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "payloadSize",
+              "type": "number",
+              "optional": true,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "boolean",
+          "signature": "sendP2PMessage(toUserId: GenericId<\"users\"> | undefined, appChannel: number | undefined, reliable: boolean | undefined, payload: Uint8Array, payloadSize?: number): boolean;"
+        },
+        {
+          "method_name": "broadcastP2PMessage",
+          "arguments": [
+            {
+              "argument_name": "appChannel",
+              "type": "number | undefined",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "reliable",
+              "type": "boolean | undefined",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "payload",
+              "type": "Uint8Array",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "payloadSize",
+              "type": "number",
+              "optional": true,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "boolean",
+          "signature": "broadcastP2PMessage(appChannel: number | undefined, reliable: boolean | undefined, payload: Uint8Array, payloadSize?: number): boolean;"
+        },
+        {
+          "method_name": "readP2PMessageFromChannel",
+          "arguments": [
+            {
+              "argument_name": "appChannel",
+              "type": "number",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "P2PMessage | null",
+          "signature": "readP2PMessageFromChannel(appChannel: number): P2PMessage | null;"
+        },
+        {
+          "method_name": "drainP2PChannelToBuffer",
+          "arguments": [
+            {
+              "argument_name": "appChannel",
+              "type": "number",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "buffer",
+              "type": "Uint8Array",
+              "optional": true,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "Uint8Array",
+          "signature": "drainP2PChannelToBuffer(appChannel: number, buffer?: Uint8Array): Uint8Array;"
+        },
+        {
+          "method_name": "createLobby",
+          "arguments": [
+            {
+              "argument_name": "visibility",
+              "type": "LobbyVisibility",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "maxPlayers",
+              "type": "number",
+              "optional": true,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "Promise<WavedashResponse<GenericId<\"lobbies\">>>",
+          "signature": "createLobby(visibility: LobbyVisibility, maxPlayers?: number): Promise<WavedashResponse<GenericId<\"lobbies\">>>;"
+        },
+        {
+          "method_name": "joinLobby",
+          "arguments": [
+            {
+              "argument_name": "lobbyId",
+              "type": "number",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "Promise<WavedashResponse<boolean>>",
+          "signature": "joinLobby(lobbyId: GenericId<\"lobbies\">): Promise<WavedashResponse<boolean>>;"
+        },
+        {
+          "method_name": "listAvailableLobbies",
+          "arguments": [
+            {
+              "argument_name": "friendsOnly",
+              "type": "boolean",
+              "optional": true,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "Promise<WavedashResponse<Lobby[]>>",
+          "signature": "listAvailableLobbies(friendsOnly?: boolean): Promise<WavedashResponse<Lobby[]>>;"
+        },
+        {
+          "method_name": "getLobbyUsers",
+          "arguments": [
+            {
+              "argument_name": "lobbyId",
+              "type": "number",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "LobbyUser[]",
+          "signature": "getLobbyUsers(lobbyId: GenericId<\"lobbies\">): LobbyUser[];"
+        },
+        {
+          "method_name": "getNumLobbyUsers",
+          "arguments": [
+            {
+              "argument_name": "lobbyId",
+              "type": "number",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "number",
+          "signature": "getNumLobbyUsers(lobbyId: GenericId<\"lobbies\">): number;"
+        },
+        {
+          "method_name": "getLobbyHostId",
+          "arguments": [
+            {
+              "argument_name": "lobbyId",
+              "type": "number",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "GenericId<\"users\"> | null",
+          "signature": "getLobbyHostId(lobbyId: GenericId<\"lobbies\">): GenericId<\"users\"> | null;"
+        },
+        {
+          "method_name": "getLobbyData",
+          "arguments": [
+            {
+              "argument_name": "lobbyId",
+              "type": "number",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "key",
+              "type": "string",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "string | number | null",
+          "signature": "getLobbyData(lobbyId: GenericId<\"lobbies\">, key: string): string | number | null;"
+        },
+        {
+          "method_name": "setLobbyData",
+          "arguments": [
+            {
+              "argument_name": "lobbyId",
+              "type": "number",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "key",
+              "type": "string",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "value",
+              "type": "string | number | null",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "boolean",
+          "signature": "setLobbyData(lobbyId: GenericId<\"lobbies\">, key: string, value: string | number | null): boolean;"
+        },
+        {
+          "method_name": "deleteLobbyData",
+          "arguments": [
+            {
+              "argument_name": "lobbyId",
+              "type": "number",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "key",
+              "type": "string",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "boolean",
+          "signature": "deleteLobbyData(lobbyId: GenericId<\"lobbies\">, key: string): boolean;"
+        },
+        {
+          "method_name": "leaveLobby",
+          "arguments": [
+            {
+              "argument_name": "lobbyId",
+              "type": "number",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "Promise<WavedashResponse<GenericId<\"lobbies\">>>",
+          "signature": "leaveLobby(lobbyId: GenericId<\"lobbies\">): Promise<WavedashResponse<GenericId<\"lobbies\">>>;"
+        },
+        {
+          "method_name": "sendLobbyMessage",
+          "arguments": [
+            {
+              "argument_name": "lobbyId",
+              "type": "number",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "message",
+              "type": "string",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "boolean",
+          "signature": "sendLobbyMessage(lobbyId: GenericId<\"lobbies\">, message: string): boolean;"
+        },
+        {
+          "method_name": "inviteUserToLobby",
+          "arguments": [
+            {
+              "argument_name": "lobbyId",
+              "type": "number",
+              "optional": false,
+              "rest": false,
+              "default": null
+            },
+            {
+              "argument_name": "userId",
+              "type": "number",
+              "optional": false,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "Promise<WavedashResponse<boolean>>",
+          "signature": "inviteUserToLobby(lobbyId: GenericId<\"lobbies\">, userId: GenericId<\"users\">): Promise<WavedashResponse<boolean>>;"
+        },
+        {
+          "method_name": "getLobbyInviteLink",
+          "arguments": [
+            {
+              "argument_name": "copyToClipboard",
+              "type": "boolean",
+              "optional": true,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "Promise<WavedashResponse<string>>",
+          "signature": "getLobbyInviteLink(copyToClipboard?: boolean): Promise<WavedashResponse<string>>;"
+        },
+        {
+          "method_name": "updateUserPresence",
+          "arguments": [
+            {
+              "argument_name": "data",
+              "type": "Record<string, unknown>",
+              "optional": true,
+              "rest": false,
+              "default": null,
+              "last": true
+            }
+          ],
+          "returnType": "Promise<WavedashResponse<boolean>>",
+          "signature": "updateUserPresence(data?: Record<string, unknown>): Promise<WavedashResponse<boolean>>;"
+        },
+        {
+          "method_name": "ensureGameplayJwt",
+          "arguments": [],
+          "returnType": "Promise<string>",
+          "signature": "ensureGameplayJwt(): Promise<string>;"
+        }
+      ]
+    }
+  ],
+  "consts": [
+    {
+      "name": "WavedashEvents",
+      "readonlyFields": [
+        {
+          "field_name": "LOBBY_MESSAGE",
+          "field_type": "\"LobbyMessage\""
+        },
+        {
+          "field_name": "LOBBY_JOINED",
+          "field_type": "\"LobbyJoined\""
+        },
+        {
+          "field_name": "LOBBY_KICKED",
+          "field_type": "\"LobbyKicked\""
+        },
+        {
+          "field_name": "LOBBY_USERS_UPDATED",
+          "field_type": "\"LobbyUsersUpdated\""
+        },
+        {
+          "field_name": "LOBBY_DATA_UPDATED",
+          "field_type": "\"LobbyDataUpdated\""
+        },
+        {
+          "field_name": "LOBBY_INVITE",
+          "field_type": "\"LobbyInvite\""
+        },
+        {
+          "field_name": "P2P_CONNECTION_ESTABLISHED",
+          "field_type": "\"P2PConnectionEstablished\""
+        },
+        {
+          "field_name": "P2P_CONNECTION_FAILED",
+          "field_type": "\"P2PConnectionFailed\""
+        },
+        {
+          "field_name": "P2P_PEER_DISCONNECTED",
+          "field_type": "\"P2PPeerDisconnected\""
+        },
+        {
+          "field_name": "P2P_PEER_RECONNECTING",
+          "field_type": "\"P2PPeerReconnecting\""
+        },
+        {
+          "field_name": "P2P_PEER_RECONNECTED",
+          "field_type": "\"P2PPeerReconnected\""
+        },
+        {
+          "field_name": "P2P_PACKET_DROPPED",
+          "field_type": "\"P2PPacketDropped\""
+        },
+        {
+          "field_name": "STATS_STORED",
+          "field_type": "\"StatsStored\""
+        },
+        {
+          "field_name": "BACKEND_CONNECTED",
+          "field_type": "\"BackendConnected\""
+        },
+        {
+          "field_name": "BACKEND_DISCONNECTED",
+          "field_type": "\"BackendDisconnected\""
+        },
+        {
+          "field_name": "BACKEND_RECONNECTING",
+          "field_type": "\"BackendReconnecting\""
+        },
+        {
+          "field_name": "FULLSCREEN_CHANGED",
+          "field_type": "\"FullscreenChanged\""
+        }
+      ]
+    },
+    {
+      "name": "LobbyKickedReason",
+      "readonlyFields": [
+        {
+          "field_name": "KICKED",
+          "field_type": "\"KICKED\""
+        },
+        {
+          "field_name": "ERROR",
+          "field_type": "\"ERROR\""
+        }
+      ]
+    },
+    {
+      "name": "LobbyUserChangeType",
+      "readonlyFields": [
+        {
+          "field_name": "JOINED",
+          "field_type": "\"JOINED\""
+        },
+        {
+          "field_name": "LEFT",
+          "field_type": "\"LEFT\""
+        }
+      ]
+    },
+    {
+      "name": "P",
+      "readonlyFields": [
+        {
+          "field_name": "QUEUE_FULL",
+          "field_type": "\"QUEUE_FULL\""
+        },
+        {
+          "field_name": "PAYLOAD_TOO_LARGE",
+          "field_type": "\"PAYLOAD_TOO_LARGE\""
+        },
+        {
+          "field_name": "INVALID_PAYLOAD_SIZE",
+          "field_type": "\"INVALID_PAYLOAD_SIZE\""
+        },
+        {
+          "field_name": "INVALID_CHANNEL",
+          "field_type": "\"INVALID_CHANNEL\""
+        },
+        {
+          "field_name": "MALFORMED",
+          "field_type": "\"MALFORMED\""
+        },
+        {
+          "field_name": "PEER_NOT_READY",
+          "field_type": "\"PEER_NOT_READY\""
+        }
+      ]
+    }
+  ]
+}

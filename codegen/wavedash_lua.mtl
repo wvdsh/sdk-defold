@@ -1,0 +1,109 @@
+local M = {}
+
+local function lua_to_js(arg_value, arg_type)
+	if not arg_value then
+		return ""
+	end
+	
+	if not arg_type then
+		arg_type = type(arg_value)
+	end
+	
+	if arg_type == "number" then
+		return tostring(arg_value)
+	elseif arg_type == "string" then
+		return "\"" .. arg_value .. "\""
+	elseif arg_type == "Uint8Array" then
+		return "Uint8Array.fromBase64(\"" .. arg_value .. "\")"
+	elseif type(arg_value) == "table" then
+		return "'" .. json.encode(arg_value) .. "'"
+	else
+		return tostring(arg_value)
+	end
+end
+
+local CLASS_LOOKUP = {
+	["WavedashManager"] = "Wavedash.wavedashManager",
+	["LobbyManager"] = "Wavedash.lobbyManager",
+	["FileSystemManager"] = "Wavedash.fileSystemManager",
+	["UGCManager"] = "Wavedash.ugcManager",
+	["LeaderboardManager"] = "Wavedash.leaderboardManager",
+	["P2PManager"] = "Wavedash.p2pManager",
+	["StatsManager"] = "Wavedash.statsManager",
+	["HeartbeatManager"] = "Wavedash.heartbeatManager",
+	["GameEventManager"] = "Wavedash.gameEventManager",
+	["FullscreenManager"] = "Wavedash.fullscreenManager",
+	["OverlayManager"] = "Wavedash.overlayManager",
+	["FriendsManager"] = "Wavedash.friendsManager",
+	["WavedashLogger"] = "Wavedash.wavedashLogger",
+	["IFrameMessenger"] = "Wavedash.iframeMessenger",
+	["WavedashSDK"] = "Wavedash",
+	["DefoldWavedash"] = "DefoldWavedash",
+}
+
+-- call wavedash api method using html5.run() which basically evaluates
+-- a string of JS code and returns any output from the evaluation
+local function run(class, method, args)
+	print("run", class, method, args)
+	local code = "window.Wavedash && window." .. CLASS_LOOKUP[class] .. "." .. method .. "(" .. args .. ")"
+	print("run", code)
+	return html5 and html5.run(code) or false
+end
+
+
+{{#consts}}
+M.{{name}} = {}
+{{#readonlyFields}}
+M.{{name}}.{{field_name}} = {{field_type}}
+{{/readonlyFields}}
+
+{{/consts}}
+
+
+{{#consts.WavedashEvents.readonlyFields}}
+M.{{name}} = {{type}}
+{{/consts.WavedashEvents.readonlyFields}}
+
+{{#classes}}
+M.{{class_name}} = {}
+{{#methods}}
+M.{{class_name}}.{{method_name}} = function({{#arguments}}{{argument_name}}{{^last}},{{/last}}{{/arguments}})
+	local args = ""
+	{{#arguments}}
+	args = args .. lua_to_js({{argument_name}}, "{{type}}"){{^last}} .. ","{{/last}}
+	{{/arguments}}
+	return run("{{class_name}}", "{{method_name}}", args)
+end
+{{/methods}}
+
+{{/classes}}
+
+
+local event_queue = {}
+
+M.WavedashSDK.on = function(event, cb)
+	print("on", event, cb)
+	if not event_queue[event] then
+		event_queue[event] = {
+			events = {},
+			listeners = {},
+		}
+	end
+
+	local events = event_queue[event].events
+	local listeners = event_queue[event].listeners
+	listeners[#listeners + 1] = cb
+
+
+	local handle = timer.delay(1, false, function()
+		local result = run("DefoldWavedash", "get_event", lua_to_js(event, "string"))
+		print("timer", event, result)
+	end)
+	-- events[event][cb] = {
+	-- 	timerh = handle
+	-- }
+
+	run("DefoldWavedash", "on", lua_to_js(event, "string"))
+end
+
+return M

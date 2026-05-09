@@ -1,12 +1,11 @@
-local wavedash = require("wavedash.wavedash")
+--local wavedash = require("wavedash.wavedash")
 
 function init(self)
-	wavedash.WavedashSDK.init({ debug = true })
-	wavedash.WavedashSDK.on(wavedash.WavedashEvents.LOBBY_JOINED, function(...)
-		print("LOBBY_JOINED", ...)
+	wavedash.init(function(self, event, payload)
+		pprint(payload)
+		print("event:", event, "payload:", payload)
 	end)
-
-	wavedash.LobbyManager.listAvailableLobbies()
+	wavedash.create_lobby(1, 4)
 end
 
 function final(self)

@@ -8,30 +8,7 @@
 			if (window.Wavedash) {
 				window.Wavedash.updateLoadProgressZeroToOne(percentage / 100);
 			}
-			
 		});
-
-
-		const events = {};
-		window.DefoldWavedash = {};
-		window.DefoldWavedash.on = function(event) {
-			console.log("on " + event);
-			window.Wavedash.on(event, (payload) => {
-				events.push({"event": event, "payload": payload});
-			});
-		}
-		window.DefoldWavedash.get_event = function(event) {
-			console.log("event " + event);
-			for (let i = 0; i < events.length; i++) {
-				let e = events[i];
-				if (e.event == event) {
-					events.splice(i, 1);
-					return e.payload;
-				}
-			}
-			return null;
-		}
-
 	</script>
 </body>
 </html>

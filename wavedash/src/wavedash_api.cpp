@@ -2,12 +2,81 @@
 
 #if defined(DM_PLATFORM_HTML5)
 
+#include <cmath>
+#include <cstring>
+#include <string>
+
 typedef void (*OnEventCallback)(const char* event, const char* payload, uint32_t payload_length);
 
 extern "C" {
-    void WavedashJs_Init(OnEventCallback callback);
-    void WavedashJs_CreateLobby(uint32_t visibility, uint32_t maxPlayers);
-    void WavedashJs_JoinLobby(uint32_t lobbyId);
+    int WavedashJs_Init(OnEventCallback callback);
+    void WavedashJs_ReadyForEvents();
+    void WavedashJs_UpdateLoadProgressZeroToOne(double progress);
+    void WavedashJs_LoadComplete();
+    void WavedashJs_ToggleOverlay();
+    int WavedashJs_IsFullscreen();
+    void WavedashJs_RequestFullscreen(int fullscreen);
+    void WavedashJs_ToggleFullscreen();
+
+    const char* WavedashJs_GetUser();
+    const char* WavedashJs_GetUsername(double user_id);
+    double WavedashJs_GetUserId();
+    void WavedashJs_GetUserJwt();
+    const char* WavedashJs_GetLaunchParams();
+    void WavedashJs_ListFriends();
+    const char* WavedashJs_GetUserAvatarUrl(double user_id, double size);
+
+    void WavedashJs_GetLeaderboard(const char* name);
+    void WavedashJs_GetOrCreateLeaderboard(const char* name, double sort_order, double display_type);
+    double WavedashJs_GetLeaderboardEntryCount(double leaderboard_id);
+    void WavedashJs_GetMyLeaderboardEntries(double leaderboard_id);
+    void WavedashJs_ListLeaderboardEntriesAroundUser(double leaderboard_id, double count_ahead, double count_behind, int friends_only);
+    void WavedashJs_ListLeaderboardEntries(double leaderboard_id, double offset, double limit, int friends_only);
+    void WavedashJs_UploadLeaderboardScore(double leaderboard_id, double score, int keep_best, double ugc_id);
+
+    void WavedashJs_CreateUGCItem(double ugc_type, const char* title, const char* description, double visibility, const char* file_path);
+    void WavedashJs_UpdateUGCItem(double ugc_id, const char* title, const char* description, double visibility, const char* file_path);
+    void WavedashJs_DownloadUGCItem(double ugc_id, const char* file_path);
+    void WavedashJs_DeleteRemoteFile(const char* file_path);
+    void WavedashJs_DownloadRemoteFile(const char* file_path);
+    void WavedashJs_UploadRemoteFile(const char* file_path);
+    void WavedashJs_ListRemoteDirectory(const char* path);
+    void WavedashJs_DownloadRemoteDirectory(const char* path);
+    void WavedashJs_WriteLocalFile(const char* file_path, const void* data, uint32_t data_length);
+    const char* WavedashJs_ReadLocalFile(const char* file_path);
+
+    int WavedashJs_GetAchievement(const char* identifier);
+    double WavedashJs_GetStat(const char* identifier);
+    int WavedashJs_SetAchievement(const char* identifier, int store_now);
+    int WavedashJs_SetStat(const char* identifier, double value, int store_now);
+    void WavedashJs_RequestStats();
+    int WavedashJs_StoreStats();
+
+    double WavedashJs_GetP2PMaxPayloadSize();
+    double WavedashJs_GetP2PMaxIncomingMessages();
+    const char* WavedashJs_GetP2POutgoingMessageBuffer(uint32_t* out_length);
+    int WavedashJs_SendP2PMessage(double to_user_id, double app_channel, int reliable, const void* payload, uint32_t payload_length, double payload_size);
+    int WavedashJs_BroadcastP2PMessage(double app_channel, int reliable, const void* payload, uint32_t payload_length, double payload_size);
+    const char* WavedashJs_ReadP2PMessageFromChannel(double app_channel);
+    const char* WavedashJs_DrainP2PChannelToBuffer(double app_channel, uint32_t* out_length);
+
+    void WavedashJs_CreateLobby(double visibility, double max_players);
+    void WavedashJs_JoinLobby(double lobby_id);
+    void WavedashJs_ListAvailableLobbies(int friends_only);
+    const char* WavedashJs_GetLobbyUsers(double lobby_id);
+    double WavedashJs_GetNumLobbyUsers(double lobby_id);
+    const char* WavedashJs_GetLobbyHostId(double lobby_id);
+    const char* WavedashJs_GetLobbyData(double lobby_id, const char* key);
+    int WavedashJs_SetLobbyData(double lobby_id, const char* key, const char* value_json);
+    int WavedashJs_DeleteLobbyData(double lobby_id, const char* key);
+    void WavedashJs_LeaveLobby(double lobby_id);
+    int WavedashJs_SendLobbyMessage(double lobby_id, const char* message);
+    void WavedashJs_InviteUserToLobby(double lobby_id, double user_id);
+    void WavedashJs_GetLobbyInviteLink(int copy_to_clipboard);
+    void WavedashJs_UpdateUserPresence(const char* data_json);
+    void WavedashJs_EnsureGameplayJwt();
+
+    void WavedashJs_Free(void* ptr);
 }
 
 static dmScript::LuaCallbackInfo* g_EventCallback = 0x0;
@@ -38,56 +107,651 @@ static void Wavedash_OnEventCallback(const char* event, const char* payload, uin
     dmScript::TeardownCallback(g_EventCallback);
 }
 
-/**
- * Initialize Wavedash SDK
- * @name init
- * @function listener Event callback function
- */
+static double OptionalNumberArg(lua_State* L, int index)
+{
+    return lua_isnoneornil(L, index) ? NAN : luaL_checknumber(L, index);
+}
+
+static int OptionalBoolArg(lua_State* L, int index)
+{
+    if (lua_isnoneornil(L, index))
+    {
+        return -1;
+    }
+    return lua_toboolean(L, index) ? 1 : 0;
+}
+
+static const char* OptionalStringArg(lua_State* L, int index)
+{
+    return lua_isnoneornil(L, index) ? 0 : luaL_checkstring(L, index);
+}
+
+static void PushAndFreeString(lua_State* L, const char* value)
+{
+    if (!value)
+    {
+        lua_pushnil(L);
+        return;
+    }
+
+    lua_pushstring(L, value);
+    WavedashJs_Free((void*) value);
+}
+
+static void PushAndFreeJson(lua_State* L, const char* value)
+{
+    if (!value)
+    {
+        lua_pushnil(L);
+        return;
+    }
+
+    dmScript::JsonToLua(L, value, (uint32_t) strlen(value));
+    WavedashJs_Free((void*) value);
+}
+
+static void PushAndFreeBytes(lua_State* L, const char* value, uint32_t length)
+{
+    if (!value)
+    {
+        lua_pushnil(L);
+        return;
+    }
+
+    lua_pushlstring(L, value, length);
+    WavedashJs_Free((void*) value);
+}
+
+static std::string EscapeJsonString(const char* value)
+{
+    std::string result;
+    for (const char* p = value; *p; ++p)
+    {
+        switch (*p)
+        {
+            case '"':
+                result += "\\\"";
+                break;
+            case '\\':
+                result += "\\\\";
+                break;
+            case '\b':
+                result += "\\b";
+                break;
+            case '\f':
+                result += "\\f";
+                break;
+            case '\n':
+                result += "\\n";
+                break;
+            case '\r':
+                result += "\\r";
+                break;
+            case '\t':
+                result += "\\t";
+                break;
+            default:
+                result += *p;
+                break;
+        }
+    }
+    return result;
+}
+
+static bool LuaValueToJsonLiteral(lua_State* L, int index, std::string& json)
+{
+    int type = lua_type(L, index);
+    switch (type)
+    {
+        case LUA_TNIL:
+            json = "null";
+            return true;
+        case LUA_TBOOLEAN:
+            json = lua_toboolean(L, index) ? "true" : "false";
+            return true;
+        case LUA_TNUMBER:
+            json = std::to_string(lua_tonumber(L, index));
+            return true;
+        case LUA_TSTRING:
+            json = "\"";
+            json += EscapeJsonString(lua_tostring(L, index));
+            json += "\"";
+            return true;
+        default:
+            dmLogError("Unsupported Lua value for JSON literal at argument %d", index);
+            return false;
+    }
+}
+
+static const char* RawJsonStringArg(lua_State* L, int index)
+{
+    if (lua_isnoneornil(L, index))
+    {
+        return 0;
+    }
+
+    if (!lua_isstring(L, index))
+    {
+        dmLogError("Expected JSON string at argument %d", index);
+        return 0;
+    }
+
+    return lua_tostring(L, index);
+}
+
 int Wavedash_Init(lua_State* L)
 {
-    DM_LUA_STACK_CHECK(L, 0);
+    DM_LUA_STACK_CHECK(L, 1);
     g_EventCallback = dmScript::CreateCallback(L, 1);
-    WavedashJs_Init(Wavedash_OnEventCallback);
+    lua_pushboolean(L, WavedashJs_Init(Wavedash_OnEventCallback));
+    return 1;
+}
+
+int Wavedash_ReadyForEvents(lua_State* L)
+{
+    DM_LUA_STACK_CHECK(L, 0);
+    WavedashJs_ReadyForEvents();
     return 0;
 }
 
+int Wavedash_UpdateLoadProgressZeroToOne(lua_State* L)
+{
+    DM_LUA_STACK_CHECK(L, 0);
+    WavedashJs_UpdateLoadProgressZeroToOne(luaL_checknumber(L, 1));
+    return 0;
+}
+
+int Wavedash_LoadComplete(lua_State* L)
+{
+    DM_LUA_STACK_CHECK(L, 0);
+    WavedashJs_LoadComplete();
+    return 0;
+}
+
+int Wavedash_ToggleOverlay(lua_State* L)
+{
+    DM_LUA_STACK_CHECK(L, 0);
+    WavedashJs_ToggleOverlay();
+    return 0;
+}
+
+int Wavedash_IsFullscreen(lua_State* L)
+{
+    DM_LUA_STACK_CHECK(L, 1);
+    lua_pushboolean(L, WavedashJs_IsFullscreen());
+    return 1;
+}
+
+int Wavedash_RequestFullscreen(lua_State* L)
+{
+    DM_LUA_STACK_CHECK(L, 0);
+    WavedashJs_RequestFullscreen(lua_toboolean(L, 1) ? 1 : 0);
+    return 0;
+}
+
+int Wavedash_ToggleFullscreen(lua_State* L)
+{
+    DM_LUA_STACK_CHECK(L, 0);
+    WavedashJs_ToggleFullscreen();
+    return 0;
+}
+
+int Wavedash_GetUser(lua_State* L)
+{
+    DM_LUA_STACK_CHECK(L, 1);
+    PushAndFreeJson(L, WavedashJs_GetUser());
+    return 1;
+}
+
+int Wavedash_GetUsername(lua_State* L)
+{
+    DM_LUA_STACK_CHECK(L, 1);
+    PushAndFreeString(L, WavedashJs_GetUsername(OptionalNumberArg(L, 1)));
+    return 1;
+}
+
+int Wavedash_GetUserId(lua_State* L)
+{
+    DM_LUA_STACK_CHECK(L, 1);
+    lua_pushnumber(L, WavedashJs_GetUserId());
+    return 1;
+}
+
+int Wavedash_GetUserJwt(lua_State* L)
+{
+    DM_LUA_STACK_CHECK(L, 0);
+    WavedashJs_GetUserJwt();
+    return 0;
+}
+
+int Wavedash_GetLaunchParams(lua_State* L)
+{
+    DM_LUA_STACK_CHECK(L, 1);
+    PushAndFreeJson(L, WavedashJs_GetLaunchParams());
+    return 1;
+}
+
+int Wavedash_ListFriends(lua_State* L)
+{
+    DM_LUA_STACK_CHECK(L, 0);
+    WavedashJs_ListFriends();
+    return 0;
+}
+
+int Wavedash_GetUserAvatarUrl(lua_State* L)
+{
+    DM_LUA_STACK_CHECK(L, 1);
+    PushAndFreeString(L, WavedashJs_GetUserAvatarUrl(luaL_checknumber(L, 1), OptionalNumberArg(L, 2)));
+    return 1;
+}
+
+int Wavedash_GetLeaderboard(lua_State* L)
+{
+    DM_LUA_STACK_CHECK(L, 0);
+    WavedashJs_GetLeaderboard(luaL_checkstring(L, 1));
+    return 0;
+}
+
+int Wavedash_GetOrCreateLeaderboard(lua_State* L)
+{
+    DM_LUA_STACK_CHECK(L, 0);
+    WavedashJs_GetOrCreateLeaderboard(luaL_checkstring(L, 1), luaL_checknumber(L, 2), luaL_checknumber(L, 3));
+    return 0;
+}
+
+int Wavedash_GetLeaderboardEntryCount(lua_State* L)
+{
+    DM_LUA_STACK_CHECK(L, 1);
+    lua_pushnumber(L, WavedashJs_GetLeaderboardEntryCount(luaL_checknumber(L, 1)));
+    return 1;
+}
+
+int Wavedash_GetMyLeaderboardEntries(lua_State* L)
+{
+    DM_LUA_STACK_CHECK(L, 0);
+    WavedashJs_GetMyLeaderboardEntries(luaL_checknumber(L, 1));
+    return 0;
+}
+
+int Wavedash_ListLeaderboardEntriesAroundUser(lua_State* L)
+{
+    DM_LUA_STACK_CHECK(L, 0);
+    WavedashJs_ListLeaderboardEntriesAroundUser(luaL_checknumber(L, 1), luaL_checknumber(L, 2), luaL_checknumber(L, 3), OptionalBoolArg(L, 4));
+    return 0;
+}
+
+int Wavedash_ListLeaderboardEntries(lua_State* L)
+{
+    DM_LUA_STACK_CHECK(L, 0);
+    WavedashJs_ListLeaderboardEntries(luaL_checknumber(L, 1), luaL_checknumber(L, 2), luaL_checknumber(L, 3), OptionalBoolArg(L, 4));
+    return 0;
+}
+
+int Wavedash_UploadLeaderboardScore(lua_State* L)
+{
+    DM_LUA_STACK_CHECK(L, 0);
+    WavedashJs_UploadLeaderboardScore(luaL_checknumber(L, 1), luaL_checknumber(L, 2), lua_toboolean(L, 3) ? 1 : 0, OptionalNumberArg(L, 4));
+    return 0;
+}
+
+int Wavedash_CreateUGCItem(lua_State* L)
+{
+    DM_LUA_STACK_CHECK(L, 0);
+    WavedashJs_CreateUGCItem(luaL_checknumber(L, 1), OptionalStringArg(L, 2), OptionalStringArg(L, 3), OptionalNumberArg(L, 4), OptionalStringArg(L, 5));
+    return 0;
+}
+
+int Wavedash_UpdateUGCItem(lua_State* L)
+{
+    DM_LUA_STACK_CHECK(L, 0);
+    WavedashJs_UpdateUGCItem(luaL_checknumber(L, 1), OptionalStringArg(L, 2), OptionalStringArg(L, 3), OptionalNumberArg(L, 4), OptionalStringArg(L, 5));
+    return 0;
+}
+
+int Wavedash_DownloadUGCItem(lua_State* L)
+{
+    DM_LUA_STACK_CHECK(L, 0);
+    WavedashJs_DownloadUGCItem(luaL_checknumber(L, 1), luaL_checkstring(L, 2));
+    return 0;
+}
+
+int Wavedash_DeleteRemoteFile(lua_State* L)
+{
+    DM_LUA_STACK_CHECK(L, 0);
+    WavedashJs_DeleteRemoteFile(luaL_checkstring(L, 1));
+    return 0;
+}
+
+int Wavedash_DownloadRemoteFile(lua_State* L)
+{
+    DM_LUA_STACK_CHECK(L, 0);
+    WavedashJs_DownloadRemoteFile(luaL_checkstring(L, 1));
+    return 0;
+}
+
+int Wavedash_UploadRemoteFile(lua_State* L)
+{
+    DM_LUA_STACK_CHECK(L, 0);
+    WavedashJs_UploadRemoteFile(luaL_checkstring(L, 1));
+    return 0;
+}
+
+int Wavedash_ListRemoteDirectory(lua_State* L)
+{
+    DM_LUA_STACK_CHECK(L, 0);
+    WavedashJs_ListRemoteDirectory(luaL_checkstring(L, 1));
+    return 0;
+}
+
+int Wavedash_DownloadRemoteDirectory(lua_State* L)
+{
+    DM_LUA_STACK_CHECK(L, 0);
+    WavedashJs_DownloadRemoteDirectory(luaL_checkstring(L, 1));
+    return 0;
+}
+
+int Wavedash_WriteLocalFile(lua_State* L)
+{
+    DM_LUA_STACK_CHECK(L, 0);
+
+    size_t data_length = 0;
+    const char* data = luaL_checklstring(L, 2, &data_length);
+    WavedashJs_WriteLocalFile(luaL_checkstring(L, 1), data, (uint32_t) data_length);
+    return 0;
+}
+
+int Wavedash_ReadLocalFile(lua_State* L)
+{
+    DM_LUA_STACK_CHECK(L, 0);
+    WavedashJs_ReadLocalFile(luaL_checkstring(L, 1));
+    return 0;
+}
+
+int Wavedash_GetAchievement(lua_State* L)
+{
+    DM_LUA_STACK_CHECK(L, 1);
+    lua_pushboolean(L, WavedashJs_GetAchievement(luaL_checkstring(L, 1)));
+    return 1;
+}
+
+int Wavedash_GetStat(lua_State* L)
+{
+    DM_LUA_STACK_CHECK(L, 1);
+    lua_pushnumber(L, WavedashJs_GetStat(luaL_checkstring(L, 1)));
+    return 1;
+}
+
+int Wavedash_SetAchievement(lua_State* L)
+{
+    DM_LUA_STACK_CHECK(L, 1);
+    lua_pushboolean(L, WavedashJs_SetAchievement(luaL_checkstring(L, 1), OptionalBoolArg(L, 2)));
+    return 1;
+}
+
+int Wavedash_SetStat(lua_State* L)
+{
+    DM_LUA_STACK_CHECK(L, 1);
+    lua_pushboolean(L, WavedashJs_SetStat(luaL_checkstring(L, 1), luaL_checknumber(L, 2), OptionalBoolArg(L, 3)));
+    return 1;
+}
+
+int Wavedash_RequestStats(lua_State* L)
+{
+    DM_LUA_STACK_CHECK(L, 0);
+    WavedashJs_RequestStats();
+    return 0;
+}
+
+int Wavedash_StoreStats(lua_State* L)
+{
+    DM_LUA_STACK_CHECK(L, 1);
+    lua_pushboolean(L, WavedashJs_StoreStats());
+    return 1;
+}
+
+int Wavedash_GetP2PMaxPayloadSize(lua_State* L)
+{
+    DM_LUA_STACK_CHECK(L, 1);
+    lua_pushnumber(L, WavedashJs_GetP2PMaxPayloadSize());
+    return 1;
+}
+
+int Wavedash_GetP2PMaxIncomingMessages(lua_State* L)
+{
+    DM_LUA_STACK_CHECK(L, 1);
+    lua_pushnumber(L, WavedashJs_GetP2PMaxIncomingMessages());
+    return 1;
+}
+
+int Wavedash_GetP2POutgoingMessageBuffer(lua_State* L)
+{
+    DM_LUA_STACK_CHECK(L, 1);
+
+    uint32_t length = 0;
+    PushAndFreeBytes(L, WavedashJs_GetP2POutgoingMessageBuffer(&length), length);
+    return 1;
+}
+
+int Wavedash_SendP2PMessage(lua_State* L)
+{
+    DM_LUA_STACK_CHECK(L, 1);
+
+    size_t payload_length = 0;
+    const char* payload = luaL_checklstring(L, 4, &payload_length);
+    lua_pushboolean(L, WavedashJs_SendP2PMessage(OptionalNumberArg(L, 1), OptionalNumberArg(L, 2), OptionalBoolArg(L, 3), payload, (uint32_t) payload_length, OptionalNumberArg(L, 5)));
+    return 1;
+}
+
+int Wavedash_BroadcastP2PMessage(lua_State* L)
+{
+    DM_LUA_STACK_CHECK(L, 1);
+
+    size_t payload_length = 0;
+    const char* payload = luaL_checklstring(L, 3, &payload_length);
+    lua_pushboolean(L, WavedashJs_BroadcastP2PMessage(OptionalNumberArg(L, 1), OptionalBoolArg(L, 2), payload, (uint32_t) payload_length, OptionalNumberArg(L, 4)));
+    return 1;
+}
+
+int Wavedash_ReadP2PMessageFromChannel(lua_State* L)
+{
+    DM_LUA_STACK_CHECK(L, 1);
+    PushAndFreeJson(L, WavedashJs_ReadP2PMessageFromChannel(luaL_checknumber(L, 1)));
+    return 1;
+}
+
+int Wavedash_DrainP2PChannelToBuffer(lua_State* L)
+{
+    DM_LUA_STACK_CHECK(L, 1);
+
+    uint32_t length = 0;
+    PushAndFreeBytes(L, WavedashJs_DrainP2PChannelToBuffer(luaL_checknumber(L, 1), &length), length);
+    return 1;
+}
+
 /**
- * Create lobby
- * @name create_lobby
+ * Create a lobby
  * @number visibility
  * @number max_players
  */
 int Wavedash_CreateLobby(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
+    WavedashJs_CreateLobby(luaL_checknumber(L, 1), OptionalNumberArg(L, 2));
+    return 0;
+}
 
-    uint32_t visibility = luaL_checknumber(L, 1);
-    uint32_t maxPlayers = luaL_checknumber(L, 2);
-
-    WavedashJs_CreateLobby(visibility, maxPlayers);
+int Wavedash_JoinLobby(lua_State* L)
+{
+    DM_LUA_STACK_CHECK(L, 0);
+    WavedashJs_JoinLobby(luaL_checknumber(L, 1));
     return 0;
 }
 
 /**
- * Join lobby
- * @name join_lobby
- * @number lobby_id
+ * List available lobbies
+ * @boolean? friends_only
  */
-int Wavedash_JoinLobby(lua_State* L)
+int Wavedash_ListAvailableLobbies(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
+    WavedashJs_ListAvailableLobbies(OptionalBoolArg(L, 1));
+    return 0;
+}
 
-    uint32_t lobbyId = luaL_checknumber(L, 1);
+int Wavedash_GetLobbyUsers(lua_State* L)
+{
+    DM_LUA_STACK_CHECK(L, 1);
+    PushAndFreeJson(L, WavedashJs_GetLobbyUsers(luaL_checknumber(L, 1)));
+    return 1;
+}
 
-    WavedashJs_JoinLobby(lobbyId);
+int Wavedash_GetNumLobbyUsers(lua_State* L)
+{
+    DM_LUA_STACK_CHECK(L, 1);
+    lua_pushnumber(L, WavedashJs_GetNumLobbyUsers(luaL_checknumber(L, 1)));
+    return 1;
+}
+
+int Wavedash_GetLobbyHostId(lua_State* L)
+{
+    DM_LUA_STACK_CHECK(L, 1);
+    PushAndFreeJson(L, WavedashJs_GetLobbyHostId(luaL_checknumber(L, 1)));
+    return 1;
+}
+
+int Wavedash_GetLobbyData(lua_State* L)
+{
+    DM_LUA_STACK_CHECK(L, 1);
+    PushAndFreeJson(L, WavedashJs_GetLobbyData(luaL_checknumber(L, 1), luaL_checkstring(L, 2)));
+    return 1;
+}
+
+int Wavedash_SetLobbyData(lua_State* L)
+{
+    DM_LUA_STACK_CHECK(L, 1);
+
+    std::string value_json;
+    if (!LuaValueToJsonLiteral(L, 3, value_json))
+    {
+        lua_pushboolean(L, 0);
+        return 1;
+    }
+
+    lua_pushboolean(L, WavedashJs_SetLobbyData(luaL_checknumber(L, 1), luaL_checkstring(L, 2), value_json.c_str()));
+    return 1;
+}
+
+int Wavedash_DeleteLobbyData(lua_State* L)
+{
+    DM_LUA_STACK_CHECK(L, 1);
+    lua_pushboolean(L, WavedashJs_DeleteLobbyData(luaL_checknumber(L, 1), luaL_checkstring(L, 2)));
+    return 1;
+}
+
+int Wavedash_LeaveLobby(lua_State* L)
+{
+    DM_LUA_STACK_CHECK(L, 0);
+    WavedashJs_LeaveLobby(luaL_checknumber(L, 1));
+    return 0;
+}
+
+int Wavedash_SendLobbyMessage(lua_State* L)
+{
+    DM_LUA_STACK_CHECK(L, 1);
+    lua_pushboolean(L, WavedashJs_SendLobbyMessage(luaL_checknumber(L, 1), luaL_checkstring(L, 2)));
+    return 1;
+}
+
+int Wavedash_InviteUserToLobby(lua_State* L)
+{
+    DM_LUA_STACK_CHECK(L, 0);
+    WavedashJs_InviteUserToLobby(luaL_checknumber(L, 1), luaL_checknumber(L, 2));
+    return 0;
+}
+
+int Wavedash_GetLobbyInviteLink(lua_State* L)
+{
+    DM_LUA_STACK_CHECK(L, 0);
+    WavedashJs_GetLobbyInviteLink(OptionalBoolArg(L, 1));
+    return 0;
+}
+
+int Wavedash_UpdateUserPresence(lua_State* L)
+{
+    DM_LUA_STACK_CHECK(L, 0);
+    WavedashJs_UpdateUserPresence(RawJsonStringArg(L, 1));
+    return 0;
+}
+
+int Wavedash_EnsureGameplayJwt(lua_State* L)
+{
+    DM_LUA_STACK_CHECK(L, 0);
+    WavedashJs_EnsureGameplayJwt();
     return 0;
 }
 
 static const luaL_reg Module_methods[] =
 {
     {"init", Wavedash_Init},
+    {"ready_for_events", Wavedash_ReadyForEvents},
+    {"update_load_progress_zero_to_one", Wavedash_UpdateLoadProgressZeroToOne},
+    {"load_complete", Wavedash_LoadComplete},
+    {"toggle_overlay", Wavedash_ToggleOverlay},
+    {"is_fullscreen", Wavedash_IsFullscreen},
+    {"request_fullscreen", Wavedash_RequestFullscreen},
+    {"toggle_fullscreen", Wavedash_ToggleFullscreen},
+    {"get_user", Wavedash_GetUser},
+    {"get_username", Wavedash_GetUsername},
+    {"get_user_id", Wavedash_GetUserId},
+    {"get_user_jwt", Wavedash_GetUserJwt},
+    {"get_launch_params", Wavedash_GetLaunchParams},
+    {"list_friends", Wavedash_ListFriends},
+    {"get_user_avatar_url", Wavedash_GetUserAvatarUrl},
+    {"get_leaderboard", Wavedash_GetLeaderboard},
+    {"get_or_create_leaderboard", Wavedash_GetOrCreateLeaderboard},
+    {"get_leaderboard_entry_count", Wavedash_GetLeaderboardEntryCount},
+    {"get_my_leaderboard_entries", Wavedash_GetMyLeaderboardEntries},
+    {"list_leaderboard_entries_around_user", Wavedash_ListLeaderboardEntriesAroundUser},
+    {"list_leaderboard_entries", Wavedash_ListLeaderboardEntries},
+    {"upload_leaderboard_score", Wavedash_UploadLeaderboardScore},
+    {"create_ugc_item", Wavedash_CreateUGCItem},
+    {"update_ugc_item", Wavedash_UpdateUGCItem},
+    {"download_ugc_item", Wavedash_DownloadUGCItem},
+    {"delete_remote_file", Wavedash_DeleteRemoteFile},
+    {"download_remote_file", Wavedash_DownloadRemoteFile},
+    {"upload_remote_file", Wavedash_UploadRemoteFile},
+    {"list_remote_directory", Wavedash_ListRemoteDirectory},
+    {"download_remote_directory", Wavedash_DownloadRemoteDirectory},
+    {"write_local_file", Wavedash_WriteLocalFile},
+    {"read_local_file", Wavedash_ReadLocalFile},
+    {"get_achievement", Wavedash_GetAchievement},
+    {"get_stat", Wavedash_GetStat},
+    {"set_achievement", Wavedash_SetAchievement},
+    {"set_stat", Wavedash_SetStat},
+    {"request_stats", Wavedash_RequestStats},
+    {"store_stats", Wavedash_StoreStats},
+    {"get_p2p_max_payload_size", Wavedash_GetP2PMaxPayloadSize},
+    {"get_p2p_max_incoming_messages", Wavedash_GetP2PMaxIncomingMessages},
+    {"get_p2p_outgoing_message_buffer", Wavedash_GetP2POutgoingMessageBuffer},
+    {"send_p2p_message", Wavedash_SendP2PMessage},
+    {"broadcast_p2p_message", Wavedash_BroadcastP2PMessage},
+    {"read_p2p_message_from_channel", Wavedash_ReadP2PMessageFromChannel},
+    {"drain_p2p_channel_to_buffer", Wavedash_DrainP2PChannelToBuffer},
     {"create_lobby", Wavedash_CreateLobby},
     {"join_lobby", Wavedash_JoinLobby},
+    {"list_available_lobbies", Wavedash_ListAvailableLobbies},
+    {"get_lobby_users", Wavedash_GetLobbyUsers},
+    {"get_num_lobby_users", Wavedash_GetNumLobbyUsers},
+    {"get_lobby_host_id", Wavedash_GetLobbyHostId},
+    {"get_lobby_data", Wavedash_GetLobbyData},
+    {"set_lobby_data", Wavedash_SetLobbyData},
+    {"delete_lobby_data", Wavedash_DeleteLobbyData},
+    {"leave_lobby", Wavedash_LeaveLobby},
+    {"send_lobby_message", Wavedash_SendLobbyMessage},
+    {"invite_user_to_lobby", Wavedash_InviteUserToLobby},
+    {"get_lobby_invite_link", Wavedash_GetLobbyInviteLink},
+    {"update_user_presence", Wavedash_UpdateUserPresence},
+    {"ensure_gameplay_jwt", Wavedash_EnsureGameplayJwt},
     {0, 0}
 };
 

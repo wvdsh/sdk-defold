@@ -239,6 +239,10 @@ static const char* RawJsonStringArg(lua_State* L, int index)
     return lua_tostring(L, index);
 }
 
+/**
+ * Initialize Wavedash
+ * @function callback
+ */
 int Wavedash_Init(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 1);
@@ -247,6 +251,9 @@ int Wavedash_Init(lua_State* L)
     return 1;
 }
 
+/**
+ * Signal that the game is ready to receive events
+ */
 int Wavedash_ReadyForEvents(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
@@ -254,6 +261,10 @@ int Wavedash_ReadyForEvents(lua_State* L)
     return 0;
 }
 
+/**
+ * Update the load progress
+ * @number progress
+ */
 int Wavedash_UpdateLoadProgressZeroToOne(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
@@ -261,6 +272,9 @@ int Wavedash_UpdateLoadProgressZeroToOne(lua_State* L)
     return 0;
 }
 
+/**
+ * Signal that loading is complete
+ */
 int Wavedash_LoadComplete(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
@@ -268,6 +282,9 @@ int Wavedash_LoadComplete(lua_State* L)
     return 0;
 }
 
+/**
+ * Toggle the overlay
+ */
 int Wavedash_ToggleOverlay(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
@@ -275,6 +292,9 @@ int Wavedash_ToggleOverlay(lua_State* L)
     return 0;
 }
 
+/**
+ * Check if fullscreen is enabled
+ */
 int Wavedash_IsFullscreen(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 1);
@@ -282,6 +302,10 @@ int Wavedash_IsFullscreen(lua_State* L)
     return 1;
 }
 
+/**
+ * Request fullscreen mode
+ * @boolean fullscreen
+ */
 int Wavedash_RequestFullscreen(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
@@ -289,6 +313,9 @@ int Wavedash_RequestFullscreen(lua_State* L)
     return 0;
 }
 
+/**
+ * Toggle fullscreen mode
+ */
 int Wavedash_ToggleFullscreen(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
@@ -296,6 +323,9 @@ int Wavedash_ToggleFullscreen(lua_State* L)
     return 0;
 }
 
+/**
+ * Get the current user
+ */
 int Wavedash_GetUser(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 1);
@@ -303,6 +333,10 @@ int Wavedash_GetUser(lua_State* L)
     return 1;
 }
 
+/**
+ * Get a username
+ * @number? user_id
+ */
 int Wavedash_GetUsername(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 1);
@@ -310,6 +344,9 @@ int Wavedash_GetUsername(lua_State* L)
     return 1;
 }
 
+/**
+ * Get the current user id
+ */
 int Wavedash_GetUserId(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 1);
@@ -317,6 +354,9 @@ int Wavedash_GetUserId(lua_State* L)
     return 1;
 }
 
+/**
+ * Request a user JWT
+ */
 int Wavedash_GetUserJwt(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
@@ -324,6 +364,9 @@ int Wavedash_GetUserJwt(lua_State* L)
     return 0;
 }
 
+/**
+ * Get launch parameters
+ */
 int Wavedash_GetLaunchParams(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 1);
@@ -331,6 +374,9 @@ int Wavedash_GetLaunchParams(lua_State* L)
     return 1;
 }
 
+/**
+ * List friends
+ */
 int Wavedash_ListFriends(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
@@ -338,6 +384,11 @@ int Wavedash_ListFriends(lua_State* L)
     return 0;
 }
 
+/**
+ * Get a user avatar URL
+ * @number user_id
+ * @number? size
+ */
 int Wavedash_GetUserAvatarUrl(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 1);
@@ -345,6 +396,10 @@ int Wavedash_GetUserAvatarUrl(lua_State* L)
     return 1;
 }
 
+/**
+ * Get a leaderboard
+ * @string name
+ */
 int Wavedash_GetLeaderboard(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
@@ -352,6 +407,12 @@ int Wavedash_GetLeaderboard(lua_State* L)
     return 0;
 }
 
+/**
+ * Get or create a leaderboard
+ * @string name
+ * @number sort_order
+ * @number display_type
+ */
 int Wavedash_GetOrCreateLeaderboard(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
@@ -359,6 +420,10 @@ int Wavedash_GetOrCreateLeaderboard(lua_State* L)
     return 0;
 }
 
+/**
+ * Get leaderboard entry count
+ * @number leaderboard_id
+ */
 int Wavedash_GetLeaderboardEntryCount(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 1);
@@ -366,6 +431,10 @@ int Wavedash_GetLeaderboardEntryCount(lua_State* L)
     return 1;
 }
 
+/**
+ * Get the current user's leaderboard entries
+ * @number leaderboard_id
+ */
 int Wavedash_GetMyLeaderboardEntries(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
@@ -373,6 +442,13 @@ int Wavedash_GetMyLeaderboardEntries(lua_State* L)
     return 0;
 }
 
+/**
+ * List leaderboard entries around a user
+ * @number leaderboard_id
+ * @number count_ahead
+ * @number count_behind
+ * @boolean? friends_only
+ */
 int Wavedash_ListLeaderboardEntriesAroundUser(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
@@ -380,6 +456,13 @@ int Wavedash_ListLeaderboardEntriesAroundUser(lua_State* L)
     return 0;
 }
 
+/**
+ * List leaderboard entries
+ * @number leaderboard_id
+ * @number offset
+ * @number limit
+ * @boolean? friends_only
+ */
 int Wavedash_ListLeaderboardEntries(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
@@ -387,6 +470,13 @@ int Wavedash_ListLeaderboardEntries(lua_State* L)
     return 0;
 }
 
+/**
+ * Upload a leaderboard score
+ * @number leaderboard_id
+ * @number score
+ * @boolean keep_best
+ * @number? ugc_id
+ */
 int Wavedash_UploadLeaderboardScore(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
@@ -394,6 +484,14 @@ int Wavedash_UploadLeaderboardScore(lua_State* L)
     return 0;
 }
 
+/**
+ * Create a UGC item
+ * @number ugc_type
+ * @string? title
+ * @string? description
+ * @number? visibility
+ * @string? file_path
+ */
 int Wavedash_CreateUGCItem(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
@@ -401,6 +499,14 @@ int Wavedash_CreateUGCItem(lua_State* L)
     return 0;
 }
 
+/**
+ * Update a UGC item
+ * @number ugc_id
+ * @string? title
+ * @string? description
+ * @number? visibility
+ * @string? file_path
+ */
 int Wavedash_UpdateUGCItem(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
@@ -408,6 +514,11 @@ int Wavedash_UpdateUGCItem(lua_State* L)
     return 0;
 }
 
+/**
+ * Download a UGC item
+ * @number ugc_id
+ * @string file_path
+ */
 int Wavedash_DownloadUGCItem(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
@@ -415,6 +526,10 @@ int Wavedash_DownloadUGCItem(lua_State* L)
     return 0;
 }
 
+/**
+ * Delete a remote file
+ * @string file_path
+ */
 int Wavedash_DeleteRemoteFile(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
@@ -422,6 +537,10 @@ int Wavedash_DeleteRemoteFile(lua_State* L)
     return 0;
 }
 
+/**
+ * Download a remote file
+ * @string file_path
+ */
 int Wavedash_DownloadRemoteFile(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
@@ -429,6 +548,10 @@ int Wavedash_DownloadRemoteFile(lua_State* L)
     return 0;
 }
 
+/**
+ * Upload a remote file
+ * @string file_path
+ */
 int Wavedash_UploadRemoteFile(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
@@ -436,6 +559,10 @@ int Wavedash_UploadRemoteFile(lua_State* L)
     return 0;
 }
 
+/**
+ * List a remote directory
+ * @string path
+ */
 int Wavedash_ListRemoteDirectory(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
@@ -443,6 +570,10 @@ int Wavedash_ListRemoteDirectory(lua_State* L)
     return 0;
 }
 
+/**
+ * Download a remote directory
+ * @string path
+ */
 int Wavedash_DownloadRemoteDirectory(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
@@ -450,6 +581,11 @@ int Wavedash_DownloadRemoteDirectory(lua_State* L)
     return 0;
 }
 
+/**
+ * Write a local file
+ * @string file_path
+ * @string data
+ */
 int Wavedash_WriteLocalFile(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
@@ -460,6 +596,10 @@ int Wavedash_WriteLocalFile(lua_State* L)
     return 0;
 }
 
+/**
+ * Read a local file
+ * @string file_path
+ */
 int Wavedash_ReadLocalFile(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
@@ -467,6 +607,10 @@ int Wavedash_ReadLocalFile(lua_State* L)
     return 0;
 }
 
+/**
+ * Get an achievement
+ * @string identifier
+ */
 int Wavedash_GetAchievement(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 1);
@@ -474,6 +618,10 @@ int Wavedash_GetAchievement(lua_State* L)
     return 1;
 }
 
+/**
+ * Get a stat
+ * @string identifier
+ */
 int Wavedash_GetStat(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 1);
@@ -481,6 +629,11 @@ int Wavedash_GetStat(lua_State* L)
     return 1;
 }
 
+/**
+ * Set an achievement
+ * @string identifier
+ * @boolean? store_now
+ */
 int Wavedash_SetAchievement(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 1);
@@ -488,6 +641,12 @@ int Wavedash_SetAchievement(lua_State* L)
     return 1;
 }
 
+/**
+ * Set a stat
+ * @string identifier
+ * @number value
+ * @boolean? store_now
+ */
 int Wavedash_SetStat(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 1);
@@ -495,6 +654,9 @@ int Wavedash_SetStat(lua_State* L)
     return 1;
 }
 
+/**
+ * Request stats
+ */
 int Wavedash_RequestStats(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
@@ -502,6 +664,9 @@ int Wavedash_RequestStats(lua_State* L)
     return 0;
 }
 
+/**
+ * Store stats
+ */
 int Wavedash_StoreStats(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 1);
@@ -509,6 +674,9 @@ int Wavedash_StoreStats(lua_State* L)
     return 1;
 }
 
+/**
+ * Get the maximum P2P payload size
+ */
 int Wavedash_GetP2PMaxPayloadSize(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 1);
@@ -516,6 +684,9 @@ int Wavedash_GetP2PMaxPayloadSize(lua_State* L)
     return 1;
 }
 
+/**
+ * Get the maximum number of incoming P2P messages
+ */
 int Wavedash_GetP2PMaxIncomingMessages(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 1);
@@ -523,6 +694,9 @@ int Wavedash_GetP2PMaxIncomingMessages(lua_State* L)
     return 1;
 }
 
+/**
+ * Get the P2P outgoing message buffer
+ */
 int Wavedash_GetP2POutgoingMessageBuffer(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 1);
@@ -532,6 +706,14 @@ int Wavedash_GetP2POutgoingMessageBuffer(lua_State* L)
     return 1;
 }
 
+/**
+ * Send a P2P message
+ * @number? to_user_id
+ * @number? app_channel
+ * @boolean? reliable
+ * @string payload
+ * @number? payload_size
+ */
 int Wavedash_SendP2PMessage(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 1);
@@ -542,6 +724,13 @@ int Wavedash_SendP2PMessage(lua_State* L)
     return 1;
 }
 
+/**
+ * Broadcast a P2P message
+ * @number? app_channel
+ * @boolean? reliable
+ * @string payload
+ * @number? payload_size
+ */
 int Wavedash_BroadcastP2PMessage(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 1);
@@ -552,6 +741,10 @@ int Wavedash_BroadcastP2PMessage(lua_State* L)
     return 1;
 }
 
+/**
+ * Read a P2P message from a channel
+ * @number app_channel
+ */
 int Wavedash_ReadP2PMessageFromChannel(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 1);
@@ -559,6 +752,10 @@ int Wavedash_ReadP2PMessageFromChannel(lua_State* L)
     return 1;
 }
 
+/**
+ * Drain a P2P channel to a buffer
+ * @number app_channel
+ */
 int Wavedash_DrainP2PChannelToBuffer(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 1);
@@ -580,6 +777,10 @@ int Wavedash_CreateLobby(lua_State* L)
     return 0;
 }
 
+/**
+ * Join a lobby
+ * @number lobby_id
+ */
 int Wavedash_JoinLobby(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
@@ -598,6 +799,10 @@ int Wavedash_ListAvailableLobbies(lua_State* L)
     return 0;
 }
 
+/**
+ * Get lobby users
+ * @number lobby_id
+ */
 int Wavedash_GetLobbyUsers(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 1);
@@ -605,6 +810,10 @@ int Wavedash_GetLobbyUsers(lua_State* L)
     return 1;
 }
 
+/**
+ * Get the number of lobby users
+ * @number lobby_id
+ */
 int Wavedash_GetNumLobbyUsers(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 1);
@@ -612,6 +821,10 @@ int Wavedash_GetNumLobbyUsers(lua_State* L)
     return 1;
 }
 
+/**
+ * Get the lobby host id
+ * @number lobby_id
+ */
 int Wavedash_GetLobbyHostId(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 1);
@@ -619,6 +832,11 @@ int Wavedash_GetLobbyHostId(lua_State* L)
     return 1;
 }
 
+/**
+ * Get lobby data
+ * @number lobby_id
+ * @string key
+ */
 int Wavedash_GetLobbyData(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 1);
@@ -626,6 +844,12 @@ int Wavedash_GetLobbyData(lua_State* L)
     return 1;
 }
 
+/**
+ * Set lobby data
+ * @number lobby_id
+ * @string key
+ * @any value
+ */
 int Wavedash_SetLobbyData(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 1);
@@ -641,6 +865,11 @@ int Wavedash_SetLobbyData(lua_State* L)
     return 1;
 }
 
+/**
+ * Delete lobby data
+ * @number lobby_id
+ * @string key
+ */
 int Wavedash_DeleteLobbyData(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 1);
@@ -648,6 +877,10 @@ int Wavedash_DeleteLobbyData(lua_State* L)
     return 1;
 }
 
+/**
+ * Leave a lobby
+ * @number lobby_id
+ */
 int Wavedash_LeaveLobby(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
@@ -655,6 +888,11 @@ int Wavedash_LeaveLobby(lua_State* L)
     return 0;
 }
 
+/**
+ * Send a lobby message
+ * @number lobby_id
+ * @string message
+ */
 int Wavedash_SendLobbyMessage(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 1);
@@ -662,6 +900,11 @@ int Wavedash_SendLobbyMessage(lua_State* L)
     return 1;
 }
 
+/**
+ * Invite a user to a lobby
+ * @number lobby_id
+ * @number user_id
+ */
 int Wavedash_InviteUserToLobby(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
@@ -669,6 +912,10 @@ int Wavedash_InviteUserToLobby(lua_State* L)
     return 0;
 }
 
+/**
+ * Get a lobby invite link
+ * @boolean? copy_to_clipboard
+ */
 int Wavedash_GetLobbyInviteLink(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
@@ -676,6 +923,10 @@ int Wavedash_GetLobbyInviteLink(lua_State* L)
     return 0;
 }
 
+/**
+ * Update user presence
+ * @string? data_json
+ */
 int Wavedash_UpdateUserPresence(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
@@ -683,6 +934,9 @@ int Wavedash_UpdateUserPresence(lua_State* L)
     return 0;
 }
 
+/**
+ * Ensure a gameplay JWT is available
+ */
 int Wavedash_EnsureGameplayJwt(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);

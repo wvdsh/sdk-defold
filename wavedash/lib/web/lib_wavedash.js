@@ -5,6 +5,16 @@ var LibWavedash = {
     $WavedashJs: {
         eventCallback: null,
 
+        invokeCallback: function(event, payload) {
+            var event_c = stringToNewUTF8(event);
+            var payload_json = JSON.stringify(payload);
+            var payload_json_c = stringToNewUTF8(payload_json);
+            var payload_json_len = lengthBytesUTF8(payload_json);
+            {{{ makeDynCall("viii", "WavedashJs.eventCallback")}}}(event_c, payload_json_c, payload_json_len);
+            Module._free(payload_json_c);
+            Module._free(event_c);
+        },
+
         initEvents: function() {
             for (var key in window.Wavedash.Events) {
                 if (!window.Wavedash.Events.hasOwnProperty(key)) {
@@ -15,13 +25,7 @@ var LibWavedash = {
                 console.log("Registering Wavedash event " + event);
                 window.Wavedash.on(event, function(payload) {
                     console.log("on", event, payload);
-                    var event_c = stringToNewUTF8(event);
-                    var payload_json = JSON.stringify(payload);
-                    var payload_json_c = stringToNewUTF8(payload_json);
-                    var payload_json_len = lengthBytesUTF8(payload_json);
-                    {{{ makeDynCall("viii", "WavedashJs.eventCallback")}}}(event_c, payload_json_c, payload_json_len);
-                    Module._free(payload_json_c);
-                    Module._free(event_c);
+                    WavedashJs.invokeCallback(event, payload);
                 });
             }
         },

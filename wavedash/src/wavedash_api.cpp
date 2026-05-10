@@ -6,6 +6,12 @@
 #include <cstring>
 #include <string>
 
+/**
+ * Wavedash Defold API
+ * @namespace wavedash
+ * @document
+ */
+
 typedef void (*OnEventCallback)(const char* event, const char* payload, uint32_t payload_length);
 
 extern "C" {
@@ -345,7 +351,7 @@ int Wavedash_GetUser(lua_State* L)
 /**
  * Get a username
  * @name get_username
- * @number? user_id
+ * @number user_id?
  */
 int Wavedash_GetUsername(lua_State* L)
 {
@@ -402,7 +408,7 @@ int Wavedash_ListFriends(lua_State* L)
  * Get a user avatar URL
  * @name get_user_avatar_url
  * @number user_id
- * @number? size
+ * @number size?
  */
 int Wavedash_GetUserAvatarUrl(lua_State* L)
 {
@@ -467,7 +473,7 @@ int Wavedash_GetMyLeaderboardEntries(lua_State* L)
  * @number leaderboard_id
  * @number count_ahead
  * @number count_behind
- * @boolean? friends_only
+ * @boolean friends_only?
  */
 int Wavedash_ListLeaderboardEntriesAroundUser(lua_State* L)
 {
@@ -482,7 +488,7 @@ int Wavedash_ListLeaderboardEntriesAroundUser(lua_State* L)
  * @number leaderboard_id
  * @number offset
  * @number limit
- * @boolean? friends_only
+ * @boolean friends_only?
  */
 int Wavedash_ListLeaderboardEntries(lua_State* L)
 {
@@ -497,7 +503,7 @@ int Wavedash_ListLeaderboardEntries(lua_State* L)
  * @number leaderboard_id
  * @number score
  * @boolean keep_best
- * @number? ugc_id
+ * @number ugc_id?
  */
 int Wavedash_UploadLeaderboardScore(lua_State* L)
 {
@@ -510,10 +516,10 @@ int Wavedash_UploadLeaderboardScore(lua_State* L)
  * Create a UGC item
  * @name create_ugc_item
  * @number ugc_type
- * @string? title
- * @string? description
- * @number? visibility
- * @string? file_path
+ * @string title?
+ * @string description?
+ * @number visibility?
+ * @string file_path?
  */
 int Wavedash_CreateUGCItem(lua_State* L)
 {
@@ -526,10 +532,10 @@ int Wavedash_CreateUGCItem(lua_State* L)
  * Update a UGC item
  * @name update_ugc_item
  * @number ugc_id
- * @string? title
- * @string? description
- * @number? visibility
- * @string? file_path
+ * @string title?
+ * @string description?
+ * @number visibility?
+ * @string file_path?
  */
 int Wavedash_UpdateUGCItem(lua_State* L)
 {
@@ -667,7 +673,7 @@ int Wavedash_GetStat(lua_State* L)
  * Set an achievement
  * @name set_achievement
  * @string identifier
- * @boolean? store_now
+ * @boolean store_now?
  */
 int Wavedash_SetAchievement(lua_State* L)
 {
@@ -681,7 +687,7 @@ int Wavedash_SetAchievement(lua_State* L)
  * @name set_stat
  * @string identifier
  * @number value
- * @boolean? store_now
+ * @boolean store_now?
  */
 int Wavedash_SetStat(lua_State* L)
 {
@@ -750,11 +756,11 @@ int Wavedash_GetP2POutgoingMessageBuffer(lua_State* L)
 /**
  * Send a P2P message
  * @name send_p2p_message
- * @number? to_user_id
- * @number? app_channel
- * @boolean? reliable
+ * @number to_user_id?
+ * @number app_channel?
+ * @boolean reliable?
  * @string payload
- * @number? payload_size
+ * @number payload_size?
  */
 int Wavedash_SendP2PMessage(lua_State* L)
 {
@@ -769,10 +775,10 @@ int Wavedash_SendP2PMessage(lua_State* L)
 /**
  * Broadcast a P2P message
  * @name broadcast_p2p_message
- * @number? app_channel
- * @boolean? reliable
+ * @number app_channel?
+ * @boolean reliable?
  * @string payload
- * @number? payload_size
+ * @number payload_size?
  */
 int Wavedash_BroadcastP2PMessage(lua_State* L)
 {
@@ -838,7 +844,7 @@ int Wavedash_JoinLobby(lua_State* L)
 /**
  * List available lobbies
  * @name list_available_lobbies
- * @boolean? friends_only
+ * @boolean friends_only?
  */
 int Wavedash_ListAvailableLobbies(lua_State* L)
 {
@@ -972,7 +978,7 @@ int Wavedash_InviteUserToLobby(lua_State* L)
 /**
  * Get a lobby invite link
  * @name get_lobby_invite_link
- * @boolean? copy_to_clipboard
+ * @boolean copy_to_clipboard?
  */
 int Wavedash_GetLobbyInviteLink(lua_State* L)
 {
@@ -984,7 +990,7 @@ int Wavedash_GetLobbyInviteLink(lua_State* L)
 /**
  * Update user presence
  * @name update_user_presence
- * @string? data_json
+ * @string data_json?
  */
 int Wavedash_UpdateUserPresence(lua_State* L)
 {

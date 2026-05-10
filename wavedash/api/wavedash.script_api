@@ -1,10 +1,10 @@
 # This is a generated file. Do not modify. Created using https://github.com/britzl/generatedocs
-- name: wavedash_api
+- name: wavedash
   type: table
-  desc: 
+  desc: Wavedash Defold API
 
   members:
-  - name: Wavedash_Init
+  - name: init
     type: function
     desc: |
       Initialize Wavedash
@@ -12,12 +12,12 @@
     - name: callback
       type: function
 
-  - name: Wavedash_ReadyForEvents
+  - name: ready_for_events
     type: function
     desc: |
       Signal that the game is ready to receive events
 
-  - name: Wavedash_UpdateLoadProgressZeroToOne
+  - name: update_load_progress_zero_to_one
     type: function
     desc: |
       Update the load progress
@@ -25,22 +25,22 @@
     - name: progress
       type: number
 
-  - name: Wavedash_LoadComplete
+  - name: load_complete
     type: function
     desc: |
       Signal that loading is complete
 
-  - name: Wavedash_ToggleOverlay
+  - name: toggle_overlay
     type: function
     desc: |
       Toggle the overlay
 
-  - name: Wavedash_IsFullscreen
+  - name: is_fullscreen
     type: function
     desc: |
       Check if fullscreen is enabled
 
-  - name: Wavedash_RequestFullscreen
+  - name: request_fullscreen
     type: function
     desc: |
       Request fullscreen mode
@@ -48,61 +48,57 @@
     - name: fullscreen
       type: boolean
 
-  - name: Wavedash_ToggleFullscreen
+  - name: toggle_fullscreen
     type: function
     desc: |
       Toggle fullscreen mode
 
-  - name: Wavedash_GetUser
+  - name: get_user
     type: function
     desc: |
       Get the current user
 
-  - name: Wavedash_GetUsername
+  - name: get_username
     type: function
     desc: |
       Get a username
     parameters:
-    - name: @number?
+    - name: user_id
       type: number
-      desc: |
-        User_id
-        
+      optional: True
 
-  - name: Wavedash_GetUserId
+  - name: get_user_id
     type: function
     desc: |
       Get the current user id
 
-  - name: Wavedash_GetUserJwt
+  - name: get_user_jwt
     type: function
     desc: |
       Request a user JWT
 
-  - name: Wavedash_GetLaunchParams
+  - name: get_launch_params
     type: function
     desc: |
       Get launch parameters
 
-  - name: Wavedash_ListFriends
+  - name: list_friends
     type: function
     desc: |
       List friends
 
-  - name: Wavedash_GetUserAvatarUrl
+  - name: get_user_avatar_url
     type: function
     desc: |
       Get a user avatar URL
     parameters:
     - name: user_id
       type: number
-    - name: @number?
+    - name: size
       type: number
-      desc: |
-        Size
-        
+      optional: True
 
-  - name: Wavedash_GetLeaderboard
+  - name: get_leaderboard
     type: function
     desc: |
       Get a leaderboard
@@ -110,7 +106,7 @@
     - name: name
       type: string
 
-  - name: Wavedash_GetOrCreateLeaderboard
+  - name: get_or_create_leaderboard
     type: function
     desc: |
       Get or create a leaderboard
@@ -122,7 +118,7 @@
     - name: display_type
       type: number
 
-  - name: Wavedash_GetLeaderboardEntryCount
+  - name: get_leaderboard_entry_count
     type: function
     desc: |
       Get leaderboard entry count
@@ -130,7 +126,7 @@
     - name: leaderboard_id
       type: number
 
-  - name: Wavedash_GetMyLeaderboardEntries
+  - name: get_my_leaderboard_entries
     type: function
     desc: |
       Get the current user's leaderboard entries
@@ -138,7 +134,7 @@
     - name: leaderboard_id
       type: number
 
-  - name: Wavedash_ListLeaderboardEntriesAroundUser
+  - name: list_leaderboard_entries_around_user
     type: function
     desc: |
       List leaderboard entries around a user
@@ -149,13 +145,11 @@
       type: number
     - name: count_behind
       type: number
-    - name: @boolean?
+    - name: friends_only
       type: boolean
-      desc: |
-        Friends_only
-        
+      optional: True
 
-  - name: Wavedash_ListLeaderboardEntries
+  - name: list_leaderboard_entries
     type: function
     desc: |
       List leaderboard entries
@@ -166,13 +160,11 @@
       type: number
     - name: limit
       type: number
-    - name: @boolean?
+    - name: friends_only
       type: boolean
-      desc: |
-        Friends_only
-        
+      optional: True
 
-  - name: Wavedash_UploadLeaderboardScore
+  - name: upload_leaderboard_score
     type: function
     desc: |
       Upload a leaderboard score
@@ -183,69 +175,51 @@
       type: number
     - name: keep_best
       type: boolean
-    - name: @number?
+    - name: ugc_id
       type: number
-      desc: |
-        Ugc_id
-        
+      optional: True
 
-  - name: Wavedash_CreateUGCItem
+  - name: create_ugc_item
     type: function
     desc: |
       Create a UGC item
     parameters:
     - name: ugc_type
       type: number
-    - name: @string?
+    - name: title
       type: string
-      desc: |
-        Title
-        
-    - name: @string?
+      optional: True
+    - name: description
       type: string
-      desc: |
-        Description
-        
-    - name: @number?
+      optional: True
+    - name: visibility
       type: number
-      desc: |
-        Visibility
-        
-    - name: @string?
+      optional: True
+    - name: file_path
       type: string
-      desc: |
-        File_path
-        
+      optional: True
 
-  - name: Wavedash_UpdateUGCItem
+  - name: update_ugc_item
     type: function
     desc: |
       Update a UGC item
     parameters:
     - name: ugc_id
       type: number
-    - name: @string?
+    - name: title
       type: string
-      desc: |
-        Title
-        
-    - name: @string?
+      optional: True
+    - name: description
       type: string
-      desc: |
-        Description
-        
-    - name: @number?
+      optional: True
+    - name: visibility
       type: number
-      desc: |
-        Visibility
-        
-    - name: @string?
+      optional: True
+    - name: file_path
       type: string
-      desc: |
-        File_path
-        
+      optional: True
 
-  - name: Wavedash_DownloadUGCItem
+  - name: download_ugc_item
     type: function
     desc: |
       Download a UGC item
@@ -255,7 +229,7 @@
     - name: file_path
       type: string
 
-  - name: Wavedash_DeleteRemoteFile
+  - name: delete_remote_file
     type: function
     desc: |
       Delete a remote file
@@ -263,7 +237,7 @@
     - name: file_path
       type: string
 
-  - name: Wavedash_DownloadRemoteFile
+  - name: download_remote_file
     type: function
     desc: |
       Download a remote file
@@ -271,7 +245,7 @@
     - name: file_path
       type: string
 
-  - name: Wavedash_UploadRemoteFile
+  - name: upload_remote_file
     type: function
     desc: |
       Upload a remote file
@@ -279,7 +253,7 @@
     - name: file_path
       type: string
 
-  - name: Wavedash_ListRemoteDirectory
+  - name: list_remote_directory
     type: function
     desc: |
       List a remote directory
@@ -287,7 +261,7 @@
     - name: path
       type: string
 
-  - name: Wavedash_DownloadRemoteDirectory
+  - name: download_remote_directory
     type: function
     desc: |
       Download a remote directory
@@ -295,7 +269,7 @@
     - name: path
       type: string
 
-  - name: Wavedash_WriteLocalFile
+  - name: write_local_file
     type: function
     desc: |
       Write a local file
@@ -305,7 +279,7 @@
     - name: data
       type: string
 
-  - name: Wavedash_ReadLocalFile
+  - name: read_local_file
     type: function
     desc: |
       Read a local file
@@ -313,7 +287,7 @@
     - name: file_path
       type: string
 
-  - name: Wavedash_GetAchievement
+  - name: get_achievement
     type: function
     desc: |
       Get an achievement
@@ -321,7 +295,7 @@
     - name: identifier
       type: string
 
-  - name: Wavedash_GetStat
+  - name: get_stat
     type: function
     desc: |
       Get a stat
@@ -329,20 +303,18 @@
     - name: identifier
       type: string
 
-  - name: Wavedash_SetAchievement
+  - name: set_achievement
     type: function
     desc: |
       Set an achievement
     parameters:
     - name: identifier
       type: string
-    - name: @boolean?
+    - name: store_now
       type: boolean
-      desc: |
-        Store_now
-        
+      optional: True
 
-  - name: Wavedash_SetStat
+  - name: set_stat
     type: function
     desc: |
       Set a stat
@@ -351,89 +323,73 @@
       type: string
     - name: value
       type: number
-    - name: @boolean?
+    - name: store_now
       type: boolean
-      desc: |
-        Store_now
-        
+      optional: True
 
-  - name: Wavedash_RequestStats
+  - name: request_stats
     type: function
     desc: |
       Request stats
 
-  - name: Wavedash_StoreStats
+  - name: store_stats
     type: function
     desc: |
       Store stats
 
-  - name: Wavedash_GetP2PMaxPayloadSize
+  - name: get_p2p_max_payload_size
     type: function
     desc: |
       Get the maximum P2P payload size
 
-  - name: Wavedash_GetP2PMaxIncomingMessages
+  - name: get_p2p_max_incoming_messages
     type: function
     desc: |
       Get the maximum number of incoming P2P messages
 
-  - name: Wavedash_GetP2POutgoingMessageBuffer
+  - name: get_p2p_outgoing_message_buffer
     type: function
     desc: |
       Get the P2P outgoing message buffer
 
-  - name: Wavedash_SendP2PMessage
+  - name: send_p2p_message
     type: function
     desc: |
       Send a P2P message
     parameters:
-    - name: @number?
+    - name: to_user_id
       type: number
-      desc: |
-        To_user_id
-        
-    - name: @number?
+      optional: True
+    - name: app_channel
       type: number
-      desc: |
-        App_channel
-        
-    - name: @boolean?
+      optional: True
+    - name: reliable
       type: boolean
-      desc: |
-        Reliable
-        
+      optional: True
     - name: payload
       type: string
-    - name: @number?
+    - name: payload_size
       type: number
-      desc: |
-        Payload_size
-        
+      optional: True
 
-  - name: Wavedash_BroadcastP2PMessage
+  - name: broadcast_p2p_message
     type: function
     desc: |
       Broadcast a P2P message
     parameters:
-    - name: @number?
+    - name: app_channel
       type: number
-      desc: |
-        App_channel
-        
-    - name: @boolean?
+      optional: True
+    - name: reliable
       type: boolean
-      desc: |
-        Reliable
-        
+      optional: True
     - name: payload
       type: string
-    - name: @number?
+    - name: payload_size
       type: number
-      desc: |
-        Payload_size
-        
+      optional: True
 
-  - name: Wavedash_ReadP2PMessageFromChannel
+  - name: read_p2p_message_from_channel
     type: function
     desc: |
       Read a P2P message from a channel
@@ -441,7 +397,7 @@
     - name: app_channel
       type: number
 
-  - name: Wavedash_DrainP2PChannelToBuffer
+  - name: drain_p2p_channel_to_buffer
     type: function
     desc: |
       Drain a P2P channel to a buffer
@@ -449,7 +405,7 @@
     - name: app_channel
       type: number
 
-  - name: Wavedash_CreateLobby
+  - name: create_lobby
     type: function
     desc: |
       Create a lobby
@@ -459,7 +415,7 @@
     - name: max_players
       type: number
 
-  - name: Wavedash_JoinLobby
+  - name: join_lobby
     type: function
     desc: |
       Join a lobby
@@ -467,18 +423,16 @@
     - name: lobby_id
       type: number
 
-  - name: Wavedash_ListAvailableLobbies
+  - name: list_available_lobbies
     type: function
     desc: |
       List available lobbies
     parameters:
-    - name: @boolean?
+    - name: friends_only
       type: boolean
-      desc: |
-        Friends_only
-        
+      optional: True
 
-  - name: Wavedash_GetLobbyUsers
+  - name: get_lobby_users
     type: function
     desc: |
       Get lobby users
@@ -486,7 +440,7 @@
     - name: lobby_id
       type: number
 
-  - name: Wavedash_GetNumLobbyUsers
+  - name: get_num_lobby_users
     type: function
     desc: |
       Get the number of lobby users
@@ -494,7 +448,7 @@
     - name: lobby_id
       type: number
 
-  - name: Wavedash_GetLobbyHostId
+  - name: get_lobby_host_id
     type: function
     desc: |
       Get the lobby host id
@@ -502,7 +456,7 @@
     - name: lobby_id
       type: number
 
-  - name: Wavedash_GetLobbyData
+  - name: get_lobby_data
     type: function
     desc: |
       Get lobby data
@@ -512,7 +466,7 @@
     - name: key
       type: string
 
-  - name: Wavedash_SetLobbyData
+  - name: set_lobby_data
     type: function
     desc: |
       Set lobby data
@@ -522,7 +476,7 @@
     - name: key
       type: string
 
-  - name: Wavedash_DeleteLobbyData
+  - name: delete_lobby_data
     type: function
     desc: |
       Delete lobby data
@@ -532,7 +486,7 @@
     - name: key
       type: string
 
-  - name: Wavedash_LeaveLobby
+  - name: leave_lobby
     type: function
     desc: |
       Leave a lobby
@@ -540,7 +494,7 @@
     - name: lobby_id
       type: number
 
-  - name: Wavedash_SendLobbyMessage
+  - name: send_lobby_message
     type: function
     desc: |
       Send a lobby message
@@ -550,7 +504,7 @@
     - name: message
       type: string
 
-  - name: Wavedash_InviteUserToLobby
+  - name: invite_user_to_lobby
     type: function
     desc: |
       Invite a user to a lobby
@@ -560,29 +514,25 @@
     - name: user_id
       type: number
 
-  - name: Wavedash_GetLobbyInviteLink
+  - name: get_lobby_invite_link
     type: function
     desc: |
       Get a lobby invite link
     parameters:
-    - name: @boolean?
+    - name: copy_to_clipboard
       type: boolean
-      desc: |
-        Copy_to_clipboard
-        
+      optional: True
 
-  - name: Wavedash_UpdateUserPresence
+  - name: update_user_presence
     type: function
     desc: |
       Update user presence
     parameters:
-    - name: @string?
+    - name: data_json
       type: string
-      desc: |
-        Data_json
-        
+      optional: True
 
-  - name: Wavedash_EnsureGameplayJwt
+  - name: ensure_gameplay_jwt
     type: function
     desc: |
       Ensure a gameplay JWT is available

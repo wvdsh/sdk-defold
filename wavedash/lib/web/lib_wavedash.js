@@ -131,11 +131,11 @@ var LibWavedash = {
         return WavedashJs.call("isFullscreen", []) ? 1 : 0;
     },
 
-    WavedashJs_RequestFullscreen: function(fullscreen) {
+    WavedashJs_RequestFullscreenAsync: function(fullscreen) {
         WavedashJs.callPromise("requestFullscreen", [!!fullscreen]);
     },
 
-    WavedashJs_ToggleFullscreen: function() {
+    WavedashJs_ToggleFullscreenAsync: function() {
         WavedashJs.callPromise("toggleFullscreen", []);
     },
 
@@ -153,7 +153,7 @@ var LibWavedash = {
         return WavedashJs.call("getUserId", []);
     },
 
-    WavedashJs_GetUserJwt: function() {
+    WavedashJs_GetUserJwtAsync: function() {
         WavedashJs.callPromise("getUserJwt", []);
     },
 
@@ -161,7 +161,7 @@ var LibWavedash = {
         return WavedashJs.allocJson(WavedashJs.call("getLaunchParams", []));
     },
 
-    WavedashJs_ListFriends: function() {
+    WavedashJs_ListFriendsAsync: function() {
         WavedashJs.callPromise("listFriends", []);
     },
 
@@ -169,11 +169,11 @@ var LibWavedash = {
         return WavedashJs.allocString(WavedashJs.call("getUserAvatarUrl", [userId, WavedashJs.optionalNumber(size)]));
     },
 
-    WavedashJs_GetLeaderboard: function(name) {
+    WavedashJs_GetLeaderboardAsync: function(name) {
         WavedashJs.callPromise("getLeaderboard", [UTF8ToString(name)]);
     },
 
-    WavedashJs_GetOrCreateLeaderboard: function(name, sortOrder, displayType) {
+    WavedashJs_GetOrCreateLeaderboardAsync: function(name, sortOrder, displayType) {
         WavedashJs.callPromise("getOrCreateLeaderboard", [UTF8ToString(name), sortOrder, displayType]);
     },
 
@@ -181,23 +181,23 @@ var LibWavedash = {
         return WavedashJs.call("getLeaderboardEntryCount", [leaderboardId]);
     },
 
-    WavedashJs_GetMyLeaderboardEntries: function(leaderboardId) {
+    WavedashJs_GetMyLeaderboardEntriesAsync: function(leaderboardId) {
         WavedashJs.callPromise("getMyLeaderboardEntries", [leaderboardId]);
     },
 
-    WavedashJs_ListLeaderboardEntriesAroundUser: function(leaderboardId, countAhead, countBehind, friendsOnly) {
+    WavedashJs_ListLeaderboardEntriesAroundUserAsync: function(leaderboardId, countAhead, countBehind, friendsOnly) {
         WavedashJs.callPromise("listLeaderboardEntriesAroundUser", [leaderboardId, countAhead, countBehind, WavedashJs.optionalBool(friendsOnly)]);
     },
 
-    WavedashJs_ListLeaderboardEntries: function(leaderboardId, offset, limit, friendsOnly) {
+    WavedashJs_ListLeaderboardEntriesAsync: function(leaderboardId, offset, limit, friendsOnly) {
         WavedashJs.callPromise("listLeaderboardEntries", [leaderboardId, offset, limit, WavedashJs.optionalBool(friendsOnly)]);
     },
 
-    WavedashJs_UploadLeaderboardScore: function(leaderboardId, score, keepBest, ugcId) {
+    WavedashJs_UploadLeaderboardScoreAsync: function(leaderboardId, score, keepBest, ugcId) {
         WavedashJs.callPromise("uploadLeaderboardScore", [leaderboardId, score, !!keepBest, WavedashJs.optionalNumber(ugcId)]);
     },
 
-    WavedashJs_CreateUGCItem: function(ugcType, title, description, visibility, filePath) {
+    WavedashJs_CreateUGCItemAsync: function(ugcType, title, description, visibility, filePath) {
         WavedashJs.callPromise("createUGCItem", [
             ugcType,
             WavedashJs.optionalString(title),
@@ -207,7 +207,7 @@ var LibWavedash = {
         ]);
     },
 
-    WavedashJs_UpdateUGCItem: function(ugcId, title, description, visibility, filePath) {
+    WavedashJs_UpdateUGCItemAsync: function(ugcId, title, description, visibility, filePath) {
         WavedashJs.callPromise("updateUGCItem", [
             ugcId,
             WavedashJs.optionalString(title),
@@ -217,35 +217,35 @@ var LibWavedash = {
         ]);
     },
 
-    WavedashJs_DownloadUGCItem: function(ugcId, filePath) {
+    WavedashJs_DownloadUGCItemAsync: function(ugcId, filePath) {
         WavedashJs.callPromise("downloadUGCItem", [ugcId, UTF8ToString(filePath)]);
     },
 
-    WavedashJs_DeleteRemoteFile: function(filePath) {
+    WavedashJs_DeleteRemoteFileAsync: function(filePath) {
         WavedashJs.callPromise("deleteRemoteFile", [UTF8ToString(filePath)]);
     },
 
-    WavedashJs_DownloadRemoteFile: function(filePath) {
+    WavedashJs_DownloadRemoteFileAsync: function(filePath) {
         WavedashJs.callPromise("downloadRemoteFile", [UTF8ToString(filePath)]);
     },
 
-    WavedashJs_UploadRemoteFile: function(filePath) {
+    WavedashJs_UploadRemoteFileAsync: function(filePath) {
         WavedashJs.callPromise("uploadRemoteFile", [UTF8ToString(filePath)]);
     },
 
-    WavedashJs_ListRemoteDirectory: function(path) {
+    WavedashJs_ListRemoteDirectoryAsync: function(path) {
         WavedashJs.callPromise("listRemoteDirectory", [UTF8ToString(path)]);
     },
 
-    WavedashJs_DownloadRemoteDirectory: function(path) {
+    WavedashJs_DownloadRemoteDirectoryAsync: function(path) {
         WavedashJs.callPromise("downloadRemoteDirectory", [UTF8ToString(path)]);
     },
 
-    WavedashJs_WriteLocalFile: function(filePath, dataPtr, dataLen) {
+    WavedashJs_WriteLocalFileAsync: function(filePath, dataPtr, dataLen) {
         WavedashJs.callPromise("writeLocalFile", [UTF8ToString(filePath), WavedashJs.heapBytes(dataPtr, dataLen)]);
     },
 
-    WavedashJs_ReadLocalFile: function(filePath) {
+    WavedashJs_ReadLocalFileAsync: function(filePath) {
         WavedashJs.callPromise("readLocalFile", [UTF8ToString(filePath)]);
         return 0;
     },
@@ -266,7 +266,7 @@ var LibWavedash = {
         return WavedashJs.call("setStat", [UTF8ToString(identifier), value, WavedashJs.optionalBool(storeNow)]) ? 1 : 0;
     },
 
-    WavedashJs_RequestStats: function() {
+    WavedashJs_RequestStatsAsync: function() {
         WavedashJs.callPromise("requestStats", []);
     },
 
@@ -313,15 +313,15 @@ var LibWavedash = {
         return WavedashJs.allocBytes(WavedashJs.call("drainP2PChannelToBuffer", [appChannel]), outLen);
     },
 
-    WavedashJs_CreateLobby: function(visibility, maxPlayers) {
+    WavedashJs_CreateLobbyAsync: function(visibility, maxPlayers) {
         WavedashJs.callPromise("createLobby", [visibility, WavedashJs.optionalNumber(maxPlayers)]);
     },
 
-    WavedashJs_JoinLobby: function(lobbyId) {
+    WavedashJs_JoinLobbyAsync: function(lobbyId) {
         WavedashJs.callPromise("joinLobby", [lobbyId]);
     },
 
-    WavedashJs_ListAvailableLobbies: function(friendsOnly) {
+    WavedashJs_ListAvailableLobbiesAsync: function(friendsOnly) {
         WavedashJs.callPromise("listAvailableLobbies", [WavedashJs.optionalBool(friendsOnly)]);
     },
 
@@ -349,7 +349,7 @@ var LibWavedash = {
         return WavedashJs.call("deleteLobbyData", [lobbyId, UTF8ToString(key)]) ? 1 : 0;
     },
 
-    WavedashJs_LeaveLobby: function(lobbyId) {
+    WavedashJs_LeaveLobbyAsync: function(lobbyId) {
         WavedashJs.callPromise("leaveLobby", [lobbyId]);
     },
 
@@ -357,19 +357,19 @@ var LibWavedash = {
         return WavedashJs.call("sendLobbyMessage", [lobbyId, UTF8ToString(message)]) ? 1 : 0;
     },
 
-    WavedashJs_InviteUserToLobby: function(lobbyId, userId) {
+    WavedashJs_InviteUserToLobbyAsync: function(lobbyId, userId) {
         WavedashJs.callPromise("inviteUserToLobby", [lobbyId, userId]);
     },
 
-    WavedashJs_GetLobbyInviteLink: function(copyToClipboard) {
+    WavedashJs_GetLobbyInviteLinkAsync: function(copyToClipboard) {
         WavedashJs.callPromise("getLobbyInviteLink", [WavedashJs.optionalBool(copyToClipboard)]);
     },
 
-    WavedashJs_UpdateUserPresence: function(dataJson) {
+    WavedashJs_UpdateUserPresenceAsync: function(dataJson) {
         WavedashJs.callPromise("updateUserPresence", [WavedashJs.optionalJson(dataJson)]);
     },
 
-    WavedashJs_EnsureGameplayJwt: function() {
+    WavedashJs_EnsureGameplayJwtAsync: function() {
         WavedashJs.callPromise("ensureGameplayJwt", []);
     }
 }

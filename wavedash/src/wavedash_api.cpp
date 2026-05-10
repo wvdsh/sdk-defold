@@ -15,41 +15,41 @@ extern "C" {
     void WavedashJs_LoadComplete();
     void WavedashJs_ToggleOverlay();
     int WavedashJs_IsFullscreen();
-    void WavedashJs_RequestFullscreen(int fullscreen);
-    void WavedashJs_ToggleFullscreen();
+    void WavedashJs_RequestFullscreenAsync(int fullscreen);
+    void WavedashJs_ToggleFullscreenAsync();
 
     const char* WavedashJs_GetUser();
     const char* WavedashJs_GetUsername(double user_id);
     double WavedashJs_GetUserId();
-    void WavedashJs_GetUserJwt();
+    void WavedashJs_GetUserJwtAsync();
     const char* WavedashJs_GetLaunchParams();
-    void WavedashJs_ListFriends();
+    void WavedashJs_ListFriendsAsync();
     const char* WavedashJs_GetUserAvatarUrl(double user_id, double size);
 
-    void WavedashJs_GetLeaderboard(const char* name);
-    void WavedashJs_GetOrCreateLeaderboard(const char* name, double sort_order, double display_type);
+    void WavedashJs_GetLeaderboardAsync(const char* name);
+    void WavedashJs_GetOrCreateLeaderboardAsync(const char* name, double sort_order, double display_type);
     double WavedashJs_GetLeaderboardEntryCount(double leaderboard_id);
-    void WavedashJs_GetMyLeaderboardEntries(double leaderboard_id);
-    void WavedashJs_ListLeaderboardEntriesAroundUser(double leaderboard_id, double count_ahead, double count_behind, int friends_only);
-    void WavedashJs_ListLeaderboardEntries(double leaderboard_id, double offset, double limit, int friends_only);
-    void WavedashJs_UploadLeaderboardScore(double leaderboard_id, double score, int keep_best, double ugc_id);
+    void WavedashJs_GetMyLeaderboardEntriesAsync(double leaderboard_id);
+    void WavedashJs_ListLeaderboardEntriesAroundUserAsync(double leaderboard_id, double count_ahead, double count_behind, int friends_only);
+    void WavedashJs_ListLeaderboardEntriesAsync(double leaderboard_id, double offset, double limit, int friends_only);
+    void WavedashJs_UploadLeaderboardScoreAsync(double leaderboard_id, double score, int keep_best, double ugc_id);
 
-    void WavedashJs_CreateUGCItem(double ugc_type, const char* title, const char* description, double visibility, const char* file_path);
-    void WavedashJs_UpdateUGCItem(double ugc_id, const char* title, const char* description, double visibility, const char* file_path);
-    void WavedashJs_DownloadUGCItem(double ugc_id, const char* file_path);
-    void WavedashJs_DeleteRemoteFile(const char* file_path);
-    void WavedashJs_DownloadRemoteFile(const char* file_path);
-    void WavedashJs_UploadRemoteFile(const char* file_path);
-    void WavedashJs_ListRemoteDirectory(const char* path);
-    void WavedashJs_DownloadRemoteDirectory(const char* path);
-    void WavedashJs_WriteLocalFile(const char* file_path, const void* data, uint32_t data_length);
-    const char* WavedashJs_ReadLocalFile(const char* file_path);
+    void WavedashJs_CreateUGCItemAsync(double ugc_type, const char* title, const char* description, double visibility, const char* file_path);
+    void WavedashJs_UpdateUGCItemAsync(double ugc_id, const char* title, const char* description, double visibility, const char* file_path);
+    void WavedashJs_DownloadUGCItemAsync(double ugc_id, const char* file_path);
+    void WavedashJs_DeleteRemoteFileAsync(const char* file_path);
+    void WavedashJs_DownloadRemoteFileAsync(const char* file_path);
+    void WavedashJs_UploadRemoteFileAsync(const char* file_path);
+    void WavedashJs_ListRemoteDirectoryAsync(const char* path);
+    void WavedashJs_DownloadRemoteDirectoryAsync(const char* path);
+    void WavedashJs_WriteLocalFileAsync(const char* file_path, const void* data, uint32_t data_length);
+    const char* WavedashJs_ReadLocalFileAsync(const char* file_path);
 
     int WavedashJs_GetAchievement(const char* identifier);
     double WavedashJs_GetStat(const char* identifier);
     int WavedashJs_SetAchievement(const char* identifier, int store_now);
     int WavedashJs_SetStat(const char* identifier, double value, int store_now);
-    void WavedashJs_RequestStats();
+    void WavedashJs_RequestStatsAsync();
     int WavedashJs_StoreStats();
 
     double WavedashJs_GetP2PMaxPayloadSize();
@@ -60,21 +60,21 @@ extern "C" {
     const char* WavedashJs_ReadP2PMessageFromChannel(double app_channel);
     const char* WavedashJs_DrainP2PChannelToBuffer(double app_channel, uint32_t* out_length);
 
-    void WavedashJs_CreateLobby(double visibility, double max_players);
-    void WavedashJs_JoinLobby(double lobby_id);
-    void WavedashJs_ListAvailableLobbies(int friends_only);
+    void WavedashJs_CreateLobbyAsync(double visibility, double max_players);
+    void WavedashJs_JoinLobbyAsync(double lobby_id);
+    void WavedashJs_ListAvailableLobbiesAsync(int friends_only);
     const char* WavedashJs_GetLobbyUsers(double lobby_id);
     double WavedashJs_GetNumLobbyUsers(double lobby_id);
     const char* WavedashJs_GetLobbyHostId(double lobby_id);
     const char* WavedashJs_GetLobbyData(double lobby_id, const char* key);
     int WavedashJs_SetLobbyData(double lobby_id, const char* key, const char* value_json);
     int WavedashJs_DeleteLobbyData(double lobby_id, const char* key);
-    void WavedashJs_LeaveLobby(double lobby_id);
+    void WavedashJs_LeaveLobbyAsync(double lobby_id);
     int WavedashJs_SendLobbyMessage(double lobby_id, const char* message);
-    void WavedashJs_InviteUserToLobby(double lobby_id, double user_id);
-    void WavedashJs_GetLobbyInviteLink(int copy_to_clipboard);
-    void WavedashJs_UpdateUserPresence(const char* data_json);
-    void WavedashJs_EnsureGameplayJwt();
+    void WavedashJs_InviteUserToLobbyAsync(double lobby_id, double user_id);
+    void WavedashJs_GetLobbyInviteLinkAsync(int copy_to_clipboard);
+    void WavedashJs_UpdateUserPresenceAsync(const char* data_json);
+    void WavedashJs_EnsureGameplayJwtAsync();
 
     void WavedashJs_Free(void* ptr);
 }
@@ -316,7 +316,7 @@ int Wavedash_IsFullscreen(lua_State* L)
 int Wavedash_RequestFullscreen(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
-    WavedashJs_RequestFullscreen(lua_toboolean(L, 1) ? 1 : 0);
+    WavedashJs_RequestFullscreenAsync(lua_toboolean(L, 1) ? 1 : 0);
     return 0;
 }
 
@@ -327,7 +327,7 @@ int Wavedash_RequestFullscreen(lua_State* L)
 int Wavedash_ToggleFullscreen(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
-    WavedashJs_ToggleFullscreen();
+    WavedashJs_ToggleFullscreenAsync();
     return 0;
 }
 
@@ -372,7 +372,7 @@ int Wavedash_GetUserId(lua_State* L)
 int Wavedash_GetUserJwt(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
-    WavedashJs_GetUserJwt();
+    WavedashJs_GetUserJwtAsync();
     return 0;
 }
 
@@ -394,7 +394,7 @@ int Wavedash_GetLaunchParams(lua_State* L)
 int Wavedash_ListFriends(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
-    WavedashJs_ListFriends();
+    WavedashJs_ListFriendsAsync();
     return 0;
 }
 
@@ -419,7 +419,7 @@ int Wavedash_GetUserAvatarUrl(lua_State* L)
 int Wavedash_GetLeaderboard(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
-    WavedashJs_GetLeaderboard(luaL_checkstring(L, 1));
+    WavedashJs_GetLeaderboardAsync(luaL_checkstring(L, 1));
     return 0;
 }
 
@@ -433,7 +433,7 @@ int Wavedash_GetLeaderboard(lua_State* L)
 int Wavedash_GetOrCreateLeaderboard(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
-    WavedashJs_GetOrCreateLeaderboard(luaL_checkstring(L, 1), luaL_checknumber(L, 2), luaL_checknumber(L, 3));
+    WavedashJs_GetOrCreateLeaderboardAsync(luaL_checkstring(L, 1), luaL_checknumber(L, 2), luaL_checknumber(L, 3));
     return 0;
 }
 
@@ -457,7 +457,7 @@ int Wavedash_GetLeaderboardEntryCount(lua_State* L)
 int Wavedash_GetMyLeaderboardEntries(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
-    WavedashJs_GetMyLeaderboardEntries(luaL_checknumber(L, 1));
+    WavedashJs_GetMyLeaderboardEntriesAsync(luaL_checknumber(L, 1));
     return 0;
 }
 
@@ -472,7 +472,7 @@ int Wavedash_GetMyLeaderboardEntries(lua_State* L)
 int Wavedash_ListLeaderboardEntriesAroundUser(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
-    WavedashJs_ListLeaderboardEntriesAroundUser(luaL_checknumber(L, 1), luaL_checknumber(L, 2), luaL_checknumber(L, 3), OptionalBoolArg(L, 4));
+    WavedashJs_ListLeaderboardEntriesAroundUserAsync(luaL_checknumber(L, 1), luaL_checknumber(L, 2), luaL_checknumber(L, 3), OptionalBoolArg(L, 4));
     return 0;
 }
 
@@ -487,7 +487,7 @@ int Wavedash_ListLeaderboardEntriesAroundUser(lua_State* L)
 int Wavedash_ListLeaderboardEntries(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
-    WavedashJs_ListLeaderboardEntries(luaL_checknumber(L, 1), luaL_checknumber(L, 2), luaL_checknumber(L, 3), OptionalBoolArg(L, 4));
+    WavedashJs_ListLeaderboardEntriesAsync(luaL_checknumber(L, 1), luaL_checknumber(L, 2), luaL_checknumber(L, 3), OptionalBoolArg(L, 4));
     return 0;
 }
 
@@ -502,7 +502,7 @@ int Wavedash_ListLeaderboardEntries(lua_State* L)
 int Wavedash_UploadLeaderboardScore(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
-    WavedashJs_UploadLeaderboardScore(luaL_checknumber(L, 1), luaL_checknumber(L, 2), lua_toboolean(L, 3) ? 1 : 0, OptionalNumberArg(L, 4));
+    WavedashJs_UploadLeaderboardScoreAsync(luaL_checknumber(L, 1), luaL_checknumber(L, 2), lua_toboolean(L, 3) ? 1 : 0, OptionalNumberArg(L, 4));
     return 0;
 }
 
@@ -518,7 +518,7 @@ int Wavedash_UploadLeaderboardScore(lua_State* L)
 int Wavedash_CreateUGCItem(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
-    WavedashJs_CreateUGCItem(luaL_checknumber(L, 1), OptionalStringArg(L, 2), OptionalStringArg(L, 3), OptionalNumberArg(L, 4), OptionalStringArg(L, 5));
+    WavedashJs_CreateUGCItemAsync(luaL_checknumber(L, 1), OptionalStringArg(L, 2), OptionalStringArg(L, 3), OptionalNumberArg(L, 4), OptionalStringArg(L, 5));
     return 0;
 }
 
@@ -534,7 +534,7 @@ int Wavedash_CreateUGCItem(lua_State* L)
 int Wavedash_UpdateUGCItem(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
-    WavedashJs_UpdateUGCItem(luaL_checknumber(L, 1), OptionalStringArg(L, 2), OptionalStringArg(L, 3), OptionalNumberArg(L, 4), OptionalStringArg(L, 5));
+    WavedashJs_UpdateUGCItemAsync(luaL_checknumber(L, 1), OptionalStringArg(L, 2), OptionalStringArg(L, 3), OptionalNumberArg(L, 4), OptionalStringArg(L, 5));
     return 0;
 }
 
@@ -547,7 +547,7 @@ int Wavedash_UpdateUGCItem(lua_State* L)
 int Wavedash_DownloadUGCItem(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
-    WavedashJs_DownloadUGCItem(luaL_checknumber(L, 1), luaL_checkstring(L, 2));
+    WavedashJs_DownloadUGCItemAsync(luaL_checknumber(L, 1), luaL_checkstring(L, 2));
     return 0;
 }
 
@@ -559,7 +559,7 @@ int Wavedash_DownloadUGCItem(lua_State* L)
 int Wavedash_DeleteRemoteFile(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
-    WavedashJs_DeleteRemoteFile(luaL_checkstring(L, 1));
+    WavedashJs_DeleteRemoteFileAsync(luaL_checkstring(L, 1));
     return 0;
 }
 
@@ -571,7 +571,7 @@ int Wavedash_DeleteRemoteFile(lua_State* L)
 int Wavedash_DownloadRemoteFile(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
-    WavedashJs_DownloadRemoteFile(luaL_checkstring(L, 1));
+    WavedashJs_DownloadRemoteFileAsync(luaL_checkstring(L, 1));
     return 0;
 }
 
@@ -583,7 +583,7 @@ int Wavedash_DownloadRemoteFile(lua_State* L)
 int Wavedash_UploadRemoteFile(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
-    WavedashJs_UploadRemoteFile(luaL_checkstring(L, 1));
+    WavedashJs_UploadRemoteFileAsync(luaL_checkstring(L, 1));
     return 0;
 }
 
@@ -595,7 +595,7 @@ int Wavedash_UploadRemoteFile(lua_State* L)
 int Wavedash_ListRemoteDirectory(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
-    WavedashJs_ListRemoteDirectory(luaL_checkstring(L, 1));
+    WavedashJs_ListRemoteDirectoryAsync(luaL_checkstring(L, 1));
     return 0;
 }
 
@@ -607,7 +607,7 @@ int Wavedash_ListRemoteDirectory(lua_State* L)
 int Wavedash_DownloadRemoteDirectory(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
-    WavedashJs_DownloadRemoteDirectory(luaL_checkstring(L, 1));
+    WavedashJs_DownloadRemoteDirectoryAsync(luaL_checkstring(L, 1));
     return 0;
 }
 
@@ -623,7 +623,7 @@ int Wavedash_WriteLocalFile(lua_State* L)
 
     size_t data_length = 0;
     const char* data = luaL_checklstring(L, 2, &data_length);
-    WavedashJs_WriteLocalFile(luaL_checkstring(L, 1), data, (uint32_t) data_length);
+    WavedashJs_WriteLocalFileAsync(luaL_checkstring(L, 1), data, (uint32_t) data_length);
     return 0;
 }
 
@@ -635,7 +635,7 @@ int Wavedash_WriteLocalFile(lua_State* L)
 int Wavedash_ReadLocalFile(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
-    WavedashJs_ReadLocalFile(luaL_checkstring(L, 1));
+    WavedashJs_ReadLocalFileAsync(luaL_checkstring(L, 1));
     return 0;
 }
 
@@ -697,7 +697,7 @@ int Wavedash_SetStat(lua_State* L)
 int Wavedash_RequestStats(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
-    WavedashJs_RequestStats();
+    WavedashJs_RequestStatsAsync();
     return 0;
 }
 
@@ -819,7 +819,7 @@ int Wavedash_DrainP2PChannelToBuffer(lua_State* L)
 int Wavedash_CreateLobby(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
-    WavedashJs_CreateLobby(luaL_checknumber(L, 1), OptionalNumberArg(L, 2));
+    WavedashJs_CreateLobbyAsync(luaL_checknumber(L, 1), OptionalNumberArg(L, 2));
     return 0;
 }
 
@@ -831,7 +831,7 @@ int Wavedash_CreateLobby(lua_State* L)
 int Wavedash_JoinLobby(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
-    WavedashJs_JoinLobby(luaL_checknumber(L, 1));
+    WavedashJs_JoinLobbyAsync(luaL_checknumber(L, 1));
     return 0;
 }
 
@@ -843,7 +843,7 @@ int Wavedash_JoinLobby(lua_State* L)
 int Wavedash_ListAvailableLobbies(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
-    WavedashJs_ListAvailableLobbies(OptionalBoolArg(L, 1));
+    WavedashJs_ListAvailableLobbiesAsync(OptionalBoolArg(L, 1));
     return 0;
 }
 
@@ -939,7 +939,7 @@ int Wavedash_DeleteLobbyData(lua_State* L)
 int Wavedash_LeaveLobby(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
-    WavedashJs_LeaveLobby(luaL_checknumber(L, 1));
+    WavedashJs_LeaveLobbyAsync(luaL_checknumber(L, 1));
     return 0;
 }
 
@@ -965,7 +965,7 @@ int Wavedash_SendLobbyMessage(lua_State* L)
 int Wavedash_InviteUserToLobby(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
-    WavedashJs_InviteUserToLobby(luaL_checknumber(L, 1), luaL_checknumber(L, 2));
+    WavedashJs_InviteUserToLobbyAsync(luaL_checknumber(L, 1), luaL_checknumber(L, 2));
     return 0;
 }
 
@@ -977,7 +977,7 @@ int Wavedash_InviteUserToLobby(lua_State* L)
 int Wavedash_GetLobbyInviteLink(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
-    WavedashJs_GetLobbyInviteLink(OptionalBoolArg(L, 1));
+    WavedashJs_GetLobbyInviteLinkAsync(OptionalBoolArg(L, 1));
     return 0;
 }
 
@@ -989,7 +989,7 @@ int Wavedash_GetLobbyInviteLink(lua_State* L)
 int Wavedash_UpdateUserPresence(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
-    WavedashJs_UpdateUserPresence(RawJsonStringArg(L, 1));
+    WavedashJs_UpdateUserPresenceAsync(RawJsonStringArg(L, 1));
     return 0;
 }
 
@@ -1000,7 +1000,7 @@ int Wavedash_UpdateUserPresence(lua_State* L)
 int Wavedash_EnsureGameplayJwt(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
-    WavedashJs_EnsureGameplayJwt();
+    WavedashJs_EnsureGameplayJwtAsync();
     return 0;
 }
 

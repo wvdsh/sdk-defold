@@ -37,8 +37,10 @@ var LibWavedash = {
             var p = Promise.resolve(WavedashJs.call(method, args));
             p.then(
                 function(response) {
+                    WavedashJs.invokeCallback(method, response);
                 },
                 function(err) {
+                    WavedashJs.invokeCallback(method, err);
                 }
             );
         },

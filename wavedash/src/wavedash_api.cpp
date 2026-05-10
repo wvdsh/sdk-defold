@@ -241,6 +241,7 @@ static const char* RawJsonStringArg(lua_State* L, int index)
 
 /**
  * Initialize Wavedash
+ * @name init
  * @function callback
  */
 int Wavedash_Init(lua_State* L)
@@ -253,6 +254,7 @@ int Wavedash_Init(lua_State* L)
 
 /**
  * Signal that the game is ready to receive events
+ * @name ready_for_events
  */
 int Wavedash_ReadyForEvents(lua_State* L)
 {
@@ -263,6 +265,7 @@ int Wavedash_ReadyForEvents(lua_State* L)
 
 /**
  * Update the load progress
+ * @name update_load_progress_zero_to_one
  * @number progress
  */
 int Wavedash_UpdateLoadProgressZeroToOne(lua_State* L)
@@ -274,6 +277,7 @@ int Wavedash_UpdateLoadProgressZeroToOne(lua_State* L)
 
 /**
  * Signal that loading is complete
+ * @name load_complete
  */
 int Wavedash_LoadComplete(lua_State* L)
 {
@@ -284,6 +288,7 @@ int Wavedash_LoadComplete(lua_State* L)
 
 /**
  * Toggle the overlay
+ * @name toggle_overlay
  */
 int Wavedash_ToggleOverlay(lua_State* L)
 {
@@ -294,6 +299,7 @@ int Wavedash_ToggleOverlay(lua_State* L)
 
 /**
  * Check if fullscreen is enabled
+ * @name is_fullscreen
  */
 int Wavedash_IsFullscreen(lua_State* L)
 {
@@ -304,6 +310,7 @@ int Wavedash_IsFullscreen(lua_State* L)
 
 /**
  * Request fullscreen mode
+ * @name request_fullscreen
  * @boolean fullscreen
  */
 int Wavedash_RequestFullscreen(lua_State* L)
@@ -315,6 +322,7 @@ int Wavedash_RequestFullscreen(lua_State* L)
 
 /**
  * Toggle fullscreen mode
+ * @name toggle_fullscreen
  */
 int Wavedash_ToggleFullscreen(lua_State* L)
 {
@@ -325,6 +333,7 @@ int Wavedash_ToggleFullscreen(lua_State* L)
 
 /**
  * Get the current user
+ * @name get_user
  */
 int Wavedash_GetUser(lua_State* L)
 {
@@ -335,6 +344,7 @@ int Wavedash_GetUser(lua_State* L)
 
 /**
  * Get a username
+ * @name get_username
  * @number? user_id
  */
 int Wavedash_GetUsername(lua_State* L)
@@ -346,6 +356,7 @@ int Wavedash_GetUsername(lua_State* L)
 
 /**
  * Get the current user id
+ * @name get_user_id
  */
 int Wavedash_GetUserId(lua_State* L)
 {
@@ -356,6 +367,7 @@ int Wavedash_GetUserId(lua_State* L)
 
 /**
  * Request a user JWT
+ * @name get_user_jwt
  */
 int Wavedash_GetUserJwt(lua_State* L)
 {
@@ -366,6 +378,7 @@ int Wavedash_GetUserJwt(lua_State* L)
 
 /**
  * Get launch parameters
+ * @name get_launch_params
  */
 int Wavedash_GetLaunchParams(lua_State* L)
 {
@@ -376,6 +389,7 @@ int Wavedash_GetLaunchParams(lua_State* L)
 
 /**
  * List friends
+ * @name list_friends
  */
 int Wavedash_ListFriends(lua_State* L)
 {
@@ -386,6 +400,7 @@ int Wavedash_ListFriends(lua_State* L)
 
 /**
  * Get a user avatar URL
+ * @name get_user_avatar_url
  * @number user_id
  * @number? size
  */
@@ -398,6 +413,7 @@ int Wavedash_GetUserAvatarUrl(lua_State* L)
 
 /**
  * Get a leaderboard
+ * @name get_leaderboard
  * @string name
  */
 int Wavedash_GetLeaderboard(lua_State* L)
@@ -409,6 +425,7 @@ int Wavedash_GetLeaderboard(lua_State* L)
 
 /**
  * Get or create a leaderboard
+ * @name get_or_create_leaderboard
  * @string name
  * @number sort_order
  * @number display_type
@@ -422,6 +439,7 @@ int Wavedash_GetOrCreateLeaderboard(lua_State* L)
 
 /**
  * Get leaderboard entry count
+ * @name get_leaderboard_entry_count
  * @number leaderboard_id
  */
 int Wavedash_GetLeaderboardEntryCount(lua_State* L)
@@ -433,6 +451,7 @@ int Wavedash_GetLeaderboardEntryCount(lua_State* L)
 
 /**
  * Get the current user's leaderboard entries
+ * @name get_my_leaderboard_entries
  * @number leaderboard_id
  */
 int Wavedash_GetMyLeaderboardEntries(lua_State* L)
@@ -444,6 +463,7 @@ int Wavedash_GetMyLeaderboardEntries(lua_State* L)
 
 /**
  * List leaderboard entries around a user
+ * @name list_leaderboard_entries_around_user
  * @number leaderboard_id
  * @number count_ahead
  * @number count_behind
@@ -458,6 +478,7 @@ int Wavedash_ListLeaderboardEntriesAroundUser(lua_State* L)
 
 /**
  * List leaderboard entries
+ * @name list_leaderboard_entries
  * @number leaderboard_id
  * @number offset
  * @number limit
@@ -472,6 +493,7 @@ int Wavedash_ListLeaderboardEntries(lua_State* L)
 
 /**
  * Upload a leaderboard score
+ * @name upload_leaderboard_score
  * @number leaderboard_id
  * @number score
  * @boolean keep_best
@@ -486,6 +508,7 @@ int Wavedash_UploadLeaderboardScore(lua_State* L)
 
 /**
  * Create a UGC item
+ * @name create_ugc_item
  * @number ugc_type
  * @string? title
  * @string? description
@@ -501,6 +524,7 @@ int Wavedash_CreateUGCItem(lua_State* L)
 
 /**
  * Update a UGC item
+ * @name update_ugc_item
  * @number ugc_id
  * @string? title
  * @string? description
@@ -516,6 +540,7 @@ int Wavedash_UpdateUGCItem(lua_State* L)
 
 /**
  * Download a UGC item
+ * @name download_ugc_item
  * @number ugc_id
  * @string file_path
  */
@@ -528,6 +553,7 @@ int Wavedash_DownloadUGCItem(lua_State* L)
 
 /**
  * Delete a remote file
+ * @name delete_remote_file
  * @string file_path
  */
 int Wavedash_DeleteRemoteFile(lua_State* L)
@@ -539,6 +565,7 @@ int Wavedash_DeleteRemoteFile(lua_State* L)
 
 /**
  * Download a remote file
+ * @name download_remote_file
  * @string file_path
  */
 int Wavedash_DownloadRemoteFile(lua_State* L)
@@ -550,6 +577,7 @@ int Wavedash_DownloadRemoteFile(lua_State* L)
 
 /**
  * Upload a remote file
+ * @name upload_remote_file
  * @string file_path
  */
 int Wavedash_UploadRemoteFile(lua_State* L)
@@ -561,6 +589,7 @@ int Wavedash_UploadRemoteFile(lua_State* L)
 
 /**
  * List a remote directory
+ * @name list_remote_directory
  * @string path
  */
 int Wavedash_ListRemoteDirectory(lua_State* L)
@@ -572,6 +601,7 @@ int Wavedash_ListRemoteDirectory(lua_State* L)
 
 /**
  * Download a remote directory
+ * @name download_remote_directory
  * @string path
  */
 int Wavedash_DownloadRemoteDirectory(lua_State* L)
@@ -583,6 +613,7 @@ int Wavedash_DownloadRemoteDirectory(lua_State* L)
 
 /**
  * Write a local file
+ * @name write_local_file
  * @string file_path
  * @string data
  */
@@ -598,6 +629,7 @@ int Wavedash_WriteLocalFile(lua_State* L)
 
 /**
  * Read a local file
+ * @name read_local_file
  * @string file_path
  */
 int Wavedash_ReadLocalFile(lua_State* L)
@@ -609,6 +641,7 @@ int Wavedash_ReadLocalFile(lua_State* L)
 
 /**
  * Get an achievement
+ * @name get_achievement
  * @string identifier
  */
 int Wavedash_GetAchievement(lua_State* L)
@@ -620,6 +653,7 @@ int Wavedash_GetAchievement(lua_State* L)
 
 /**
  * Get a stat
+ * @name get_stat
  * @string identifier
  */
 int Wavedash_GetStat(lua_State* L)
@@ -631,6 +665,7 @@ int Wavedash_GetStat(lua_State* L)
 
 /**
  * Set an achievement
+ * @name set_achievement
  * @string identifier
  * @boolean? store_now
  */
@@ -643,6 +678,7 @@ int Wavedash_SetAchievement(lua_State* L)
 
 /**
  * Set a stat
+ * @name set_stat
  * @string identifier
  * @number value
  * @boolean? store_now
@@ -656,6 +692,7 @@ int Wavedash_SetStat(lua_State* L)
 
 /**
  * Request stats
+ * @name request_stats
  */
 int Wavedash_RequestStats(lua_State* L)
 {
@@ -666,6 +703,7 @@ int Wavedash_RequestStats(lua_State* L)
 
 /**
  * Store stats
+ * @name store_stats
  */
 int Wavedash_StoreStats(lua_State* L)
 {
@@ -676,6 +714,7 @@ int Wavedash_StoreStats(lua_State* L)
 
 /**
  * Get the maximum P2P payload size
+ * @name get_p2p_max_payload_size
  */
 int Wavedash_GetP2PMaxPayloadSize(lua_State* L)
 {
@@ -686,6 +725,7 @@ int Wavedash_GetP2PMaxPayloadSize(lua_State* L)
 
 /**
  * Get the maximum number of incoming P2P messages
+ * @name get_p2p_max_incoming_messages
  */
 int Wavedash_GetP2PMaxIncomingMessages(lua_State* L)
 {
@@ -696,6 +736,7 @@ int Wavedash_GetP2PMaxIncomingMessages(lua_State* L)
 
 /**
  * Get the P2P outgoing message buffer
+ * @name get_p2p_outgoing_message_buffer
  */
 int Wavedash_GetP2POutgoingMessageBuffer(lua_State* L)
 {
@@ -708,6 +749,7 @@ int Wavedash_GetP2POutgoingMessageBuffer(lua_State* L)
 
 /**
  * Send a P2P message
+ * @name send_p2p_message
  * @number? to_user_id
  * @number? app_channel
  * @boolean? reliable
@@ -726,6 +768,7 @@ int Wavedash_SendP2PMessage(lua_State* L)
 
 /**
  * Broadcast a P2P message
+ * @name broadcast_p2p_message
  * @number? app_channel
  * @boolean? reliable
  * @string payload
@@ -743,6 +786,7 @@ int Wavedash_BroadcastP2PMessage(lua_State* L)
 
 /**
  * Read a P2P message from a channel
+ * @name read_p2p_message_from_channel
  * @number app_channel
  */
 int Wavedash_ReadP2PMessageFromChannel(lua_State* L)
@@ -754,6 +798,7 @@ int Wavedash_ReadP2PMessageFromChannel(lua_State* L)
 
 /**
  * Drain a P2P channel to a buffer
+ * @name drain_p2p_channel_to_buffer
  * @number app_channel
  */
 int Wavedash_DrainP2PChannelToBuffer(lua_State* L)
@@ -767,6 +812,7 @@ int Wavedash_DrainP2PChannelToBuffer(lua_State* L)
 
 /**
  * Create a lobby
+ * @name create_lobby
  * @number visibility
  * @number max_players
  */
@@ -779,6 +825,7 @@ int Wavedash_CreateLobby(lua_State* L)
 
 /**
  * Join a lobby
+ * @name join_lobby
  * @number lobby_id
  */
 int Wavedash_JoinLobby(lua_State* L)
@@ -790,6 +837,7 @@ int Wavedash_JoinLobby(lua_State* L)
 
 /**
  * List available lobbies
+ * @name list_available_lobbies
  * @boolean? friends_only
  */
 int Wavedash_ListAvailableLobbies(lua_State* L)
@@ -801,6 +849,7 @@ int Wavedash_ListAvailableLobbies(lua_State* L)
 
 /**
  * Get lobby users
+ * @name get_lobby_users
  * @number lobby_id
  */
 int Wavedash_GetLobbyUsers(lua_State* L)
@@ -812,6 +861,7 @@ int Wavedash_GetLobbyUsers(lua_State* L)
 
 /**
  * Get the number of lobby users
+ * @name get_num_lobby_users
  * @number lobby_id
  */
 int Wavedash_GetNumLobbyUsers(lua_State* L)
@@ -823,6 +873,7 @@ int Wavedash_GetNumLobbyUsers(lua_State* L)
 
 /**
  * Get the lobby host id
+ * @name get_lobby_host_id
  * @number lobby_id
  */
 int Wavedash_GetLobbyHostId(lua_State* L)
@@ -834,6 +885,7 @@ int Wavedash_GetLobbyHostId(lua_State* L)
 
 /**
  * Get lobby data
+ * @name get_lobby_data
  * @number lobby_id
  * @string key
  */
@@ -846,6 +898,7 @@ int Wavedash_GetLobbyData(lua_State* L)
 
 /**
  * Set lobby data
+ * @name set_lobby_data
  * @number lobby_id
  * @string key
  * @any value
@@ -867,6 +920,7 @@ int Wavedash_SetLobbyData(lua_State* L)
 
 /**
  * Delete lobby data
+ * @name delete_lobby_data
  * @number lobby_id
  * @string key
  */
@@ -879,6 +933,7 @@ int Wavedash_DeleteLobbyData(lua_State* L)
 
 /**
  * Leave a lobby
+ * @name leave_lobby
  * @number lobby_id
  */
 int Wavedash_LeaveLobby(lua_State* L)
@@ -890,6 +945,7 @@ int Wavedash_LeaveLobby(lua_State* L)
 
 /**
  * Send a lobby message
+ * @name send_lobby_message
  * @number lobby_id
  * @string message
  */
@@ -902,6 +958,7 @@ int Wavedash_SendLobbyMessage(lua_State* L)
 
 /**
  * Invite a user to a lobby
+ * @name invite_user_to_lobby
  * @number lobby_id
  * @number user_id
  */
@@ -914,6 +971,7 @@ int Wavedash_InviteUserToLobby(lua_State* L)
 
 /**
  * Get a lobby invite link
+ * @name get_lobby_invite_link
  * @boolean? copy_to_clipboard
  */
 int Wavedash_GetLobbyInviteLink(lua_State* L)
@@ -925,6 +983,7 @@ int Wavedash_GetLobbyInviteLink(lua_State* L)
 
 /**
  * Update user presence
+ * @name update_user_presence
  * @string? data_json
  */
 int Wavedash_UpdateUserPresence(lua_State* L)
@@ -936,6 +995,7 @@ int Wavedash_UpdateUserPresence(lua_State* L)
 
 /**
  * Ensure a gameplay JWT is available
+ * @name ensure_gameplay_jwt
  */
 int Wavedash_EnsureGameplayJwt(lua_State* L)
 {

@@ -1,0 +1,824 @@
+# This is a generated file. Do not modify. Created using https://github.com/britzl/generatedocs
+- name: wavedash_api
+  type: table
+  desc: 
+
+  members:
+  - name: Wavedash_Init
+    type: function
+    desc: |
+      Initialize Wavedash
+    parameters:
+    - name: callback
+      type: function
+
+  - name: Wavedash_ReadyForEvents
+    type: function
+    desc: |
+      Signal that the game is ready to receive events
+
+  - name: Wavedash_UpdateLoadProgressZeroToOne
+    type: function
+    desc: |
+      Update the load progress
+    parameters:
+    - name: progress
+      type: number
+
+  - name: Wavedash_LoadComplete
+    type: function
+    desc: |
+      Signal that loading is complete
+
+  - name: Wavedash_ToggleOverlay
+    type: function
+    desc: |
+      Toggle the overlay
+
+  - name: Wavedash_IsFullscreen
+    type: function
+    desc: |
+      Check if fullscreen is enabled
+
+  - name: Wavedash_RequestFullscreen
+    type: function
+    desc: |
+      Request fullscreen mode
+    parameters:
+    - name: fullscreen
+      type: boolean
+
+  - name: Wavedash_ToggleFullscreen
+    type: function
+    desc: |
+      Toggle fullscreen mode
+
+  - name: Wavedash_GetUser
+    type: function
+    desc: |
+      Get the current user
+
+  - name: Wavedash_GetUsername
+    type: function
+    desc: |
+      Get a username
+    parameters:
+    - name: @number?
+      type: number
+      desc: |
+        User_id
+        
+
+  - name: Wavedash_GetUserId
+    type: function
+    desc: |
+      Get the current user id
+
+  - name: Wavedash_GetUserJwt
+    type: function
+    desc: |
+      Request a user JWT
+
+  - name: Wavedash_GetLaunchParams
+    type: function
+    desc: |
+      Get launch parameters
+
+  - name: Wavedash_ListFriends
+    type: function
+    desc: |
+      List friends
+
+  - name: Wavedash_GetUserAvatarUrl
+    type: function
+    desc: |
+      Get a user avatar URL
+    parameters:
+    - name: user_id
+      type: number
+    - name: @number?
+      type: number
+      desc: |
+        Size
+        
+
+  - name: Wavedash_GetLeaderboard
+    type: function
+    desc: |
+      Get a leaderboard
+    parameters:
+    - name: name
+      type: string
+
+  - name: Wavedash_GetOrCreateLeaderboard
+    type: function
+    desc: |
+      Get or create a leaderboard
+    parameters:
+    - name: name
+      type: string
+    - name: sort_order
+      type: number
+    - name: display_type
+      type: number
+
+  - name: Wavedash_GetLeaderboardEntryCount
+    type: function
+    desc: |
+      Get leaderboard entry count
+    parameters:
+    - name: leaderboard_id
+      type: number
+
+  - name: Wavedash_GetMyLeaderboardEntries
+    type: function
+    desc: |
+      Get the current user's leaderboard entries
+    parameters:
+    - name: leaderboard_id
+      type: number
+
+  - name: Wavedash_ListLeaderboardEntriesAroundUser
+    type: function
+    desc: |
+      List leaderboard entries around a user
+    parameters:
+    - name: leaderboard_id
+      type: number
+    - name: count_ahead
+      type: number
+    - name: count_behind
+      type: number
+    - name: @boolean?
+      type: boolean
+      desc: |
+        Friends_only
+        
+
+  - name: Wavedash_ListLeaderboardEntries
+    type: function
+    desc: |
+      List leaderboard entries
+    parameters:
+    - name: leaderboard_id
+      type: number
+    - name: offset
+      type: number
+    - name: limit
+      type: number
+    - name: @boolean?
+      type: boolean
+      desc: |
+        Friends_only
+        
+
+  - name: Wavedash_UploadLeaderboardScore
+    type: function
+    desc: |
+      Upload a leaderboard score
+    parameters:
+    - name: leaderboard_id
+      type: number
+    - name: score
+      type: number
+    - name: keep_best
+      type: boolean
+    - name: @number?
+      type: number
+      desc: |
+        Ugc_id
+        
+
+  - name: Wavedash_CreateUGCItem
+    type: function
+    desc: |
+      Create a UGC item
+    parameters:
+    - name: ugc_type
+      type: number
+    - name: @string?
+      type: string
+      desc: |
+        Title
+        
+    - name: @string?
+      type: string
+      desc: |
+        Description
+        
+    - name: @number?
+      type: number
+      desc: |
+        Visibility
+        
+    - name: @string?
+      type: string
+      desc: |
+        File_path
+        
+
+  - name: Wavedash_UpdateUGCItem
+    type: function
+    desc: |
+      Update a UGC item
+    parameters:
+    - name: ugc_id
+      type: number
+    - name: @string?
+      type: string
+      desc: |
+        Title
+        
+    - name: @string?
+      type: string
+      desc: |
+        Description
+        
+    - name: @number?
+      type: number
+      desc: |
+        Visibility
+        
+    - name: @string?
+      type: string
+      desc: |
+        File_path
+        
+
+  - name: Wavedash_DownloadUGCItem
+    type: function
+    desc: |
+      Download a UGC item
+    parameters:
+    - name: ugc_id
+      type: number
+    - name: file_path
+      type: string
+
+  - name: Wavedash_DeleteRemoteFile
+    type: function
+    desc: |
+      Delete a remote file
+    parameters:
+    - name: file_path
+      type: string
+
+  - name: Wavedash_DownloadRemoteFile
+    type: function
+    desc: |
+      Download a remote file
+    parameters:
+    - name: file_path
+      type: string
+
+  - name: Wavedash_UploadRemoteFile
+    type: function
+    desc: |
+      Upload a remote file
+    parameters:
+    - name: file_path
+      type: string
+
+  - name: Wavedash_ListRemoteDirectory
+    type: function
+    desc: |
+      List a remote directory
+    parameters:
+    - name: path
+      type: string
+
+  - name: Wavedash_DownloadRemoteDirectory
+    type: function
+    desc: |
+      Download a remote directory
+    parameters:
+    - name: path
+      type: string
+
+  - name: Wavedash_WriteLocalFile
+    type: function
+    desc: |
+      Write a local file
+    parameters:
+    - name: file_path
+      type: string
+    - name: data
+      type: string
+
+  - name: Wavedash_ReadLocalFile
+    type: function
+    desc: |
+      Read a local file
+    parameters:
+    - name: file_path
+      type: string
+
+  - name: Wavedash_GetAchievement
+    type: function
+    desc: |
+      Get an achievement
+    parameters:
+    - name: identifier
+      type: string
+
+  - name: Wavedash_GetStat
+    type: function
+    desc: |
+      Get a stat
+    parameters:
+    - name: identifier
+      type: string
+
+  - name: Wavedash_SetAchievement
+    type: function
+    desc: |
+      Set an achievement
+    parameters:
+    - name: identifier
+      type: string
+    - name: @boolean?
+      type: boolean
+      desc: |
+        Store_now
+        
+
+  - name: Wavedash_SetStat
+    type: function
+    desc: |
+      Set a stat
+    parameters:
+    - name: identifier
+      type: string
+    - name: value
+      type: number
+    - name: @boolean?
+      type: boolean
+      desc: |
+        Store_now
+        
+
+  - name: Wavedash_RequestStats
+    type: function
+    desc: |
+      Request stats
+
+  - name: Wavedash_StoreStats
+    type: function
+    desc: |
+      Store stats
+
+  - name: Wavedash_GetP2PMaxPayloadSize
+    type: function
+    desc: |
+      Get the maximum P2P payload size
+
+  - name: Wavedash_GetP2PMaxIncomingMessages
+    type: function
+    desc: |
+      Get the maximum number of incoming P2P messages
+
+  - name: Wavedash_GetP2POutgoingMessageBuffer
+    type: function
+    desc: |
+      Get the P2P outgoing message buffer
+
+  - name: Wavedash_SendP2PMessage
+    type: function
+    desc: |
+      Send a P2P message
+    parameters:
+    - name: @number?
+      type: number
+      desc: |
+        To_user_id
+        
+    - name: @number?
+      type: number
+      desc: |
+        App_channel
+        
+    - name: @boolean?
+      type: boolean
+      desc: |
+        Reliable
+        
+    - name: payload
+      type: string
+    - name: @number?
+      type: number
+      desc: |
+        Payload_size
+        
+
+  - name: Wavedash_BroadcastP2PMessage
+    type: function
+    desc: |
+      Broadcast a P2P message
+    parameters:
+    - name: @number?
+      type: number
+      desc: |
+        App_channel
+        
+    - name: @boolean?
+      type: boolean
+      desc: |
+        Reliable
+        
+    - name: payload
+      type: string
+    - name: @number?
+      type: number
+      desc: |
+        Payload_size
+        
+
+  - name: Wavedash_ReadP2PMessageFromChannel
+    type: function
+    desc: |
+      Read a P2P message from a channel
+    parameters:
+    - name: app_channel
+      type: number
+
+  - name: Wavedash_DrainP2PChannelToBuffer
+    type: function
+    desc: |
+      Drain a P2P channel to a buffer
+    parameters:
+    - name: app_channel
+      type: number
+
+  - name: Wavedash_CreateLobby
+    type: function
+    desc: |
+      Create a lobby
+    parameters:
+    - name: visibility
+      type: number
+    - name: max_players
+      type: number
+
+  - name: Wavedash_JoinLobby
+    type: function
+    desc: |
+      Join a lobby
+    parameters:
+    - name: lobby_id
+      type: number
+
+  - name: Wavedash_ListAvailableLobbies
+    type: function
+    desc: |
+      List available lobbies
+    parameters:
+    - name: @boolean?
+      type: boolean
+      desc: |
+        Friends_only
+        
+
+  - name: Wavedash_GetLobbyUsers
+    type: function
+    desc: |
+      Get lobby users
+    parameters:
+    - name: lobby_id
+      type: number
+
+  - name: Wavedash_GetNumLobbyUsers
+    type: function
+    desc: |
+      Get the number of lobby users
+    parameters:
+    - name: lobby_id
+      type: number
+
+  - name: Wavedash_GetLobbyHostId
+    type: function
+    desc: |
+      Get the lobby host id
+    parameters:
+    - name: lobby_id
+      type: number
+
+  - name: Wavedash_GetLobbyData
+    type: function
+    desc: |
+      Get lobby data
+    parameters:
+    - name: lobby_id
+      type: number
+    - name: key
+      type: string
+
+  - name: Wavedash_SetLobbyData
+    type: function
+    desc: |
+      Set lobby data
+    parameters:
+    - name: lobby_id
+      type: number
+    - name: key
+      type: string
+
+  - name: Wavedash_DeleteLobbyData
+    type: function
+    desc: |
+      Delete lobby data
+    parameters:
+    - name: lobby_id
+      type: number
+    - name: key
+      type: string
+
+  - name: Wavedash_LeaveLobby
+    type: function
+    desc: |
+      Leave a lobby
+    parameters:
+    - name: lobby_id
+      type: number
+
+  - name: Wavedash_SendLobbyMessage
+    type: function
+    desc: |
+      Send a lobby message
+    parameters:
+    - name: lobby_id
+      type: number
+    - name: message
+      type: string
+
+  - name: Wavedash_InviteUserToLobby
+    type: function
+    desc: |
+      Invite a user to a lobby
+    parameters:
+    - name: lobby_id
+      type: number
+    - name: user_id
+      type: number
+
+  - name: Wavedash_GetLobbyInviteLink
+    type: function
+    desc: |
+      Get a lobby invite link
+    parameters:
+    - name: @boolean?
+      type: boolean
+      desc: |
+        Copy_to_clipboard
+        
+
+  - name: Wavedash_UpdateUserPresence
+    type: function
+    desc: |
+      Update user presence
+    parameters:
+    - name: @string?
+      type: string
+      desc: |
+        Data_json
+        
+
+  - name: Wavedash_EnsureGameplayJwt
+    type: function
+    desc: |
+      Ensure a gameplay JWT is available
+
+  - name: EVENT_LOBBY_MESSAGE
+    type: number
+    desc: |
+      EVENT_LOBBY_MESSAGE
+
+  - name: EVENT_LOBBY_JOINED
+    type: number
+    desc: |
+      EVENT_LOBBY_JOINED
+
+  - name: EVENT_LOBBY_KICKED
+    type: number
+    desc: |
+      EVENT_LOBBY_KICKED
+
+  - name: EVENT_LOBBY_USERS_UPDATED
+    type: number
+    desc: |
+      EVENT_LOBBY_USERS_UPDATED
+
+  - name: EVENT_LOBBY_DATA_UPDATED
+    type: number
+    desc: |
+      EVENT_LOBBY_DATA_UPDATED
+
+  - name: EVENT_LOBBY_INVITE
+    type: number
+    desc: |
+      EVENT_LOBBY_INVITE
+
+  - name: EVENT_P2P_CONNECTION_ESTABLISHED
+    type: number
+    desc: |
+      EVENT_P2P_CONNECTION_ESTABLISHED
+
+  - name: EVENT_P2P_CONNECTION_FAILED
+    type: number
+    desc: |
+      EVENT_P2P_CONNECTION_FAILED
+
+  - name: EVENT_P2P_PEER_DISCONNECTED
+    type: number
+    desc: |
+      EVENT_P2P_PEER_DISCONNECTED
+
+  - name: EVENT_P2P_PEER_RECONNECTING
+    type: number
+    desc: |
+      EVENT_P2P_PEER_RECONNECTING
+
+  - name: EVENT_P2P_PEER_RECONNECTED
+    type: number
+    desc: |
+      EVENT_P2P_PEER_RECONNECTED
+
+  - name: EVENT_P2P_PACKET_DROPPED
+    type: number
+    desc: |
+      EVENT_P2P_PACKET_DROPPED
+
+  - name: EVENT_STATS_STORED
+    type: number
+    desc: |
+      EVENT_STATS_STORED
+
+  - name: EVENT_BACKEND_CONNECTED
+    type: number
+    desc: |
+      EVENT_BACKEND_CONNECTED
+
+  - name: EVENT_BACKEND_DISCONNECTED
+    type: number
+    desc: |
+      EVENT_BACKEND_DISCONNECTED
+
+  - name: EVENT_BACKEND_RECONNECTING
+    type: number
+    desc: |
+      EVENT_BACKEND_RECONNECTING
+
+  - name: EVENT_FULLSCREEN_CHANGED
+    type: number
+    desc: |
+      EVENT_FULLSCREEN_CHANGED
+
+  - name: LOBBY_VISIBILITY_PUBLIC
+    type: number
+    desc: |
+      LOBBY_VISIBILITY_PUBLIC
+
+  - name: LOBBY_VISIBILITY_FRIENDS_ONLY
+    type: number
+    desc: |
+      LOBBY_VISIBILITY_FRIENDS_ONLY
+
+  - name: LOBBY_VISIBILITY_PRIVATE
+    type: number
+    desc: |
+      LOBBY_VISIBILITY_PRIVATE
+
+  - name: LEADERBOARD_SORT_ORDER_ASC
+    type: number
+    desc: |
+      LEADERBOARD_SORT_ORDER_ASC
+
+  - name: LEADERBOARD_SORT_ORDER_DESC
+    type: number
+    desc: |
+      LEADERBOARD_SORT_ORDER_DESC
+
+  - name: LEADERBOARD_DISPLAY_TYPENUMERIC
+    type: number
+    desc: |
+      LEADERBOARD_DISPLAY_TYPENUMERIC
+
+  - name: LEADERBOARD_DISPLAY_TYPETIME_SECONDS
+    type: number
+    desc: |
+      LEADERBOARD_DISPLAY_TYPETIME_SECONDS
+
+  - name: LEADERBOARD_DISPLAY_TYPETIME_MILLISECONDS
+    type: number
+    desc: |
+      LEADERBOARD_DISPLAY_TYPETIME_MILLISECONDS
+
+  - name: LEADERBOARD_DISPLAY_TYPETIME_GAME_TICKS
+    type: number
+    desc: |
+      LEADERBOARD_DISPLAY_TYPETIME_GAME_TICKS
+
+  - name: UGC_TYPE_SCREENSHOT
+    type: number
+    desc: |
+      UGC_TYPE_SCREENSHOT
+
+  - name: UGC_TYPE_VIDEO
+    type: number
+    desc: |
+      UGC_TYPE_VIDEO
+
+  - name: UGC_TYPE_COMMUNITY
+    type: number
+    desc: |
+      UGC_TYPE_COMMUNITY
+
+  - name: UGC_TYPE_GAME_MANAGED
+    type: number
+    desc: |
+      UGC_TYPE_GAME_MANAGED
+
+  - name: UGC_TYPE_OTHER
+    type: number
+    desc: |
+      UGC_TYPE_OTHER
+
+  - name: UGC_VISIBILITY_PUBLIC
+    type: number
+    desc: |
+      UGC_VISIBILITY_PUBLIC
+
+  - name: UGC_VISIBILITY_FRIENDS_ONLY
+    type: number
+    desc: |
+      UGC_VISIBILITY_FRIENDS_ONLY
+
+  - name: UGC_VISIBILITY_PRIVATE
+    type: number
+    desc: |
+      UGC_VISIBILITY_PRIVATE
+
+  - name: AVATAR_SIZE_SMALL
+    type: number
+    desc: |
+      AVATAR_SIZE_SMALL
+
+  - name: AVATAR_SIZE_MEDIUM
+    type: number
+    desc: |
+      AVATAR_SIZE_MEDIUM
+
+  - name: AVATAR_SIZE_LARGE
+    type: number
+    desc: |
+      AVATAR_SIZE_LARGE
+
+  - name: LOBBY_KICKED_REASON_KICKED
+    type: number
+    desc: |
+      LOBBY_KICKED_REASON_KICKED
+
+  - name: LOBBY_KICKED_REASON_ERROR
+    type: number
+    desc: |
+      LOBBY_KICKED_REASON_ERROR
+
+  - name: LOBBY_USER_CHANGE_TYPE_JOINED
+    type: number
+    desc: |
+      LOBBY_USER_CHANGE_TYPE_JOINED
+
+  - name: LOBBY_USER_CHANGE_TYPE_LEFT
+    type: number
+    desc: |
+      LOBBY_USER_CHANGE_TYPE_LEFT
+
+  - name: P2P_PACKET_DROP_REASON_QUEUE_FULL
+    type: number
+    desc: |
+      P2P_PACKET_DROP_REASON_QUEUE_FULL
+
+  - name: P2P_PACKET_DROP_REASON_PAYLOAD_TOO_LARGE
+    type: number
+    desc: |
+      P2P_PACKET_DROP_REASON_PAYLOAD_TOO_LARGE
+
+  - name: P2P_PACKET_DROP_REASON_INVALID_PAYLOAD_SIZE
+    type: number
+    desc: |
+      P2P_PACKET_DROP_REASON_INVALID_PAYLOAD_SIZE
+
+  - name: P2P_PACKET_DROP_REASON_INVALID_CHANNEL
+    type: number
+    desc: |
+      P2P_PACKET_DROP_REASON_INVALID_CHANNEL
+
+  - name: P2P_PACKET_DROP_REASON_MALFORMED
+    type: number
+    desc: |
+      P2P_PACKET_DROP_REASON_MALFORMED
+
+  - name: P2P_PACKET_DROP_REASON_PEER_NOT_READY
+    type: number
+    desc: |
+      P2P_PACKET_DROP_REASON_PEER_NOT_READY
+

@@ -22,9 +22,8 @@ var LibWavedash = {
                 }
 
                 const event = window.Wavedash.Events[key];
-                console.log("Registering Wavedash event " + event);
                 window.Wavedash.on(event, function(payload) {
-                    console.log("on", event, payload);
+                    // console.log("on", event, payload);
                     WavedashJs.invokeCallback(event, payload);
                 });
             }
@@ -38,10 +37,8 @@ var LibWavedash = {
             var p = Promise.resolve(WavedashJs.call(method, args));
             p.then(
                 function(response) {
-                    console.log(method + " OK", response);
                 },
                 function(err) {
-                    console.log(method + " ERR", err);
                 }
             );
         },
@@ -104,7 +101,6 @@ var LibWavedash = {
     },
 
     WavedashJs_Init: function(eventCallback) {
-        console.log("WavedashJs_Init");
         WavedashJs.eventCallback = eventCallback;
         var result = WavedashJs.call("init", []);
         WavedashJs.initEvents();

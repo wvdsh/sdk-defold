@@ -246,7 +246,7 @@ static const char* RawJsonStringArg(lua_State* L, int index)
 }
 
 /**
- * Initialize Wavedash
+ * Initialize Wavedash.
  * @name init
  * @function callback
  */
@@ -259,7 +259,7 @@ int Wavedash_Init(lua_State* L)
 }
 
 /**
- * Signal that the game is ready to receive events
+ * Signal that the game is ready to receive events.
  * @name ready_for_events
  */
 int Wavedash_ReadyForEvents(lua_State* L)
@@ -270,7 +270,7 @@ int Wavedash_ReadyForEvents(lua_State* L)
 }
 
 /**
- * Update the load progress
+ * Update the load progress.
  * @name update_load_progress_zero_to_one
  * @number progress
  */
@@ -282,7 +282,7 @@ int Wavedash_UpdateLoadProgressZeroToOne(lua_State* L)
 }
 
 /**
- * Signal that loading is complete
+ * Signal that loading is complete.
  * @name load_complete
  */
 int Wavedash_LoadComplete(lua_State* L)
@@ -293,7 +293,7 @@ int Wavedash_LoadComplete(lua_State* L)
 }
 
 /**
- * Toggle the overlay
+ * Toggle the overlay.
  * @name toggle_overlay
  */
 int Wavedash_ToggleOverlay(lua_State* L)
@@ -304,7 +304,7 @@ int Wavedash_ToggleOverlay(lua_State* L)
 }
 
 /**
- * Check if fullscreen is enabled
+ * Check if fullscreen is enabled.
  * @name is_fullscreen
  */
 int Wavedash_IsFullscreen(lua_State* L)
@@ -315,7 +315,7 @@ int Wavedash_IsFullscreen(lua_State* L)
 }
 
 /**
- * Request fullscreen mode
+ * Request fullscreen mode.
  * This is an asynchronous function. The result will be delivered as an event
  * with id 'requestFullscreen'.
  * @name request_fullscreen
@@ -329,7 +329,7 @@ int Wavedash_RequestFullscreenAsync(lua_State* L)
 }
 
 /**
- * Toggle fullscreen mode
+ * Toggle fullscreen mode.
  * This is an asynchronous function. The result will be delivered as an event
  * with id 'toggleFullscreen'.
  * @name toggle_fullscreen
@@ -342,7 +342,7 @@ int Wavedash_ToggleFullscreenAsync(lua_State* L)
 }
 
 /**
- * Get the current user
+ * Get the current user.
  * @name get_user
  */
 int Wavedash_GetUser(lua_State* L)
@@ -353,7 +353,7 @@ int Wavedash_GetUser(lua_State* L)
 }
 
 /**
- * Get a username
+ * Get a username.
  * @name get_username
  * @number user_id?
  */
@@ -365,7 +365,7 @@ int Wavedash_GetUsername(lua_State* L)
 }
 
 /**
- * Get the current user id
+ * Get the current user id.
  * @name get_user_id
  */
 int Wavedash_GetUserId(lua_State* L)
@@ -376,7 +376,7 @@ int Wavedash_GetUserId(lua_State* L)
 }
 
 /**
- * Request a user JWT
+ * Request a user JWT.
  * This is an asynchronous function. The result will be delivered as an event
  * with id 'getUserJwt'.
  * @name get_user_jwt
@@ -389,7 +389,7 @@ int Wavedash_GetUserJwtAsync(lua_State* L)
 }
 
 /**
- * Get launch parameters
+ * Get launch parameters.
  * @name get_launch_params
  */
 int Wavedash_GetLaunchParams(lua_State* L)
@@ -400,7 +400,7 @@ int Wavedash_GetLaunchParams(lua_State* L)
 }
 
 /**
- * List friends
+ * List friends.
  * This is an asynchronous function. The result will be delivered as an event
  * with id 'listFriends'.
  * @name list_friends
@@ -413,7 +413,7 @@ int Wavedash_ListFriendsAsync(lua_State* L)
 }
 
 /**
- * Get a user avatar URL
+ * Get a user avatar URL.
  * @name get_user_avatar_url
  * @number user_id
  * @number size?
@@ -426,7 +426,7 @@ int Wavedash_GetUserAvatarUrl(lua_State* L)
 }
 
 /**
- * Get a leaderboard
+ * Get a leaderboard.
  * This is an asynchronous function. The result will be delivered as an event
  * with id 'getLeaderboard'.
  * @name get_leaderboard
@@ -440,7 +440,7 @@ int Wavedash_GetLeaderboardAsync(lua_State* L)
 }
 
 /**
- * Get or create a leaderboard
+ * Get or create a leaderboard.
  * This is an asynchronous function. The result will be delivered as an event
  * with id 'getOrCreateLeaderboard'.
  * @name get_or_create_leaderboard
@@ -456,7 +456,7 @@ int Wavedash_GetOrCreateLeaderboardAsync(lua_State* L)
 }
 
 /**
- * Get leaderboard entry count
+ * Get leaderboard entry count.
  * @name get_leaderboard_entry_count
  * @number leaderboard_id
  */
@@ -468,7 +468,7 @@ int Wavedash_GetLeaderboardEntryCount(lua_State* L)
 }
 
 /**
- * Get the current user's leaderboard entries
+ * Get the current user's leaderboard entries.
  * This is an asynchronous function. The result will be delivered as an event
  * with id 'getMyLeaderboardEntries'.
  * @name get_my_leaderboard_entries
@@ -482,7 +482,7 @@ int Wavedash_GetMyLeaderboardEntriesAsync(lua_State* L)
 }
 
 /**
- * List leaderboard entries around a user
+ * List leaderboard entries around a user.
  * This is an asynchronous function. The result will be delivered as an event
  * with id 'listLeaderboardEntriesAroundUser'.
  * @name list_leaderboard_entries_around_user
@@ -499,7 +499,7 @@ int Wavedash_ListLeaderboardEntriesAroundUserAsync(lua_State* L)
 }
 
 /**
- * List leaderboard entries
+ * List leaderboard entries.
  * This is an asynchronous function. The result will be delivered as an event
  * with id 'listLeaderboardEntries'.
  * @name list_leaderboard_entries
@@ -516,7 +516,7 @@ int Wavedash_ListLeaderboardEntriesAsync(lua_State* L)
 }
 
 /**
- * Upload a leaderboard score
+ * Upload a leaderboard score.
  * This is an asynchronous function. The result will be delivered as an event
  * with id 'uploadLeaderboardScore'.
  * @name upload_leaderboard_score
@@ -533,7 +533,7 @@ int Wavedash_UploadLeaderboardScoreAsync(lua_State* L)
 }
 
 /**
- * Create a UGC item
+ * Create a UGC item.
  * This is an asynchronous function. The result will be delivered as an event
  * with id 'createUGCItem'.
  * @name create_ugc_item
@@ -551,7 +551,7 @@ int Wavedash_CreateUGCItemAsync(lua_State* L)
 }
 
 /**
- * Update a UGC item
+ * Update a UGC item.
  * This is an asynchronous function. The result will be delivered as an event
  * with id 'updateUGCItem'.
  * @name update_ugc_item
@@ -569,7 +569,7 @@ int Wavedash_UpdateUGCItemAsync(lua_State* L)
 }
 
 /**
- * Download a UGC item
+ * Download a UGC item.
  * This is an asynchronous function. The result will be delivered as an event
  * with id 'downloadUGCItem'.
  * @name download_ugc_item
@@ -584,7 +584,7 @@ int Wavedash_DownloadUGCItemAsync(lua_State* L)
 }
 
 /**
- * Delete a remote file
+ * Delete a remote file.
  * This is an asynchronous function. The result will be delivered as an event
  * with id 'deleteRemoteFile'.
  * @name delete_remote_file
@@ -598,7 +598,7 @@ int Wavedash_DeleteRemoteFileAsync(lua_State* L)
 }
 
 /**
- * Download a remote file
+ * Download a remote file.
  * This is an asynchronous function. The result will be delivered as an event
  * with id 'downloadRemoteFile'.
  * @name download_remote_file
@@ -612,7 +612,7 @@ int Wavedash_DownloadRemoteFileAsync(lua_State* L)
 }
 
 /**
- * Upload a remote file
+ * Upload a remote file.
  * This is an asynchronous function. The result will be delivered as an event
  * with id 'uploadRemoteFile'.
  * @name upload_remote_file
@@ -626,7 +626,7 @@ int Wavedash_UploadRemoteFileAsync(lua_State* L)
 }
 
 /**
- * List a remote directory
+ * List a remote directory.
  * This is an asynchronous function. The result will be delivered as an event
  * with id 'listRemoteDirectory'.
  * @name list_remote_directory
@@ -640,7 +640,7 @@ int Wavedash_ListRemoteDirectoryAsync(lua_State* L)
 }
 
 /**
- * Download a remote directory
+ * Download a remote directory.
  * This is an asynchronous function. The result will be delivered as an event
  * with id 'downloadRemoteDirectory'.
  * @name download_remote_directory
@@ -654,7 +654,7 @@ int Wavedash_DownloadRemoteDirectoryAsync(lua_State* L)
 }
 
 /**
- * Write a local file
+ * Write a local file.
  * This is an asynchronous function. The result will be delivered as an event
  * with id 'writeLocalFile'.
  * @name write_local_file
@@ -672,7 +672,7 @@ int Wavedash_WriteLocalFileAsync(lua_State* L)
 }
 
 /**
- * Read a local file
+ * Read a local file.
  * This is an asynchronous function. The result will be delivered as an event
  * with id 'readLocalFile'.
  * @name read_local_file
@@ -686,7 +686,7 @@ int Wavedash_ReadLocalFileAsync(lua_State* L)
 }
 
 /**
- * Get an achievement
+ * Get an achievement.
  * @name get_achievement
  * @string identifier
  */
@@ -698,7 +698,7 @@ int Wavedash_GetAchievement(lua_State* L)
 }
 
 /**
- * Get a stat
+ * Get a stat.
  * @name get_stat
  * @string identifier
  */
@@ -710,7 +710,7 @@ int Wavedash_GetStat(lua_State* L)
 }
 
 /**
- * Set an achievement
+ * Set an achievement.
  * @name set_achievement
  * @string identifier
  * @boolean store_now?
@@ -723,7 +723,7 @@ int Wavedash_SetAchievement(lua_State* L)
 }
 
 /**
- * Set a stat
+ * Set a stat.
  * @name set_stat
  * @string identifier
  * @number value
@@ -737,7 +737,7 @@ int Wavedash_SetStat(lua_State* L)
 }
 
 /**
- * Request stats
+ * Request stats.
  * This is an asynchronous function. The result will be delivered as an event
  * with id 'requestStats'.
  * @name request_stats
@@ -750,7 +750,7 @@ int Wavedash_RequestStatsAsync(lua_State* L)
 }
 
 /**
- * Store stats
+ * Store stats.
  * @name store_stats
  */
 int Wavedash_StoreStats(lua_State* L)
@@ -761,7 +761,7 @@ int Wavedash_StoreStats(lua_State* L)
 }
 
 /**
- * Get the maximum P2P payload size
+ * Get the maximum P2P payload size.
  * @name get_p2p_max_payload_size
  */
 int Wavedash_GetP2PMaxPayloadSize(lua_State* L)
@@ -772,7 +772,7 @@ int Wavedash_GetP2PMaxPayloadSize(lua_State* L)
 }
 
 /**
- * Get the maximum number of incoming P2P messages
+ * Get the maximum number of incoming P2P messages.
  * @name get_p2p_max_incoming_messages
  */
 int Wavedash_GetP2PMaxIncomingMessages(lua_State* L)
@@ -783,7 +783,7 @@ int Wavedash_GetP2PMaxIncomingMessages(lua_State* L)
 }
 
 /**
- * Get the P2P outgoing message buffer
+ * Get the P2P outgoing message buffer.
  * @name get_p2p_outgoing_message_buffer
  */
 int Wavedash_GetP2POutgoingMessageBuffer(lua_State* L)
@@ -796,7 +796,7 @@ int Wavedash_GetP2POutgoingMessageBuffer(lua_State* L)
 }
 
 /**
- * Send a P2P message
+ * Send a P2P message.
  * @name send_p2p_message
  * @number to_user_id?
  * @number app_channel?
@@ -815,7 +815,7 @@ int Wavedash_SendP2PMessage(lua_State* L)
 }
 
 /**
- * Broadcast a P2P message
+ * Broadcast a P2P message.
  * @name broadcast_p2p_message
  * @number app_channel?
  * @boolean reliable?
@@ -833,7 +833,7 @@ int Wavedash_BroadcastP2PMessage(lua_State* L)
 }
 
 /**
- * Read a P2P message from a channel
+ * Read a P2P message from a channel.
  * @name read_p2p_message_from_channel
  * @number app_channel
  */
@@ -845,7 +845,7 @@ int Wavedash_ReadP2PMessageFromChannel(lua_State* L)
 }
 
 /**
- * Drain a P2P channel to a buffer
+ * Drain a P2P channel to a buffer.
  * @name drain_p2p_channel_to_buffer
  * @number app_channel
  */
@@ -859,7 +859,7 @@ int Wavedash_DrainP2PChannelToBuffer(lua_State* L)
 }
 
 /**
- * Create a lobby
+ * Create a lobby.
  * This is an asynchronous function. The result will be delivered as an event
  * with id 'createLobby'.
  * @name create_lobby
@@ -874,7 +874,7 @@ int Wavedash_CreateLobbyAsync(lua_State* L)
 }
 
 /**
- * Join a lobby
+ * Join a lobby.
  * This is an asynchronous function. The result will be delivered as an event
  * with id 'joinLobby'.
  * @name join_lobby
@@ -888,7 +888,7 @@ int Wavedash_JoinLobbyAsync(lua_State* L)
 }
 
 /**
- * List available lobbies
+ * List available lobbies.
  * This is an asynchronous function. The result will be delivered as an event
  * with id 'listAvailableLobbies'.
  * @name list_available_lobbies
@@ -902,7 +902,7 @@ int Wavedash_ListAvailableLobbiesAsync(lua_State* L)
 }
 
 /**
- * Get lobby users
+ * Get lobby users.
  * @name get_lobby_users
  * @number lobby_id
  */
@@ -914,7 +914,7 @@ int Wavedash_GetLobbyUsers(lua_State* L)
 }
 
 /**
- * Get the number of lobby users
+ * Get the number of lobby users.
  * @name get_num_lobby_users
  * @number lobby_id
  */
@@ -926,7 +926,7 @@ int Wavedash_GetNumLobbyUsers(lua_State* L)
 }
 
 /**
- * Get the lobby host id
+ * Get the lobby host id.
  * @name get_lobby_host_id
  * @number lobby_id
  */
@@ -938,7 +938,7 @@ int Wavedash_GetLobbyHostId(lua_State* L)
 }
 
 /**
- * Get lobby data
+ * Get lobby data.
  * @name get_lobby_data
  * @number lobby_id
  * @string key
@@ -951,7 +951,7 @@ int Wavedash_GetLobbyData(lua_State* L)
 }
 
 /**
- * Set lobby data
+ * Set lobby data.
  * @name set_lobby_data
  * @number lobby_id
  * @string key
@@ -973,7 +973,7 @@ int Wavedash_SetLobbyData(lua_State* L)
 }
 
 /**
- * Delete lobby data
+ * Delete lobby data.
  * @name delete_lobby_data
  * @number lobby_id
  * @string key
@@ -986,7 +986,7 @@ int Wavedash_DeleteLobbyData(lua_State* L)
 }
 
 /**
- * Leave a lobby
+ * Leave a lobby.
  * This is an asynchronous function. The result will be delivered as an event
  * with id 'leaveLobby'.
  * @name leave_lobby
@@ -1000,7 +1000,7 @@ int Wavedash_LeaveLobbyAsync(lua_State* L)
 }
 
 /**
- * Send a lobby message
+ * Send a lobby message.
  * @name send_lobby_message
  * @number lobby_id
  * @string message
@@ -1013,7 +1013,7 @@ int Wavedash_SendLobbyMessage(lua_State* L)
 }
 
 /**
- * Invite a user to a lobby
+ * Invite a user to a lobby.
  * This is an asynchronous function. The result will be delivered as an event
  * with id 'inviteUserToLobby'.
  * @name invite_user_to_lobby
@@ -1028,7 +1028,7 @@ int Wavedash_InviteUserToLobbyAsync(lua_State* L)
 }
 
 /**
- * Get a lobby invite link
+ * Get a lobby invite link.
  * This is an asynchronous function. The result will be delivered as an event
  * with id 'getLobbyInviteLink'.
  * @name get_lobby_invite_link
@@ -1042,7 +1042,7 @@ int Wavedash_GetLobbyInviteLinkAsync(lua_State* L)
 }
 
 /**
- * Update user presence
+ * Update user presence.
  * This is an asynchronous function. The result will be delivered as an event
  * with id 'updateUserPresence'.
  * @name update_user_presence
@@ -1056,7 +1056,7 @@ int Wavedash_UpdateUserPresenceAsync(lua_State* L)
 }
 
 /**
- * Ensure a gameplay JWT is available
+ * Ensure a gameplay JWT is available.
  * This is an asynchronous function. The result will be delivered as an event
  * with id 'ensureGameplayJwt'.
  * @name ensure_gameplay_jwt

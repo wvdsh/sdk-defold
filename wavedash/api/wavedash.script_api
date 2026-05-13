@@ -7,7 +7,7 @@
   - name: init
     type: function
     desc: |
-      Initialize Wavedash
+      Initialize Wavedash.
     parameters:
     - name: callback
       type: function
@@ -15,12 +15,12 @@
   - name: ready_for_events
     type: function
     desc: |
-      Signal that the game is ready to receive events
+      Signal that the game is ready to receive events.
 
   - name: update_load_progress_zero_to_one
     type: function
     desc: |
-      Update the load progress
+      Update the load progress.
     parameters:
     - name: progress
       type: number
@@ -28,22 +28,22 @@
   - name: load_complete
     type: function
     desc: |
-      Signal that loading is complete
+      Signal that loading is complete.
 
   - name: toggle_overlay
     type: function
     desc: |
-      Toggle the overlay
+      Toggle the overlay.
 
   - name: is_fullscreen
     type: function
     desc: |
-      Check if fullscreen is enabled
+      Check if fullscreen is enabled.
 
   - name: request_fullscreen
     type: function
     desc: |
-      Request fullscreen mode
+      Request fullscreen mode. This is an asynchronous function. The result will be delivered as an event with id 'requestFullscreen'.
     parameters:
     - name: fullscreen
       type: boolean
@@ -51,17 +51,17 @@
   - name: toggle_fullscreen
     type: function
     desc: |
-      Toggle fullscreen mode
+      Toggle fullscreen mode. This is an asynchronous function. The result will be delivered as an event with id 'toggleFullscreen'.
 
   - name: get_user
     type: function
     desc: |
-      Get the current user
+      Get the current user.
 
   - name: get_username
     type: function
     desc: |
-      Get a username
+      Get a username.
     parameters:
     - name: user_id
       type: number
@@ -70,27 +70,27 @@
   - name: get_user_id
     type: function
     desc: |
-      Get the current user id
+      Get the current user id.
 
   - name: get_user_jwt
     type: function
     desc: |
-      Request a user JWT
+      Request a user JWT. This is an asynchronous function. The result will be delivered as an event with id 'getUserJwt'.
 
   - name: get_launch_params
     type: function
     desc: |
-      Get launch parameters
+      Get launch parameters.
 
   - name: list_friends
     type: function
     desc: |
-      List friends
+      List friends. This is an asynchronous function. The result will be delivered as an event with id 'listFriends'.
 
   - name: get_user_avatar_url
     type: function
     desc: |
-      Get a user avatar URL
+      Get a user avatar URL.
     parameters:
     - name: user_id
       type: number
@@ -101,7 +101,7 @@
   - name: get_leaderboard
     type: function
     desc: |
-      Get a leaderboard
+      Get a leaderboard. This is an asynchronous function. The result will be delivered as an event with id 'getLeaderboard'.
     parameters:
     - name: name
       type: string
@@ -109,7 +109,7 @@
   - name: get_or_create_leaderboard
     type: function
     desc: |
-      Get or create a leaderboard
+      Get or create a leaderboard. This is an asynchronous function. The result will be delivered as an event with id 'getOrCreateLeaderboard'.
     parameters:
     - name: name
       type: string
@@ -121,7 +121,7 @@
   - name: get_leaderboard_entry_count
     type: function
     desc: |
-      Get leaderboard entry count
+      Get leaderboard entry count.
     parameters:
     - name: leaderboard_id
       type: number
@@ -129,7 +129,7 @@
   - name: get_my_leaderboard_entries
     type: function
     desc: |
-      Get the current user's leaderboard entries
+      Get the current user's leaderboard entries. This is an asynchronous function. The result will be delivered as an event with id 'getMyLeaderboardEntries'.
     parameters:
     - name: leaderboard_id
       type: number
@@ -137,7 +137,7 @@
   - name: list_leaderboard_entries_around_user
     type: function
     desc: |
-      List leaderboard entries around a user
+      List leaderboard entries around a user. This is an asynchronous function. The result will be delivered as an event with id 'listLeaderboardEntriesAroundUser'.
     parameters:
     - name: leaderboard_id
       type: number
@@ -152,7 +152,7 @@
   - name: list_leaderboard_entries
     type: function
     desc: |
-      List leaderboard entries
+      List leaderboard entries. This is an asynchronous function. The result will be delivered as an event with id 'listLeaderboardEntries'.
     parameters:
     - name: leaderboard_id
       type: number
@@ -167,7 +167,7 @@
   - name: upload_leaderboard_score
     type: function
     desc: |
-      Upload a leaderboard score
+      Upload a leaderboard score. This is an asynchronous function. The result will be delivered as an event with id 'uploadLeaderboardScore'.
     parameters:
     - name: leaderboard_id
       type: number
@@ -182,7 +182,7 @@
   - name: create_ugc_item
     type: function
     desc: |
-      Create a UGC item
+      Create a UGC item. This is an asynchronous function. The result will be delivered as an event with id 'createUGCItem'.
     parameters:
     - name: ugc_type
       type: number
@@ -202,7 +202,7 @@
   - name: update_ugc_item
     type: function
     desc: |
-      Update a UGC item
+      Update a UGC item. This is an asynchronous function. The result will be delivered as an event with id 'updateUGCItem'.
     parameters:
     - name: ugc_id
       type: number
@@ -222,7 +222,7 @@
   - name: download_ugc_item
     type: function
     desc: |
-      Download a UGC item
+      Download a UGC item. This is an asynchronous function. The result will be delivered as an event with id 'downloadUGCItem'.
     parameters:
     - name: ugc_id
       type: number
@@ -232,7 +232,7 @@
   - name: delete_remote_file
     type: function
     desc: |
-      Delete a remote file
+      Delete a remote file. This is an asynchronous function. The result will be delivered as an event with id 'deleteRemoteFile'.
     parameters:
     - name: file_path
       type: string
@@ -240,7 +240,7 @@
   - name: download_remote_file
     type: function
     desc: |
-      Download a remote file
+      Download a remote file. This is an asynchronous function. The result will be delivered as an event with id 'downloadRemoteFile'.
     parameters:
     - name: file_path
       type: string
@@ -248,7 +248,7 @@
   - name: upload_remote_file
     type: function
     desc: |
-      Upload a remote file
+      Upload a remote file. This is an asynchronous function. The result will be delivered as an event with id 'uploadRemoteFile'.
     parameters:
     - name: file_path
       type: string
@@ -256,7 +256,7 @@
   - name: list_remote_directory
     type: function
     desc: |
-      List a remote directory
+      List a remote directory. This is an asynchronous function. The result will be delivered as an event with id 'listRemoteDirectory'.
     parameters:
     - name: path
       type: string
@@ -264,7 +264,7 @@
   - name: download_remote_directory
     type: function
     desc: |
-      Download a remote directory
+      Download a remote directory. This is an asynchronous function. The result will be delivered as an event with id 'downloadRemoteDirectory'.
     parameters:
     - name: path
       type: string
@@ -272,7 +272,7 @@
   - name: write_local_file
     type: function
     desc: |
-      Write a local file
+      Write a local file. This is an asynchronous function. The result will be delivered as an event with id 'writeLocalFile'.
     parameters:
     - name: file_path
       type: string
@@ -282,7 +282,7 @@
   - name: read_local_file
     type: function
     desc: |
-      Read a local file
+      Read a local file. This is an asynchronous function. The result will be delivered as an event with id 'readLocalFile'.
     parameters:
     - name: file_path
       type: string
@@ -290,7 +290,7 @@
   - name: get_achievement
     type: function
     desc: |
-      Get an achievement
+      Get an achievement.
     parameters:
     - name: identifier
       type: string
@@ -298,7 +298,7 @@
   - name: get_stat
     type: function
     desc: |
-      Get a stat
+      Get a stat.
     parameters:
     - name: identifier
       type: string
@@ -306,7 +306,7 @@
   - name: set_achievement
     type: function
     desc: |
-      Set an achievement
+      Set an achievement.
     parameters:
     - name: identifier
       type: string
@@ -317,7 +317,7 @@
   - name: set_stat
     type: function
     desc: |
-      Set a stat
+      Set a stat.
     parameters:
     - name: identifier
       type: string
@@ -330,32 +330,32 @@
   - name: request_stats
     type: function
     desc: |
-      Request stats
+      Request stats. This is an asynchronous function. The result will be delivered as an event with id 'requestStats'.
 
   - name: store_stats
     type: function
     desc: |
-      Store stats
+      Store stats.
 
   - name: get_p2p_max_payload_size
     type: function
     desc: |
-      Get the maximum P2P payload size
+      Get the maximum P2P payload size.
 
   - name: get_p2p_max_incoming_messages
     type: function
     desc: |
-      Get the maximum number of incoming P2P messages
+      Get the maximum number of incoming P2P messages.
 
   - name: get_p2p_outgoing_message_buffer
     type: function
     desc: |
-      Get the P2P outgoing message buffer
+      Get the P2P outgoing message buffer.
 
   - name: send_p2p_message
     type: function
     desc: |
-      Send a P2P message
+      Send a P2P message.
     parameters:
     - name: to_user_id
       type: number
@@ -375,7 +375,7 @@
   - name: broadcast_p2p_message
     type: function
     desc: |
-      Broadcast a P2P message
+      Broadcast a P2P message.
     parameters:
     - name: app_channel
       type: number
@@ -392,7 +392,7 @@
   - name: read_p2p_message_from_channel
     type: function
     desc: |
-      Read a P2P message from a channel
+      Read a P2P message from a channel.
     parameters:
     - name: app_channel
       type: number
@@ -400,7 +400,7 @@
   - name: drain_p2p_channel_to_buffer
     type: function
     desc: |
-      Drain a P2P channel to a buffer
+      Drain a P2P channel to a buffer.
     parameters:
     - name: app_channel
       type: number
@@ -408,7 +408,7 @@
   - name: create_lobby
     type: function
     desc: |
-      Create a lobby
+      Create a lobby. This is an asynchronous function. The result will be delivered as an event with id 'createLobby'.
     parameters:
     - name: visibility
       type: number
@@ -418,7 +418,7 @@
   - name: join_lobby
     type: function
     desc: |
-      Join a lobby
+      Join a lobby. This is an asynchronous function. The result will be delivered as an event with id 'joinLobby'.
     parameters:
     - name: lobby_id
       type: number
@@ -426,7 +426,7 @@
   - name: list_available_lobbies
     type: function
     desc: |
-      List available lobbies
+      List available lobbies. This is an asynchronous function. The result will be delivered as an event with id 'listAvailableLobbies'.
     parameters:
     - name: friends_only
       type: boolean
@@ -435,7 +435,7 @@
   - name: get_lobby_users
     type: function
     desc: |
-      Get lobby users
+      Get lobby users.
     parameters:
     - name: lobby_id
       type: number
@@ -443,7 +443,7 @@
   - name: get_num_lobby_users
     type: function
     desc: |
-      Get the number of lobby users
+      Get the number of lobby users.
     parameters:
     - name: lobby_id
       type: number
@@ -451,7 +451,7 @@
   - name: get_lobby_host_id
     type: function
     desc: |
-      Get the lobby host id
+      Get the lobby host id.
     parameters:
     - name: lobby_id
       type: number
@@ -459,7 +459,7 @@
   - name: get_lobby_data
     type: function
     desc: |
-      Get lobby data
+      Get lobby data.
     parameters:
     - name: lobby_id
       type: number
@@ -469,7 +469,7 @@
   - name: set_lobby_data
     type: function
     desc: |
-      Set lobby data
+      Set lobby data.
     parameters:
     - name: lobby_id
       type: number
@@ -479,7 +479,7 @@
   - name: delete_lobby_data
     type: function
     desc: |
-      Delete lobby data
+      Delete lobby data.
     parameters:
     - name: lobby_id
       type: number
@@ -489,7 +489,7 @@
   - name: leave_lobby
     type: function
     desc: |
-      Leave a lobby
+      Leave a lobby. This is an asynchronous function. The result will be delivered as an event with id 'leaveLobby'.
     parameters:
     - name: lobby_id
       type: number
@@ -497,7 +497,7 @@
   - name: send_lobby_message
     type: function
     desc: |
-      Send a lobby message
+      Send a lobby message.
     parameters:
     - name: lobby_id
       type: number
@@ -507,7 +507,7 @@
   - name: invite_user_to_lobby
     type: function
     desc: |
-      Invite a user to a lobby
+      Invite a user to a lobby. This is an asynchronous function. The result will be delivered as an event with id 'inviteUserToLobby'.
     parameters:
     - name: lobby_id
       type: number
@@ -517,7 +517,7 @@
   - name: get_lobby_invite_link
     type: function
     desc: |
-      Get a lobby invite link
+      Get a lobby invite link. This is an asynchronous function. The result will be delivered as an event with id 'getLobbyInviteLink'.
     parameters:
     - name: copy_to_clipboard
       type: boolean
@@ -526,7 +526,7 @@
   - name: update_user_presence
     type: function
     desc: |
-      Update user presence
+      Update user presence. This is an asynchronous function. The result will be delivered as an event with id 'updateUserPresence'.
     parameters:
     - name: data_json
       type: string
@@ -535,7 +535,7 @@
   - name: ensure_gameplay_jwt
     type: function
     desc: |
-      Ensure a gameplay JWT is available
+      Ensure a gameplay JWT is available. This is an asynchronous function. The result will be delivered as an event with id 'ensureGameplayJwt'.
 
   - name: EVENT_LOBBY_MESSAGE
     type: number

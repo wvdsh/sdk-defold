@@ -40,18 +40,18 @@
     desc: |
       Check if fullscreen is enabled.
 
-  - name: request_fullscreen
+  - name: request_fullscreen_async
     type: function
     desc: |
-      Request fullscreen mode. This is an asynchronous function. The result will be delivered as an event with id 'requestFullscreen'.
+      Request fullscreen mode. This is an asynchronous function. The result will be delivered as an event with id 'requestFullscreen' or as a return value if the function is called from a coroutine.
     parameters:
     - name: fullscreen
       type: boolean
 
-  - name: toggle_fullscreen
+  - name: toggle_fullscreen_async
     type: function
     desc: |
-      Toggle fullscreen mode. This is an asynchronous function. The result will be delivered as an event with id 'toggleFullscreen'.
+      Toggle fullscreen mode. This is an asynchronous function. The result will be delivered as an event with id 'toggleFullscreen' or as a return value if the function is called from a coroutine.
 
   - name: get_user
     type: function
@@ -72,20 +72,20 @@
     desc: |
       Get the current user id.
 
-  - name: get_user_jwt
+  - name: get_user_jwt_async
     type: function
     desc: |
-      Request a user JWT. This is an asynchronous function. The result will be delivered as an event with id 'getUserJwt'.
+      Request a user JWT. This is an asynchronous function. The result will be delivered as an event with id 'getUserJwt' or as a return value if the function is called from a coroutine.
 
   - name: get_launch_params
     type: function
     desc: |
       Get launch parameters.
 
-  - name: list_friends
+  - name: list_friends_async
     type: function
     desc: |
-      List friends. This is an asynchronous function. The result will be delivered as an event with id 'listFriends'.
+      List friends. This is an asynchronous function. The result will be delivered as an event with id 'listFriends' or as a return value if the function is called from a coroutine.
 
   - name: get_user_avatar_url
     type: function
@@ -98,18 +98,18 @@
       type: number
       optional: True
 
-  - name: get_leaderboard
+  - name: get_leaderboard_async
     type: function
     desc: |
-      Get a leaderboard. This is an asynchronous function. The result will be delivered as an event with id 'getLeaderboard'.
+      Get a leaderboard. This is an asynchronous function. The result will be delivered as an event with id 'getLeaderboard' or as a return value if the function is called from a coroutine.
     parameters:
     - name: name
       type: string
 
-  - name: get_or_create_leaderboard
+  - name: get_or_create_leaderboard_async
     type: function
     desc: |
-      Get or create a leaderboard. This is an asynchronous function. The result will be delivered as an event with id 'getOrCreateLeaderboard'.
+      Get or create a leaderboard. This is an asynchronous function. The result will be delivered as an event with id 'getOrCreateLeaderboard' or as a return value if the function is called from a coroutine.
     parameters:
     - name: name
       type: string
@@ -126,18 +126,18 @@
     - name: leaderboard_id
       type: number
 
-  - name: get_my_leaderboard_entries
+  - name: get_my_leaderboard_entries_async
     type: function
     desc: |
-      Get the current user's leaderboard entries. This is an asynchronous function. The result will be delivered as an event with id 'getMyLeaderboardEntries'.
+      Get the current user's leaderboard entries. This is an asynchronous function. The result will be delivered as an event with id 'getMyLeaderboardEntries' or as a return value if the function is called from a coroutine.
     parameters:
     - name: leaderboard_id
       type: number
 
-  - name: list_leaderboard_entries_around_user
+  - name: list_leaderboard_entries_around_user_async
     type: function
     desc: |
-      List leaderboard entries around a user. This is an asynchronous function. The result will be delivered as an event with id 'listLeaderboardEntriesAroundUser'.
+      List leaderboard entries around a user. This is an asynchronous function. The result will be delivered as an event with id 'listLeaderboardEntriesAroundUser' or as a return value if the function is called from a coroutine.
     parameters:
     - name: leaderboard_id
       type: number
@@ -149,10 +149,10 @@
       type: boolean
       optional: True
 
-  - name: list_leaderboard_entries
+  - name: list_leaderboard_entries_async
     type: function
     desc: |
-      List leaderboard entries. This is an asynchronous function. The result will be delivered as an event with id 'listLeaderboardEntries'.
+      List leaderboard entries. This is an asynchronous function. The result will be delivered as an event with id 'listLeaderboardEntries' or as a return value if the function is called from a coroutine.
     parameters:
     - name: leaderboard_id
       type: number
@@ -164,10 +164,10 @@
       type: boolean
       optional: True
 
-  - name: upload_leaderboard_score
+  - name: upload_leaderboard_score_async
     type: function
     desc: |
-      Upload a leaderboard score. This is an asynchronous function. The result will be delivered as an event with id 'uploadLeaderboardScore'.
+      Upload a leaderboard score. This is an asynchronous function. The result will be delivered as an event with id 'uploadLeaderboardScore' or as a return value if the function is called from a coroutine.
     parameters:
     - name: leaderboard_id
       type: number
@@ -179,10 +179,10 @@
       type: number
       optional: True
 
-  - name: create_ugc_item
+  - name: create_ugc_item_async
     type: function
     desc: |
-      Create a UGC item. This is an asynchronous function. The result will be delivered as an event with id 'createUGCItem'.
+      Create a UGC item. This is an asynchronous function. The result will be delivered as an event with id 'createUGCItem' or as a return value if the function is called from a coroutine.
     parameters:
     - name: ugc_type
       type: number
@@ -199,10 +199,10 @@
       type: string
       optional: True
 
-  - name: update_ugc_item
+  - name: update_ugc_item_async
     type: function
     desc: |
-      Update a UGC item. This is an asynchronous function. The result will be delivered as an event with id 'updateUGCItem'.
+      Update a UGC item. This is an asynchronous function. The result will be delivered as an event with id 'updateUGCItem' or as a return value if the function is called from a coroutine.
     parameters:
     - name: ugc_id
       type: number
@@ -219,70 +219,70 @@
       type: string
       optional: True
 
-  - name: download_ugc_item
+  - name: download_ugc_item_async
     type: function
     desc: |
-      Download a UGC item. This is an asynchronous function. The result will be delivered as an event with id 'downloadUGCItem'.
+      Download a UGC item. This is an asynchronous function. The result will be delivered as an event with id 'downloadUGCItem' or as a return value if the function is called from a coroutine.
     parameters:
     - name: ugc_id
       type: number
     - name: file_path
       type: string
 
-  - name: delete_remote_file
+  - name: delete_remote_file_async
     type: function
     desc: |
-      Delete a remote file. This is an asynchronous function. The result will be delivered as an event with id 'deleteRemoteFile'.
+      Delete a remote file. This is an asynchronous function. The result will be delivered as an event with id 'deleteRemoteFile' or as a return value if the function is called from a coroutine.
     parameters:
     - name: file_path
       type: string
 
-  - name: download_remote_file
+  - name: download_remote_file_async
     type: function
     desc: |
-      Download a remote file. This is an asynchronous function. The result will be delivered as an event with id 'downloadRemoteFile'.
+      Download a remote file. This is an asynchronous function. The result will be delivered as an event with id 'downloadRemoteFile' or as a return value if the function is called from a coroutine.
     parameters:
     - name: file_path
       type: string
 
-  - name: upload_remote_file
+  - name: upload_remote_file_async
     type: function
     desc: |
-      Upload a remote file. This is an asynchronous function. The result will be delivered as an event with id 'uploadRemoteFile'.
+      Upload a remote file. This is an asynchronous function. The result will be delivered as an event with id 'uploadRemoteFile' or as a return value if the function is called from a coroutine.
     parameters:
     - name: file_path
       type: string
 
-  - name: list_remote_directory
+  - name: list_remote_directory_async
     type: function
     desc: |
-      List a remote directory. This is an asynchronous function. The result will be delivered as an event with id 'listRemoteDirectory'.
+      List a remote directory. This is an asynchronous function. The result will be delivered as an event with id 'listRemoteDirectory' or as a return value if the function is called from a coroutine.
     parameters:
     - name: path
       type: string
 
-  - name: download_remote_directory
+  - name: download_remote_directory_async
     type: function
     desc: |
-      Download a remote directory. This is an asynchronous function. The result will be delivered as an event with id 'downloadRemoteDirectory'.
+      Download a remote directory. This is an asynchronous function. The result will be delivered as an event with id 'downloadRemoteDirectory' or as a return value if the function is called from a coroutine.
     parameters:
     - name: path
       type: string
 
-  - name: write_local_file
+  - name: write_local_file_async
     type: function
     desc: |
-      Write a local file. This is an asynchronous function. The result will be delivered as an event with id 'writeLocalFile'.
+      Write a local file. This is an asynchronous function. The result will be delivered as an event with id 'writeLocalFile' or as a return value if the function is called from a coroutine.
     parameters:
     - name: file_path
       type: string
     - name: data
       type: string
 
-  - name: read_local_file
+  - name: read_local_file_async
     type: function
     desc: |
-      Read a local file. This is an asynchronous function. The result will be delivered as an event with id 'readLocalFile'.
+      Read a local file. This is an asynchronous function. The result will be delivered as an event with id 'readLocalFile' or as a return value if the function is called from a coroutine.
     parameters:
     - name: file_path
       type: string
@@ -327,10 +327,10 @@
       type: boolean
       optional: True
 
-  - name: request_stats
+  - name: request_stats_async
     type: function
     desc: |
-      Request stats. This is an asynchronous function. The result will be delivered as an event with id 'requestStats'.
+      Request stats. This is an asynchronous function. The result will be delivered as an event with id 'requestStats' or as a return value if the function is called from a coroutine.
 
   - name: store_stats
     type: function
@@ -405,28 +405,28 @@
     - name: app_channel
       type: number
 
-  - name: create_lobby
+  - name: create_lobby_async
     type: function
     desc: |
-      Create a lobby. This is an asynchronous function. The result will be delivered as an event with id 'createLobby'.
+      Create a lobby. This is an asynchronous function. The result will be delivered as an event with id 'createLobby' or as a return value if the function is called from a coroutine.
     parameters:
     - name: visibility
       type: number
     - name: max_players
       type: number
 
-  - name: join_lobby
+  - name: join_lobby_async
     type: function
     desc: |
-      Join a lobby. This is an asynchronous function. The result will be delivered as an event with id 'joinLobby'.
+      Join a lobby. This is an asynchronous function. The result will be delivered as an event with id 'joinLobby' or as a return value if the function is called from a coroutine.
     parameters:
     - name: lobby_id
       type: number
 
-  - name: list_available_lobbies
+  - name: list_available_lobbies_async
     type: function
     desc: |
-      List available lobbies. This is an asynchronous function. The result will be delivered as an event with id 'listAvailableLobbies'.
+      List available lobbies. This is an asynchronous function. The result will be delivered as an event with id 'listAvailableLobbies' or as a return value if the function is called from a coroutine.
     parameters:
     - name: friends_only
       type: boolean
@@ -486,10 +486,10 @@
     - name: key
       type: string
 
-  - name: leave_lobby
+  - name: leave_lobby_async
     type: function
     desc: |
-      Leave a lobby. This is an asynchronous function. The result will be delivered as an event with id 'leaveLobby'.
+      Leave a lobby. This is an asynchronous function. The result will be delivered as an event with id 'leaveLobby' or as a return value if the function is called from a coroutine.
     parameters:
     - name: lobby_id
       type: number
@@ -504,38 +504,38 @@
     - name: message
       type: string
 
-  - name: invite_user_to_lobby
+  - name: invite_user_to_lobby_async
     type: function
     desc: |
-      Invite a user to a lobby. This is an asynchronous function. The result will be delivered as an event with id 'inviteUserToLobby'.
+      Invite a user to a lobby. This is an asynchronous function. The result will be delivered as an event with id 'inviteUserToLobby' or as a return value if the function is called from a coroutine.
     parameters:
     - name: lobby_id
       type: number
     - name: user_id
       type: number
 
-  - name: get_lobby_invite_link
+  - name: get_lobby_invite_link_async
     type: function
     desc: |
-      Get a lobby invite link. This is an asynchronous function. The result will be delivered as an event with id 'getLobbyInviteLink'.
+      Get a lobby invite link. This is an asynchronous function. The result will be delivered as an event with id 'getLobbyInviteLink' or as a return value if the function is called from a coroutine.
     parameters:
     - name: copy_to_clipboard
       type: boolean
       optional: True
 
-  - name: update_user_presence
+  - name: update_user_presence_async
     type: function
     desc: |
-      Update user presence. This is an asynchronous function. The result will be delivered as an event with id 'updateUserPresence'.
+      Update user presence. This is an asynchronous function. The result will be delivered as an event with id 'updateUserPresence' or as a return value if the function is called from a coroutine.
     parameters:
     - name: data_json
       type: string
       optional: True
 
-  - name: ensure_gameplay_jwt
+  - name: ensure_gameplay_jwt_async
     type: function
     desc: |
-      Ensure a gameplay JWT is available. This is an asynchronous function. The result will be delivered as an event with id 'ensureGameplayJwt'.
+      Ensure a gameplay JWT is available. This is an asynchronous function. The result will be delivered as an event with id 'ensureGameplayJwt' or as a return value if the function is called from a coroutine.
 
   - name: EVENT_LOBBY_MESSAGE
     type: number

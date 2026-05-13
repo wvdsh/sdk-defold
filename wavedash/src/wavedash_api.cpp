@@ -316,10 +316,12 @@ int Wavedash_IsFullscreen(lua_State* L)
 
 /**
  * Request fullscreen mode
+ * This is an asynchronous function. The result will be delivered as an event
+ * with id 'requestFullscreen'.
  * @name request_fullscreen
  * @boolean fullscreen
  */
-int Wavedash_RequestFullscreen(lua_State* L)
+int Wavedash_RequestFullscreenAsync(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
     WavedashJs_RequestFullscreenAsync(lua_toboolean(L, 1) ? 1 : 0);
@@ -328,9 +330,11 @@ int Wavedash_RequestFullscreen(lua_State* L)
 
 /**
  * Toggle fullscreen mode
+ * This is an asynchronous function. The result will be delivered as an event
+ * with id 'toggleFullscreen'.
  * @name toggle_fullscreen
  */
-int Wavedash_ToggleFullscreen(lua_State* L)
+int Wavedash_ToggleFullscreenAsync(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
     WavedashJs_ToggleFullscreenAsync();
@@ -373,9 +377,11 @@ int Wavedash_GetUserId(lua_State* L)
 
 /**
  * Request a user JWT
+ * This is an asynchronous function. The result will be delivered as an event
+ * with id 'getUserJwt'.
  * @name get_user_jwt
  */
-int Wavedash_GetUserJwt(lua_State* L)
+int Wavedash_GetUserJwtAsync(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
     WavedashJs_GetUserJwtAsync();
@@ -395,9 +401,11 @@ int Wavedash_GetLaunchParams(lua_State* L)
 
 /**
  * List friends
+ * This is an asynchronous function. The result will be delivered as an event
+ * with id 'listFriends'.
  * @name list_friends
  */
-int Wavedash_ListFriends(lua_State* L)
+int Wavedash_ListFriendsAsync(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
     WavedashJs_ListFriendsAsync();
@@ -419,10 +427,12 @@ int Wavedash_GetUserAvatarUrl(lua_State* L)
 
 /**
  * Get a leaderboard
+ * This is an asynchronous function. The result will be delivered as an event
+ * with id 'getLeaderboard'.
  * @name get_leaderboard
  * @string name
  */
-int Wavedash_GetLeaderboard(lua_State* L)
+int Wavedash_GetLeaderboardAsync(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
     WavedashJs_GetLeaderboardAsync(luaL_checkstring(L, 1));
@@ -431,12 +441,14 @@ int Wavedash_GetLeaderboard(lua_State* L)
 
 /**
  * Get or create a leaderboard
+ * This is an asynchronous function. The result will be delivered as an event
+ * with id 'getOrCreateLeaderboard'.
  * @name get_or_create_leaderboard
  * @string name
  * @number sort_order
  * @number display_type
  */
-int Wavedash_GetOrCreateLeaderboard(lua_State* L)
+int Wavedash_GetOrCreateLeaderboardAsync(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
     WavedashJs_GetOrCreateLeaderboardAsync(luaL_checkstring(L, 1), luaL_checknumber(L, 2), luaL_checknumber(L, 3));
@@ -457,10 +469,12 @@ int Wavedash_GetLeaderboardEntryCount(lua_State* L)
 
 /**
  * Get the current user's leaderboard entries
+ * This is an asynchronous function. The result will be delivered as an event
+ * with id 'getMyLeaderboardEntries'.
  * @name get_my_leaderboard_entries
  * @number leaderboard_id
  */
-int Wavedash_GetMyLeaderboardEntries(lua_State* L)
+int Wavedash_GetMyLeaderboardEntriesAsync(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
     WavedashJs_GetMyLeaderboardEntriesAsync(luaL_checknumber(L, 1));
@@ -469,13 +483,15 @@ int Wavedash_GetMyLeaderboardEntries(lua_State* L)
 
 /**
  * List leaderboard entries around a user
+ * This is an asynchronous function. The result will be delivered as an event
+ * with id 'listLeaderboardEntriesAroundUser'.
  * @name list_leaderboard_entries_around_user
  * @number leaderboard_id
  * @number count_ahead
  * @number count_behind
  * @boolean friends_only?
  */
-int Wavedash_ListLeaderboardEntriesAroundUser(lua_State* L)
+int Wavedash_ListLeaderboardEntriesAroundUserAsync(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
     WavedashJs_ListLeaderboardEntriesAroundUserAsync(luaL_checknumber(L, 1), luaL_checknumber(L, 2), luaL_checknumber(L, 3), OptionalBoolArg(L, 4));
@@ -484,13 +500,15 @@ int Wavedash_ListLeaderboardEntriesAroundUser(lua_State* L)
 
 /**
  * List leaderboard entries
+ * This is an asynchronous function. The result will be delivered as an event
+ * with id 'listLeaderboardEntries'.
  * @name list_leaderboard_entries
  * @number leaderboard_id
  * @number offset
  * @number limit
  * @boolean friends_only?
  */
-int Wavedash_ListLeaderboardEntries(lua_State* L)
+int Wavedash_ListLeaderboardEntriesAsync(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
     WavedashJs_ListLeaderboardEntriesAsync(luaL_checknumber(L, 1), luaL_checknumber(L, 2), luaL_checknumber(L, 3), OptionalBoolArg(L, 4));
@@ -499,13 +517,15 @@ int Wavedash_ListLeaderboardEntries(lua_State* L)
 
 /**
  * Upload a leaderboard score
+ * This is an asynchronous function. The result will be delivered as an event
+ * with id 'uploadLeaderboardScore'.
  * @name upload_leaderboard_score
  * @number leaderboard_id
  * @number score
  * @boolean keep_best
  * @number ugc_id?
  */
-int Wavedash_UploadLeaderboardScore(lua_State* L)
+int Wavedash_UploadLeaderboardScoreAsync(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
     WavedashJs_UploadLeaderboardScoreAsync(luaL_checknumber(L, 1), luaL_checknumber(L, 2), lua_toboolean(L, 3) ? 1 : 0, OptionalNumberArg(L, 4));
@@ -514,6 +534,8 @@ int Wavedash_UploadLeaderboardScore(lua_State* L)
 
 /**
  * Create a UGC item
+ * This is an asynchronous function. The result will be delivered as an event
+ * with id 'createUGCItem'.
  * @name create_ugc_item
  * @number ugc_type
  * @string title?
@@ -521,7 +543,7 @@ int Wavedash_UploadLeaderboardScore(lua_State* L)
  * @number visibility?
  * @string file_path?
  */
-int Wavedash_CreateUGCItem(lua_State* L)
+int Wavedash_CreateUGCItemAsync(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
     WavedashJs_CreateUGCItemAsync(luaL_checknumber(L, 1), OptionalStringArg(L, 2), OptionalStringArg(L, 3), OptionalNumberArg(L, 4), OptionalStringArg(L, 5));
@@ -530,6 +552,8 @@ int Wavedash_CreateUGCItem(lua_State* L)
 
 /**
  * Update a UGC item
+ * This is an asynchronous function. The result will be delivered as an event
+ * with id 'updateUGCItem'.
  * @name update_ugc_item
  * @number ugc_id
  * @string title?
@@ -537,7 +561,7 @@ int Wavedash_CreateUGCItem(lua_State* L)
  * @number visibility?
  * @string file_path?
  */
-int Wavedash_UpdateUGCItem(lua_State* L)
+int Wavedash_UpdateUGCItemAsync(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
     WavedashJs_UpdateUGCItemAsync(luaL_checknumber(L, 1), OptionalStringArg(L, 2), OptionalStringArg(L, 3), OptionalNumberArg(L, 4), OptionalStringArg(L, 5));
@@ -546,11 +570,13 @@ int Wavedash_UpdateUGCItem(lua_State* L)
 
 /**
  * Download a UGC item
+ * This is an asynchronous function. The result will be delivered as an event
+ * with id 'downloadUGCItem'.
  * @name download_ugc_item
  * @number ugc_id
  * @string file_path
  */
-int Wavedash_DownloadUGCItem(lua_State* L)
+int Wavedash_DownloadUGCItemAsync(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
     WavedashJs_DownloadUGCItemAsync(luaL_checknumber(L, 1), luaL_checkstring(L, 2));
@@ -559,10 +585,12 @@ int Wavedash_DownloadUGCItem(lua_State* L)
 
 /**
  * Delete a remote file
+ * This is an asynchronous function. The result will be delivered as an event
+ * with id 'deleteRemoteFile'.
  * @name delete_remote_file
  * @string file_path
  */
-int Wavedash_DeleteRemoteFile(lua_State* L)
+int Wavedash_DeleteRemoteFileAsync(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
     WavedashJs_DeleteRemoteFileAsync(luaL_checkstring(L, 1));
@@ -571,10 +599,12 @@ int Wavedash_DeleteRemoteFile(lua_State* L)
 
 /**
  * Download a remote file
+ * This is an asynchronous function. The result will be delivered as an event
+ * with id 'downloadRemoteFile'.
  * @name download_remote_file
  * @string file_path
  */
-int Wavedash_DownloadRemoteFile(lua_State* L)
+int Wavedash_DownloadRemoteFileAsync(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
     WavedashJs_DownloadRemoteFileAsync(luaL_checkstring(L, 1));
@@ -583,10 +613,12 @@ int Wavedash_DownloadRemoteFile(lua_State* L)
 
 /**
  * Upload a remote file
+ * This is an asynchronous function. The result will be delivered as an event
+ * with id 'uploadRemoteFile'.
  * @name upload_remote_file
  * @string file_path
  */
-int Wavedash_UploadRemoteFile(lua_State* L)
+int Wavedash_UploadRemoteFileAsync(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
     WavedashJs_UploadRemoteFileAsync(luaL_checkstring(L, 1));
@@ -595,10 +627,12 @@ int Wavedash_UploadRemoteFile(lua_State* L)
 
 /**
  * List a remote directory
+ * This is an asynchronous function. The result will be delivered as an event
+ * with id 'listRemoteDirectory'.
  * @name list_remote_directory
  * @string path
  */
-int Wavedash_ListRemoteDirectory(lua_State* L)
+int Wavedash_ListRemoteDirectoryAsync(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
     WavedashJs_ListRemoteDirectoryAsync(luaL_checkstring(L, 1));
@@ -607,10 +641,12 @@ int Wavedash_ListRemoteDirectory(lua_State* L)
 
 /**
  * Download a remote directory
+ * This is an asynchronous function. The result will be delivered as an event
+ * with id 'downloadRemoteDirectory'.
  * @name download_remote_directory
  * @string path
  */
-int Wavedash_DownloadRemoteDirectory(lua_State* L)
+int Wavedash_DownloadRemoteDirectoryAsync(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
     WavedashJs_DownloadRemoteDirectoryAsync(luaL_checkstring(L, 1));
@@ -619,11 +655,13 @@ int Wavedash_DownloadRemoteDirectory(lua_State* L)
 
 /**
  * Write a local file
+ * This is an asynchronous function. The result will be delivered as an event
+ * with id 'writeLocalFile'.
  * @name write_local_file
  * @string file_path
  * @string data
  */
-int Wavedash_WriteLocalFile(lua_State* L)
+int Wavedash_WriteLocalFileAsync(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
 
@@ -635,10 +673,12 @@ int Wavedash_WriteLocalFile(lua_State* L)
 
 /**
  * Read a local file
+ * This is an asynchronous function. The result will be delivered as an event
+ * with id 'readLocalFile'.
  * @name read_local_file
  * @string file_path
  */
-int Wavedash_ReadLocalFile(lua_State* L)
+int Wavedash_ReadLocalFileAsync(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
     WavedashJs_ReadLocalFileAsync(luaL_checkstring(L, 1));
@@ -698,9 +738,11 @@ int Wavedash_SetStat(lua_State* L)
 
 /**
  * Request stats
+ * This is an asynchronous function. The result will be delivered as an event
+ * with id 'requestStats'.
  * @name request_stats
  */
-int Wavedash_RequestStats(lua_State* L)
+int Wavedash_RequestStatsAsync(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
     WavedashJs_RequestStatsAsync();
@@ -818,11 +860,13 @@ int Wavedash_DrainP2PChannelToBuffer(lua_State* L)
 
 /**
  * Create a lobby
+ * This is an asynchronous function. The result will be delivered as an event
+ * with id 'createLobby'.
  * @name create_lobby
  * @number visibility
  * @number max_players
  */
-int Wavedash_CreateLobby(lua_State* L)
+int Wavedash_CreateLobbyAsync(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
     WavedashJs_CreateLobbyAsync(luaL_checknumber(L, 1), OptionalNumberArg(L, 2));
@@ -831,10 +875,12 @@ int Wavedash_CreateLobby(lua_State* L)
 
 /**
  * Join a lobby
+ * This is an asynchronous function. The result will be delivered as an event
+ * with id 'joinLobby'.
  * @name join_lobby
  * @number lobby_id
  */
-int Wavedash_JoinLobby(lua_State* L)
+int Wavedash_JoinLobbyAsync(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
     WavedashJs_JoinLobbyAsync(luaL_checknumber(L, 1));
@@ -843,10 +889,12 @@ int Wavedash_JoinLobby(lua_State* L)
 
 /**
  * List available lobbies
+ * This is an asynchronous function. The result will be delivered as an event
+ * with id 'listAvailableLobbies'.
  * @name list_available_lobbies
  * @boolean friends_only?
  */
-int Wavedash_ListAvailableLobbies(lua_State* L)
+int Wavedash_ListAvailableLobbiesAsync(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
     WavedashJs_ListAvailableLobbiesAsync(OptionalBoolArg(L, 1));
@@ -939,10 +987,12 @@ int Wavedash_DeleteLobbyData(lua_State* L)
 
 /**
  * Leave a lobby
+ * This is an asynchronous function. The result will be delivered as an event
+ * with id 'leaveLobby'.
  * @name leave_lobby
  * @number lobby_id
  */
-int Wavedash_LeaveLobby(lua_State* L)
+int Wavedash_LeaveLobbyAsync(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
     WavedashJs_LeaveLobbyAsync(luaL_checknumber(L, 1));
@@ -964,11 +1014,13 @@ int Wavedash_SendLobbyMessage(lua_State* L)
 
 /**
  * Invite a user to a lobby
+ * This is an asynchronous function. The result will be delivered as an event
+ * with id 'inviteUserToLobby'.
  * @name invite_user_to_lobby
  * @number lobby_id
  * @number user_id
  */
-int Wavedash_InviteUserToLobby(lua_State* L)
+int Wavedash_InviteUserToLobbyAsync(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
     WavedashJs_InviteUserToLobbyAsync(luaL_checknumber(L, 1), luaL_checknumber(L, 2));
@@ -977,10 +1029,12 @@ int Wavedash_InviteUserToLobby(lua_State* L)
 
 /**
  * Get a lobby invite link
+ * This is an asynchronous function. The result will be delivered as an event
+ * with id 'getLobbyInviteLink'.
  * @name get_lobby_invite_link
  * @boolean copy_to_clipboard?
  */
-int Wavedash_GetLobbyInviteLink(lua_State* L)
+int Wavedash_GetLobbyInviteLinkAsync(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
     WavedashJs_GetLobbyInviteLinkAsync(OptionalBoolArg(L, 1));
@@ -989,10 +1043,12 @@ int Wavedash_GetLobbyInviteLink(lua_State* L)
 
 /**
  * Update user presence
+ * This is an asynchronous function. The result will be delivered as an event
+ * with id 'updateUserPresence'.
  * @name update_user_presence
  * @string data_json?
  */
-int Wavedash_UpdateUserPresence(lua_State* L)
+int Wavedash_UpdateUserPresenceAsync(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
     WavedashJs_UpdateUserPresenceAsync(RawJsonStringArg(L, 1));
@@ -1001,9 +1057,11 @@ int Wavedash_UpdateUserPresence(lua_State* L)
 
 /**
  * Ensure a gameplay JWT is available
+ * This is an asynchronous function. The result will be delivered as an event
+ * with id 'ensureGameplayJwt'.
  * @name ensure_gameplay_jwt
  */
-int Wavedash_EnsureGameplayJwt(lua_State* L)
+int Wavedash_EnsureGameplayJwtAsync(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
     WavedashJs_EnsureGameplayJwtAsync();
@@ -1018,37 +1076,37 @@ static const luaL_reg Module_methods[] =
     {"load_complete", Wavedash_LoadComplete},
     {"toggle_overlay", Wavedash_ToggleOverlay},
     {"is_fullscreen", Wavedash_IsFullscreen},
-    {"request_fullscreen", Wavedash_RequestFullscreen},
-    {"toggle_fullscreen", Wavedash_ToggleFullscreen},
+    {"request_fullscreen", Wavedash_RequestFullscreenAsync},
+    {"toggle_fullscreen", Wavedash_ToggleFullscreenAsync},
     {"get_user", Wavedash_GetUser},
     {"get_username", Wavedash_GetUsername},
     {"get_user_id", Wavedash_GetUserId},
-    {"get_user_jwt", Wavedash_GetUserJwt},
+    {"get_user_jwt", Wavedash_GetUserJwtAsync},
     {"get_launch_params", Wavedash_GetLaunchParams},
-    {"list_friends", Wavedash_ListFriends},
+    {"list_friends", Wavedash_ListFriendsAsync},
     {"get_user_avatar_url", Wavedash_GetUserAvatarUrl},
-    {"get_leaderboard", Wavedash_GetLeaderboard},
-    {"get_or_create_leaderboard", Wavedash_GetOrCreateLeaderboard},
+    {"get_leaderboard", Wavedash_GetLeaderboardAsync},
+    {"get_or_create_leaderboard", Wavedash_GetOrCreateLeaderboardAsync},
     {"get_leaderboard_entry_count", Wavedash_GetLeaderboardEntryCount},
-    {"get_my_leaderboard_entries", Wavedash_GetMyLeaderboardEntries},
-    {"list_leaderboard_entries_around_user", Wavedash_ListLeaderboardEntriesAroundUser},
-    {"list_leaderboard_entries", Wavedash_ListLeaderboardEntries},
-    {"upload_leaderboard_score", Wavedash_UploadLeaderboardScore},
-    {"create_ugc_item", Wavedash_CreateUGCItem},
-    {"update_ugc_item", Wavedash_UpdateUGCItem},
-    {"download_ugc_item", Wavedash_DownloadUGCItem},
-    {"delete_remote_file", Wavedash_DeleteRemoteFile},
-    {"download_remote_file", Wavedash_DownloadRemoteFile},
-    {"upload_remote_file", Wavedash_UploadRemoteFile},
-    {"list_remote_directory", Wavedash_ListRemoteDirectory},
-    {"download_remote_directory", Wavedash_DownloadRemoteDirectory},
-    {"write_local_file", Wavedash_WriteLocalFile},
-    {"read_local_file", Wavedash_ReadLocalFile},
+    {"get_my_leaderboard_entries", Wavedash_GetMyLeaderboardEntriesAsync},
+    {"list_leaderboard_entries_around_user", Wavedash_ListLeaderboardEntriesAroundUserAsync},
+    {"list_leaderboard_entries", Wavedash_ListLeaderboardEntriesAsync},
+    {"upload_leaderboard_score", Wavedash_UploadLeaderboardScoreAsync},
+    {"create_ugc_item", Wavedash_CreateUGCItemAsync},
+    {"update_ugc_item", Wavedash_UpdateUGCItemAsync},
+    {"download_ugc_item", Wavedash_DownloadUGCItemAsync},
+    {"delete_remote_file", Wavedash_DeleteRemoteFileAsync},
+    {"download_remote_file", Wavedash_DownloadRemoteFileAsync},
+    {"upload_remote_file", Wavedash_UploadRemoteFileAsync},
+    {"list_remote_directory", Wavedash_ListRemoteDirectoryAsync},
+    {"download_remote_directory", Wavedash_DownloadRemoteDirectoryAsync},
+    {"write_local_file", Wavedash_WriteLocalFileAsync},
+    {"read_local_file", Wavedash_ReadLocalFileAsync},
     {"get_achievement", Wavedash_GetAchievement},
     {"get_stat", Wavedash_GetStat},
     {"set_achievement", Wavedash_SetAchievement},
     {"set_stat", Wavedash_SetStat},
-    {"request_stats", Wavedash_RequestStats},
+    {"request_stats", Wavedash_RequestStatsAsync},
     {"store_stats", Wavedash_StoreStats},
     {"get_p2p_max_payload_size", Wavedash_GetP2PMaxPayloadSize},
     {"get_p2p_max_incoming_messages", Wavedash_GetP2PMaxIncomingMessages},
@@ -1057,21 +1115,21 @@ static const luaL_reg Module_methods[] =
     {"broadcast_p2p_message", Wavedash_BroadcastP2PMessage},
     {"read_p2p_message_from_channel", Wavedash_ReadP2PMessageFromChannel},
     {"drain_p2p_channel_to_buffer", Wavedash_DrainP2PChannelToBuffer},
-    {"create_lobby", Wavedash_CreateLobby},
-    {"join_lobby", Wavedash_JoinLobby},
-    {"list_available_lobbies", Wavedash_ListAvailableLobbies},
+    {"create_lobby", Wavedash_CreateLobbyAsync},
+    {"join_lobby", Wavedash_JoinLobbyAsync},
+    {"list_available_lobbies", Wavedash_ListAvailableLobbiesAsync},
     {"get_lobby_users", Wavedash_GetLobbyUsers},
     {"get_num_lobby_users", Wavedash_GetNumLobbyUsers},
     {"get_lobby_host_id", Wavedash_GetLobbyHostId},
     {"get_lobby_data", Wavedash_GetLobbyData},
     {"set_lobby_data", Wavedash_SetLobbyData},
     {"delete_lobby_data", Wavedash_DeleteLobbyData},
-    {"leave_lobby", Wavedash_LeaveLobby},
+    {"leave_lobby", Wavedash_LeaveLobbyAsync},
     {"send_lobby_message", Wavedash_SendLobbyMessage},
-    {"invite_user_to_lobby", Wavedash_InviteUserToLobby},
-    {"get_lobby_invite_link", Wavedash_GetLobbyInviteLink},
-    {"update_user_presence", Wavedash_UpdateUserPresence},
-    {"ensure_gameplay_jwt", Wavedash_EnsureGameplayJwt},
+    {"invite_user_to_lobby", Wavedash_InviteUserToLobbyAsync},
+    {"get_lobby_invite_link", Wavedash_GetLobbyInviteLinkAsync},
+    {"update_user_presence", Wavedash_UpdateUserPresenceAsync},
+    {"ensure_gameplay_jwt", Wavedash_EnsureGameplayJwtAsync},
     {0, 0}
 };
 

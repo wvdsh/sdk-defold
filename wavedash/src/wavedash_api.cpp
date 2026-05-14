@@ -25,24 +25,24 @@ extern "C" {
     void WavedashJs_ToggleFullscreenAsync();
 
     const char* WavedashJs_GetUser();
-    const char* WavedashJs_GetUsername(double user_id);
-    double WavedashJs_GetUserId();
+    const char* WavedashJs_GetUsername(const char* user_id);
+    const char* WavedashJs_GetUserId();
     void WavedashJs_GetUserJwtAsync();
     const char* WavedashJs_GetLaunchParams();
     void WavedashJs_ListFriendsAsync();
-    const char* WavedashJs_GetUserAvatarUrl(double user_id, double size);
+    const char* WavedashJs_GetUserAvatarUrl(const char* user_id, double size);
 
     void WavedashJs_GetLeaderboardAsync(const char* name);
     void WavedashJs_GetOrCreateLeaderboardAsync(const char* name, double sort_order, double display_type);
-    double WavedashJs_GetLeaderboardEntryCount(double leaderboard_id);
-    void WavedashJs_GetMyLeaderboardEntriesAsync(double leaderboard_id);
-    void WavedashJs_ListLeaderboardEntriesAroundUserAsync(double leaderboard_id, double count_ahead, double count_behind, int friends_only);
-    void WavedashJs_ListLeaderboardEntriesAsync(double leaderboard_id, double offset, double limit, int friends_only);
-    void WavedashJs_UploadLeaderboardScoreAsync(double leaderboard_id, double score, int keep_best, double ugc_id);
+    double WavedashJs_GetLeaderboardEntryCount(const char* leaderboard_id);
+    void WavedashJs_GetMyLeaderboardEntriesAsync(const char* leaderboard_id);
+    void WavedashJs_ListLeaderboardEntriesAroundUserAsync(const char* leaderboard_id, double count_ahead, double count_behind, int friends_only);
+    void WavedashJs_ListLeaderboardEntriesAsync(const char* leaderboard_id, double offset, double limit, int friends_only);
+    void WavedashJs_UploadLeaderboardScoreAsync(const char* leaderboard_id, double score, int keep_best, const char* ugc_id);
 
     void WavedashJs_CreateUGCItemAsync(double ugc_type, const char* title, const char* description, double visibility, const char* file_path);
-    void WavedashJs_UpdateUGCItemAsync(double ugc_id, const char* title, const char* description, double visibility, const char* file_path);
-    void WavedashJs_DownloadUGCItemAsync(double ugc_id, const char* file_path);
+    void WavedashJs_UpdateUGCItemAsync(const char* ugc_id, const char* title, const char* description, double visibility, const char* file_path);
+    void WavedashJs_DownloadUGCItemAsync(const char* ugc_id, const char* file_path);
     void WavedashJs_DeleteRemoteFileAsync(const char* file_path);
     void WavedashJs_DownloadRemoteFileAsync(const char* file_path);
     void WavedashJs_UploadRemoteFileAsync(const char* file_path);
@@ -61,23 +61,23 @@ extern "C" {
     double WavedashJs_GetP2PMaxPayloadSize();
     double WavedashJs_GetP2PMaxIncomingMessages();
     const char* WavedashJs_GetP2POutgoingMessageBuffer(uint32_t* out_length);
-    int WavedashJs_SendP2PMessage(double to_user_id, double app_channel, int reliable, const void* payload, uint32_t payload_length, double payload_size);
+    int WavedashJs_SendP2PMessage(const char* to_user_id, double app_channel, int reliable, const void* payload, uint32_t payload_length, double payload_size);
     int WavedashJs_BroadcastP2PMessage(double app_channel, int reliable, const void* payload, uint32_t payload_length, double payload_size);
     const char* WavedashJs_ReadP2PMessageFromChannel(double app_channel);
     const char* WavedashJs_DrainP2PChannelToBuffer(double app_channel, uint32_t* out_length);
 
     void WavedashJs_CreateLobbyAsync(double visibility, double max_players);
-    void WavedashJs_JoinLobbyAsync(double lobby_id);
+    void WavedashJs_JoinLobbyAsync(const char* lobby_id);
     void WavedashJs_ListAvailableLobbiesAsync(int friends_only);
-    const char* WavedashJs_GetLobbyUsers(double lobby_id);
-    double WavedashJs_GetNumLobbyUsers(double lobby_id);
-    const char* WavedashJs_GetLobbyHostId(double lobby_id);
-    const char* WavedashJs_GetLobbyData(double lobby_id, const char* key);
-    int WavedashJs_SetLobbyData(double lobby_id, const char* key, const char* value_json);
-    int WavedashJs_DeleteLobbyData(double lobby_id, const char* key);
-    void WavedashJs_LeaveLobbyAsync(double lobby_id);
-    int WavedashJs_SendLobbyMessage(double lobby_id, const char* message);
-    void WavedashJs_InviteUserToLobbyAsync(double lobby_id, double user_id);
+    const char* WavedashJs_GetLobbyUsers(const char* lobby_id);
+    double WavedashJs_GetNumLobbyUsers(const char* lobby_id);
+    const char* WavedashJs_GetLobbyHostId(const char* lobby_id);
+    const char* WavedashJs_GetLobbyData(const char* lobby_id, const char* key);
+    int WavedashJs_SetLobbyData(const char* lobby_id, const char* key, const char* value_json);
+    int WavedashJs_DeleteLobbyData(const char* lobby_id, const char* key);
+    void WavedashJs_LeaveLobbyAsync(const char* lobby_id);
+    int WavedashJs_SendLobbyMessage(const char* lobby_id, const char* message);
+    void WavedashJs_InviteUserToLobbyAsync(const char* lobby_id, const char* user_id);
     void WavedashJs_GetLobbyInviteLinkAsync(int copy_to_clipboard);
     void WavedashJs_UpdateUserPresenceAsync(const char* data_json);
     void WavedashJs_EnsureGameplayJwtAsync();
@@ -147,14 +147,7 @@ static void Wavedash_OnEventCallback(const char* event, const char* payload, uin
         lua_State* L = g_AsyncThread;
         g_AsyncThread = 0x0;
         g_AsyncEventId = 0x0;
-        if (payload)
-        {
-            dmScript::JsonToLua(L, payload, payload_length);
-        }
-        else
-        {
-            lua_pushnil(L);
-        }
+        dmScript::JsonToLua(L, payload, payload_length);
         int res = lua_resume(L, 1);
         if ((res != LUA_YIELD) && (res != 0))
         {
@@ -180,14 +173,7 @@ static void Wavedash_OnEventCallback(const char* event, const char* payload, uin
     }
 
     lua_pushstring(L, event);
-    if (payload)
-    {
-        dmScript::JsonToLua(L, payload, payload_length);
-    }
-    else
-    {
-        lua_pushnil(L);
-    }
+    dmScript::JsonToLua(L, payload, payload_length);
     int ret = dmScript::PCall(L, 3, 0);
     (void)ret;
 
@@ -446,12 +432,12 @@ int Wavedash_GetUser(lua_State* L)
 /**
  * Get a username.
  * @name get_username
- * @number user_id?
+ * @string user_id?
  */
 int Wavedash_GetUsername(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 1);
-    PushAndFreeString(L, WavedashJs_GetUsername(OptionalNumberArg(L, 1)));
+    PushAndFreeString(L, WavedashJs_GetUsername(OptionalStringArg(L, 1)));
     return 1;
 }
 
@@ -462,7 +448,7 @@ int Wavedash_GetUsername(lua_State* L)
 int Wavedash_GetUserId(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 1);
-    lua_pushnumber(L, WavedashJs_GetUserId());
+    PushAndFreeString(L, WavedashJs_GetUserId());
     return 1;
 }
 
@@ -516,13 +502,13 @@ int Wavedash_ListFriendsAsync(lua_State* L)
 /**
  * Get a user avatar URL.
  * @name get_user_avatar_url
- * @number user_id
+ * @string user_id
  * @number size?
  */
 int Wavedash_GetUserAvatarUrl(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 1);
-    PushAndFreeString(L, WavedashJs_GetUserAvatarUrl(luaL_checknumber(L, 1), OptionalNumberArg(L, 2)));
+    PushAndFreeString(L, WavedashJs_GetUserAvatarUrl(luaL_checkstring(L, 1), OptionalNumberArg(L, 2)));
     return 1;
 }
 
@@ -569,12 +555,12 @@ int Wavedash_GetOrCreateLeaderboardAsync(lua_State* L)
 /**
  * Get leaderboard entry count.
  * @name get_leaderboard_entry_count
- * @number leaderboard_id
+ * @string leaderboard_id
  */
 int Wavedash_GetLeaderboardEntryCount(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 1);
-    lua_pushnumber(L, WavedashJs_GetLeaderboardEntryCount(luaL_checknumber(L, 1)));
+    lua_pushnumber(L, WavedashJs_GetLeaderboardEntryCount(luaL_checkstring(L, 1)));
     return 1;
 }
 
@@ -584,7 +570,7 @@ int Wavedash_GetLeaderboardEntryCount(lua_State* L)
  * with id 'getMyLeaderboardEntries' or as a return value if the function is called from
  * a coroutine.
  * @name get_my_leaderboard_entries_async
- * @number leaderboard_id
+ * @string leaderboard_id
  * @return response Returns the current user's leaderboard entries. (Note: Only
  * if called from within a coroutine)
  */
@@ -592,7 +578,7 @@ int Wavedash_GetMyLeaderboardEntriesAsync(lua_State* L)
 {
     {
         DM_LUA_STACK_CHECK(L, 0);
-        WavedashJs_GetMyLeaderboardEntriesAsync(luaL_checknumber(L, 1));
+        WavedashJs_GetMyLeaderboardEntriesAsync(luaL_checkstring(L, 1));
     }
     return AwaitAsyncEvent(L, "getMyLeaderboardEntries");
 }
@@ -603,7 +589,7 @@ int Wavedash_GetMyLeaderboardEntriesAsync(lua_State* L)
  * with id 'listLeaderboardEntriesAroundUser' or as a return value if the function is called from
  * a coroutine.
  * @name list_leaderboard_entries_around_user_async
- * @number leaderboard_id
+ * @string leaderboard_id
  * @number count_ahead
  * @number count_behind
  * @boolean friends_only?
@@ -614,7 +600,7 @@ int Wavedash_ListLeaderboardEntriesAroundUserAsync(lua_State* L)
 {
     {
         DM_LUA_STACK_CHECK(L, 0);
-        WavedashJs_ListLeaderboardEntriesAroundUserAsync(luaL_checknumber(L, 1), luaL_checknumber(L, 2), luaL_checknumber(L, 3), OptionalBoolArg(L, 4));
+        WavedashJs_ListLeaderboardEntriesAroundUserAsync(luaL_checkstring(L, 1), luaL_checknumber(L, 2), luaL_checknumber(L, 3), OptionalBoolArg(L, 4));
     }
     return AwaitAsyncEvent(L, "listLeaderboardEntriesAroundUser");
 }
@@ -625,7 +611,7 @@ int Wavedash_ListLeaderboardEntriesAroundUserAsync(lua_State* L)
  * with id 'listLeaderboardEntries' or as a return value if the function is called from
  * a coroutine.
  * @name list_leaderboard_entries_async
- * @number leaderboard_id
+ * @string leaderboard_id
  * @number offset
  * @number limit
  * @boolean friends_only?
@@ -636,7 +622,7 @@ int Wavedash_ListLeaderboardEntriesAsync(lua_State* L)
 {
     {
         DM_LUA_STACK_CHECK(L, 0);
-        WavedashJs_ListLeaderboardEntriesAsync(luaL_checknumber(L, 1), luaL_checknumber(L, 2), luaL_checknumber(L, 3), OptionalBoolArg(L, 4));
+        WavedashJs_ListLeaderboardEntriesAsync(luaL_checkstring(L, 1), luaL_checknumber(L, 2), luaL_checknumber(L, 3), OptionalBoolArg(L, 4));
     }
     return AwaitAsyncEvent(L, "listLeaderboardEntries");
 }
@@ -647,10 +633,10 @@ int Wavedash_ListLeaderboardEntriesAsync(lua_State* L)
  * with id 'uploadLeaderboardScore' or as a return value if the function is called from
  * a coroutine.
  * @name upload_leaderboard_score_async
- * @number leaderboard_id
+ * @string leaderboard_id
  * @number score
  * @boolean keep_best
- * @number ugc_id?
+ * @string ugc_id?
  * @return response Returns the upserted leaderboard entry. (Note: Only if
  * called from within a coroutine)
  */
@@ -658,7 +644,7 @@ int Wavedash_UploadLeaderboardScoreAsync(lua_State* L)
 {
     {
         DM_LUA_STACK_CHECK(L, 0);
-        WavedashJs_UploadLeaderboardScoreAsync(luaL_checknumber(L, 1), luaL_checknumber(L, 2), lua_toboolean(L, 3) ? 1 : 0, OptionalNumberArg(L, 4));
+        WavedashJs_UploadLeaderboardScoreAsync(luaL_checkstring(L, 1), luaL_checknumber(L, 2), lua_toboolean(L, 3) ? 1 : 0, OptionalStringArg(L, 4));
     }
     return AwaitAsyncEvent(L, "uploadLeaderboardScore");
 }
@@ -674,8 +660,8 @@ int Wavedash_UploadLeaderboardScoreAsync(lua_State* L)
  * @string description?
  * @number visibility?
  * @string file_path?
- * @return response Returns ugcId. (Note: Only if called from within a
- * coroutine)
+ * @return response Returns the created UGC item id as a string. (Note: Only
+ * if called from within a coroutine)
  */
 int Wavedash_CreateUGCItemAsync(lua_State* L)
 {
@@ -692,19 +678,19 @@ int Wavedash_CreateUGCItemAsync(lua_State* L)
  * with id 'updateUGCItem' or as a return value if the function is called from
  * a coroutine.
  * @name update_ugc_item_async
- * @number ugc_id
+ * @string ugc_id
  * @string title?
  * @string description?
  * @number visibility?
  * @string file_path?
- * @return response Returns ugcId. (Note: Only if called from within a
- * coroutine)
+ * @return response Returns the updated UGC item id as a string. (Note: Only
+ * if called from within a coroutine)
  */
 int Wavedash_UpdateUGCItemAsync(lua_State* L)
 {
     {
         DM_LUA_STACK_CHECK(L, 0);
-        WavedashJs_UpdateUGCItemAsync(luaL_checknumber(L, 1), OptionalStringArg(L, 2), OptionalStringArg(L, 3), OptionalNumberArg(L, 4), OptionalStringArg(L, 5));
+        WavedashJs_UpdateUGCItemAsync(luaL_checkstring(L, 1), OptionalStringArg(L, 2), OptionalStringArg(L, 3), OptionalNumberArg(L, 4), OptionalStringArg(L, 5));
     }
     return AwaitAsyncEvent(L, "updateUGCItem");
 }
@@ -715,16 +701,16 @@ int Wavedash_UpdateUGCItemAsync(lua_State* L)
  * with id 'downloadUGCItem' or as a return value if the function is called from
  * a coroutine.
  * @name download_ugc_item_async
- * @number ugc_id
+ * @string ugc_id
  * @string file_path
- * @return response Returns ugcId. (Note: Only if called from within a
- * coroutine)
+ * @return response Returns the downloaded UGC item id as a string. (Note:
+ * Only if called from within a coroutine)
  */
 int Wavedash_DownloadUGCItemAsync(lua_State* L)
 {
     {
         DM_LUA_STACK_CHECK(L, 0);
-        WavedashJs_DownloadUGCItemAsync(luaL_checknumber(L, 1), luaL_checkstring(L, 2));
+        WavedashJs_DownloadUGCItemAsync(luaL_checkstring(L, 1), luaL_checkstring(L, 2));
     }
     return AwaitAsyncEvent(L, "downloadUGCItem");
 }
@@ -984,7 +970,7 @@ int Wavedash_GetP2POutgoingMessageBuffer(lua_State* L)
 /**
  * Send a P2P message.
  * @name send_p2p_message
- * @number to_user_id?
+ * @string to_user_id?
  * @number app_channel?
  * @boolean reliable?
  * @string payload
@@ -996,7 +982,7 @@ int Wavedash_SendP2PMessage(lua_State* L)
 
     size_t payload_length = 0;
     const char* payload = luaL_checklstring(L, 4, &payload_length);
-    lua_pushboolean(L, WavedashJs_SendP2PMessage(OptionalNumberArg(L, 1), OptionalNumberArg(L, 2), OptionalBoolArg(L, 3), payload, (uint32_t) payload_length, OptionalNumberArg(L, 5)));
+    lua_pushboolean(L, WavedashJs_SendP2PMessage(OptionalStringArg(L, 1), OptionalNumberArg(L, 2), OptionalBoolArg(L, 3), payload, (uint32_t) payload_length, OptionalNumberArg(L, 5)));
     return 1;
 }
 
@@ -1052,8 +1038,9 @@ int Wavedash_DrainP2PChannelToBuffer(lua_State* L)
  * @name create_lobby_async
  * @number visibility
  * @number max_players
- * @return response Returns the created lobbyId. Full lobby context is provided
- * via the LobbyJoined event. (Note: Only if called from within a coroutine)
+ * @return response Returns the created lobby id as a string. Full lobby
+ * context is provided via the LobbyJoined event. (Note: Only if called from
+ * within a coroutine)
  */
 int Wavedash_CreateLobbyAsync(lua_State* L)
 {
@@ -1070,7 +1057,7 @@ int Wavedash_CreateLobbyAsync(lua_State* L)
  * with id 'joinLobby' or as a return value if the function is called from
  * a coroutine.
  * @name join_lobby_async
- * @number lobby_id
+ * @string lobby_id
  * @return response Returns success/failure. Full lobby context is provided via
  * the LobbyJoined event. (Note: Only if called from within a coroutine)
  */
@@ -1078,7 +1065,7 @@ int Wavedash_JoinLobbyAsync(lua_State* L)
 {
     {
         DM_LUA_STACK_CHECK(L, 0);
-        WavedashJs_JoinLobbyAsync(luaL_checknumber(L, 1));
+        WavedashJs_JoinLobbyAsync(luaL_checkstring(L, 1));
     }
     return AwaitAsyncEvent(L, "joinLobby");
 }
@@ -1105,56 +1092,56 @@ int Wavedash_ListAvailableLobbiesAsync(lua_State* L)
 /**
  * Get lobby users.
  * @name get_lobby_users
- * @number lobby_id
+ * @string lobby_id
  */
 int Wavedash_GetLobbyUsers(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 1);
-    PushAndFreeJson(L, WavedashJs_GetLobbyUsers(luaL_checknumber(L, 1)));
+    PushAndFreeJson(L, WavedashJs_GetLobbyUsers(luaL_checkstring(L, 1)));
     return 1;
 }
 
 /**
  * Get the number of lobby users.
  * @name get_num_lobby_users
- * @number lobby_id
+ * @string lobby_id
  */
 int Wavedash_GetNumLobbyUsers(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 1);
-    lua_pushnumber(L, WavedashJs_GetNumLobbyUsers(luaL_checknumber(L, 1)));
+    lua_pushnumber(L, WavedashJs_GetNumLobbyUsers(luaL_checkstring(L, 1)));
     return 1;
 }
 
 /**
  * Get the lobby host id.
  * @name get_lobby_host_id
- * @number lobby_id
+ * @string lobby_id
  */
 int Wavedash_GetLobbyHostId(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 1);
-    PushAndFreeJson(L, WavedashJs_GetLobbyHostId(luaL_checknumber(L, 1)));
+    PushAndFreeString(L, WavedashJs_GetLobbyHostId(luaL_checkstring(L, 1)));
     return 1;
 }
 
 /**
  * Get lobby data.
  * @name get_lobby_data
- * @number lobby_id
+ * @string lobby_id
  * @string key
  */
 int Wavedash_GetLobbyData(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 1);
-    PushAndFreeJson(L, WavedashJs_GetLobbyData(luaL_checknumber(L, 1), luaL_checkstring(L, 2)));
+    PushAndFreeJson(L, WavedashJs_GetLobbyData(luaL_checkstring(L, 1), luaL_checkstring(L, 2)));
     return 1;
 }
 
 /**
  * Set lobby data.
  * @name set_lobby_data
- * @number lobby_id
+ * @string lobby_id
  * @string key
  * @any value
  */
@@ -1169,20 +1156,20 @@ int Wavedash_SetLobbyData(lua_State* L)
         return 1;
     }
 
-    lua_pushboolean(L, WavedashJs_SetLobbyData(luaL_checknumber(L, 1), luaL_checkstring(L, 2), value_json.c_str()));
+    lua_pushboolean(L, WavedashJs_SetLobbyData(luaL_checkstring(L, 1), luaL_checkstring(L, 2), value_json.c_str()));
     return 1;
 }
 
 /**
  * Delete lobby data.
  * @name delete_lobby_data
- * @number lobby_id
+ * @string lobby_id
  * @string key
  */
 int Wavedash_DeleteLobbyData(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 1);
-    lua_pushboolean(L, WavedashJs_DeleteLobbyData(luaL_checknumber(L, 1), luaL_checkstring(L, 2)));
+    lua_pushboolean(L, WavedashJs_DeleteLobbyData(luaL_checkstring(L, 1), luaL_checkstring(L, 2)));
     return 1;
 }
 
@@ -1192,15 +1179,15 @@ int Wavedash_DeleteLobbyData(lua_State* L)
  * with id 'leaveLobby' or as a return value if the function is called from
  * a coroutine.
  * @name leave_lobby_async
- * @number lobby_id
- * @return response Returns the lobbyId. (Note: Only if called from within a
- * coroutine)
+ * @string lobby_id
+ * @return response Returns the lobby id as a string. (Note: Only if called
+ * from within a coroutine)
  */
 int Wavedash_LeaveLobbyAsync(lua_State* L)
 {
     {
         DM_LUA_STACK_CHECK(L, 0);
-        WavedashJs_LeaveLobbyAsync(luaL_checknumber(L, 1));
+        WavedashJs_LeaveLobbyAsync(luaL_checkstring(L, 1));
     }
     return AwaitAsyncEvent(L, "leaveLobby");
 }
@@ -1208,13 +1195,13 @@ int Wavedash_LeaveLobbyAsync(lua_State* L)
 /**
  * Send a lobby message.
  * @name send_lobby_message
- * @number lobby_id
+ * @string lobby_id
  * @string message
  */
 int Wavedash_SendLobbyMessage(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 1);
-    lua_pushboolean(L, WavedashJs_SendLobbyMessage(luaL_checknumber(L, 1), luaL_checkstring(L, 2)));
+    lua_pushboolean(L, WavedashJs_SendLobbyMessage(luaL_checkstring(L, 1), luaL_checkstring(L, 2)));
     return 1;
 }
 
@@ -1224,8 +1211,8 @@ int Wavedash_SendLobbyMessage(lua_State* L)
  * with id 'inviteUserToLobby' or as a return value if the function is called from
  * a coroutine.
  * @name invite_user_to_lobby_async
- * @number lobby_id
- * @number user_id
+ * @string lobby_id
+ * @string user_id
  * @return response Returns success/failure. (Note: Only if called from within
  * a coroutine)
  */
@@ -1233,7 +1220,7 @@ int Wavedash_InviteUserToLobbyAsync(lua_State* L)
 {
     {
         DM_LUA_STACK_CHECK(L, 0);
-        WavedashJs_InviteUserToLobbyAsync(luaL_checknumber(L, 1), luaL_checknumber(L, 2));
+        WavedashJs_InviteUserToLobbyAsync(luaL_checkstring(L, 1), luaL_checkstring(L, 2));
     }
     return AwaitAsyncEvent(L, "inviteUserToLobby");
 }

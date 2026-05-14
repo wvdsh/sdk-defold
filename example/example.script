@@ -1,14 +1,63 @@
+local function handle_lobby_joined(self, payload)
+	print("Joined lobby with id", payload.lobbyId, "Users in the lobby:")
+	for _,user in ipairs(payload.users) do
+		print("User", user.username)
+	end
+end
+
 function init(self)
 
 
 
 	wavedash.init(function(self, event, payload)
-		print("event:", event, "payload:")
-		pprint(payload)
+		if event == wavedash.EVENT_LOBBY_JOINED then
+			handle_lobby_joined(self, payload)
+		elseif event == wavedash.EVENT_BACKEND_CONNECTED then
+			print("Backend connected")
+		elseif event == wavedash.EVENT_BACKEND_DISCONNECTED then
+			print("Backend disconnected")
+		elseif event == wavedash.EVENT_BACKEND_RECONNECTING then
+			print("Backend reconnecting")
+		else
+			print("Received event:", event)
+		end
 	end)
 	wavedash.ready_for_events()
+
+	local user = wavedash.get_user()
+	print("Playing as:", user.username)
+
+	local user_id = wavedash.get_user_id()
+	print("My user id:", user_id)
+
+	local username = wavedash.get_username()
+	print("My username:", username)
+
 	wavedash.toggle_overlay()
-	wavedash.create_lobby(wavedash.LOBBY_VISIBILITY_PUBLIC, 4)
-	wavedash.request_stats()
+
+	local co = coroutine.create(function()
+		local lobby = wavedash.create_lobby_async(wavedash.LOBBY_VISIBILITY_PUBLIC, 4)
+		if lobby.success then
+			print("Created lobby with id", lobby.data)
+		end
+
+		local leaderboard = wavedash.get_leaderboard_async("high-scores")
+		if leaderboard.success then
+			pprint("Leaderboard", leaderboard)
+		end
+
+		local friends = wavedash.list_friends_async()
+		if friends.success then
+			print("Your friends:")
+			for _,friend in pairs(friends.data) do
+				print(friend.username)
+			end
+		end
+			
+		
+		
+		wavedash.request_stats_async()
+	end)
+	assert(coroutine.resume(co))
 end
 

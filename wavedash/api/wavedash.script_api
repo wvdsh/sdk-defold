@@ -78,13 +78,16 @@
       Get a username.
     parameters:
     - name: user_id
-      type: number
+      type: string
       optional: True
 
   - name: get_user_id
     type: function
     desc: |
       Get the current user id.
+    returns:
+    - name: user_id
+      type: string
 
   - name: get_user_jwt_async
     type: function
@@ -121,7 +124,7 @@
       Get a user avatar URL.
     parameters:
     - name: user_id
-      type: number
+      type: string
     - name: size
       type: number
       optional: True
@@ -166,7 +169,7 @@
       Get leaderboard entry count.
     parameters:
     - name: leaderboard_id
-      type: number
+      type: string
 
   - name: get_my_leaderboard_entries_async
     type: function
@@ -174,7 +177,7 @@
       Get the current user's leaderboard entries. This is an asynchronous function. The result will be delivered as an event with id 'getMyLeaderboardEntries' or as a return value if the function is called from a coroutine.
     parameters:
     - name: leaderboard_id
-      type: number
+      type: string
     returns:
     - name: response
       type: function
@@ -189,7 +192,7 @@
       List leaderboard entries around a user. This is an asynchronous function. The result will be delivered as an event with id 'listLeaderboardEntriesAroundUser' or as a return value if the function is called from a coroutine.
     parameters:
     - name: leaderboard_id
-      type: number
+      type: string
     - name: count_ahead
       type: number
     - name: count_behind
@@ -211,7 +214,7 @@
       List leaderboard entries. This is an asynchronous function. The result will be delivered as an event with id 'listLeaderboardEntries' or as a return value if the function is called from a coroutine.
     parameters:
     - name: leaderboard_id
-      type: number
+      type: string
     - name: offset
       type: number
     - name: limit
@@ -233,20 +236,21 @@
       Upload a leaderboard score. This is an asynchronous function. The result will be delivered as an event with id 'uploadLeaderboardScore' or as a return value if the function is called from a coroutine.
     parameters:
     - name: leaderboard_id
-      type: number
+      type: string
     - name: score
       type: number
     - name: keep_best
       type: boolean
     - name: ugc_id
-      type: number
+      type: string
       optional: True
     returns:
     - name: response
       type: function
       desc: |
-        Returns the upserted leaderboard entry. (Note: Only if
-        called from within a coroutine)
+        Returns the upserted leaderboard entry. Any `ugcId` values are
+        surfaced as strings. (Note: Only if called from within a
+        coroutine)
         
 
   - name: create_ugc_item_async
@@ -272,7 +276,7 @@
     - name: response
       type: function
       desc: |
-        Returns ugcId. (Note: Only if called from within a
+        Returns the created UGC item id as a string. (Note: Only if called from within a
         coroutine)
         
 
@@ -282,7 +286,7 @@
       Update a UGC item. This is an asynchronous function. The result will be delivered as an event with id 'updateUGCItem' or as a return value if the function is called from a coroutine.
     parameters:
     - name: ugc_id
-      type: number
+      type: string
     - name: title
       type: string
       optional: True
@@ -299,7 +303,7 @@
     - name: response
       type: function
       desc: |
-        Returns ugcId. (Note: Only if called from within a
+        Returns the updated UGC item id as a string. (Note: Only if called from within a
         coroutine)
         
 
@@ -309,14 +313,14 @@
       Download a UGC item. This is an asynchronous function. The result will be delivered as an event with id 'downloadUGCItem' or as a return value if the function is called from a coroutine.
     parameters:
     - name: ugc_id
-      type: number
+      type: string
     - name: file_path
       type: string
     returns:
     - name: response
       type: function
       desc: |
-        Returns ugcId. (Note: Only if called from within a
+        Returns the downloaded UGC item id as a string. (Note: Only if called from within a
         coroutine)
         
 
@@ -505,7 +509,7 @@
       Send a P2P message.
     parameters:
     - name: to_user_id
-      type: number
+      type: string
       optional: True
     - name: app_channel
       type: number
@@ -565,8 +569,8 @@
     - name: response
       type: function
       desc: |
-        Returns the created lobbyId. Full lobby context is provided
-        via the LobbyJoined event. (Note: Only if called from within a coroutine)
+        Returns the created lobby id as a string. Full lobby context is
+        provided via the LobbyJoined event. (Note: Only if called from within a coroutine)
         
 
   - name: join_lobby_async
@@ -575,7 +579,7 @@
       Join a lobby. This is an asynchronous function. The result will be delivered as an event with id 'joinLobby' or as a return value if the function is called from a coroutine.
     parameters:
     - name: lobby_id
-      type: number
+      type: string
     returns:
     - name: response
       type: function
@@ -606,7 +610,7 @@
       Get lobby users.
     parameters:
     - name: lobby_id
-      type: number
+      type: string
 
   - name: get_num_lobby_users
     type: function
@@ -614,7 +618,7 @@
       Get the number of lobby users.
     parameters:
     - name: lobby_id
-      type: number
+      type: string
 
   - name: get_lobby_host_id
     type: function
@@ -622,7 +626,12 @@
       Get the lobby host id.
     parameters:
     - name: lobby_id
-      type: number
+      type: string
+    returns:
+    - name: host_id
+      type: string
+      desc: |
+        Returns the lobby host id as a string, or `nil` if no host is available.
 
   - name: get_lobby_data
     type: function
@@ -630,7 +639,7 @@
       Get lobby data.
     parameters:
     - name: lobby_id
-      type: number
+      type: string
     - name: key
       type: string
 
@@ -640,7 +649,7 @@
       Set lobby data.
     parameters:
     - name: lobby_id
-      type: number
+      type: string
     - name: key
       type: string
 
@@ -650,7 +659,7 @@
       Delete lobby data.
     parameters:
     - name: lobby_id
-      type: number
+      type: string
     - name: key
       type: string
 
@@ -660,12 +669,12 @@
       Leave a lobby. This is an asynchronous function. The result will be delivered as an event with id 'leaveLobby' or as a return value if the function is called from a coroutine.
     parameters:
     - name: lobby_id
-      type: number
+      type: string
     returns:
     - name: response
       type: function
       desc: |
-        Returns the lobbyId. (Note: Only if called from within a
+        Returns the lobby id as a string. (Note: Only if called from within a
         coroutine)
         
 
@@ -675,7 +684,7 @@
       Send a lobby message.
     parameters:
     - name: lobby_id
-      type: number
+      type: string
     - name: message
       type: string
 
@@ -685,9 +694,9 @@
       Invite a user to a lobby. This is an asynchronous function. The result will be delivered as an event with id 'inviteUserToLobby' or as a return value if the function is called from a coroutine.
     parameters:
     - name: lobby_id
-      type: number
+      type: string
     - name: user_id
-      type: number
+      type: string
     returns:
     - name: response
       type: function
@@ -974,4 +983,3 @@
     type: number
     desc: |
       P2P_PACKET_DROP_REASON_PEER_NOT_READY
-

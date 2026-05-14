@@ -140,12 +140,21 @@ static int AwaitAsyncEvent(lua_State* L, char* eventId)
 
 static void Wavedash_OnEventCallback(const char* event, const char* payload, uint32_t payload_length)
 {
+    // resume the coroutine if we have one and the event is matching the one we
+    // are waiting for
     if (g_AsyncThread && (strcmp(g_AsyncEventId, event) == 0))
     {
         lua_State* L = g_AsyncThread;
         g_AsyncThread = 0x0;
         g_AsyncEventId = 0x0;
-        dmScript::JsonToLua(L, payload, payload_length);
+        if (payload)
+        {
+            dmScript::JsonToLua(L, payload, payload_length);
+        }
+        else
+        {
+            lua_pushnil(L);
+        }
         int res = lua_resume(L, 1);
         if ((res != LUA_YIELD) && (res != 0))
         {
@@ -171,7 +180,14 @@ static void Wavedash_OnEventCallback(const char* event, const char* payload, uin
     }
 
     lua_pushstring(L, event);
-    dmScript::JsonToLua(L, payload, payload_length);
+    if (payload)
+    {
+        dmScript::JsonToLua(L, payload, payload_length);
+    }
+    else
+    {
+        lua_pushnil(L);
+    }
     int ret = dmScript::PCall(L, 3, 0);
     (void)ret;
 
@@ -1194,6 +1210,8 @@ int Wavedash_GetLobbyInviteLinkAsync(lua_State* L)
  * a coroutine.
  * @name update_user_presence_async
  * @string data_json?
+ * @return response Returns true if the presence was updated successfully. (Note: Only
+ * if called from within a coroutine)
  */
 int Wavedash_UpdateUserPresenceAsync(lua_State* L)
 {

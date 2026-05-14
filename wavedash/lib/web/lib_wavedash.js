@@ -6,13 +6,23 @@ var LibWavedash = {
         eventCallback: null,
 
         invokeCallback: function(event, payload) {
-            var event_c = stringToNewUTF8(event);
-            var payload_json = JSON.stringify(payload);
-            var payload_json_c = stringToNewUTF8(payload_json);
-            var payload_json_len = lengthBytesUTF8(payload_json);
-            {{{ makeDynCall("viii", "WavedashJs.eventCallback")}}}(event_c, payload_json_c, payload_json_len);
-            Module._free(payload_json_c);
-            Module._free(event_c);
+            console.log("Payload", event, payload);
+            if (payload != null) {
+                var event_c = stringToNewUTF8(event);
+                var payload_json = JSON.stringify(payload);
+                var payload_json_c = stringToNewUTF8(payload_json);
+                var payload_json_len = lengthBytesUTF8(payload_json);
+                {{{ makeDynCall("viii", "WavedashJs.eventCallback")}}}(event_c, payload_json_c, payload_json_len);
+                Module._free(payload_json_c);
+                Module._free(event_c);
+            }
+            else {
+                var event_c = stringToNewUTF8(event);
+                var payload_json_c = 0;
+                var payload_json_len = 0;
+                {{{ makeDynCall("viii", "WavedashJs.eventCallback")}}}(event_c, payload_json_c, payload_json_len);
+                Module._free(event_c);
+            }
         },
 
         initEvents: function() {
@@ -37,10 +47,11 @@ var LibWavedash = {
             var p = Promise.resolve(WavedashJs.call(method, args));
             p.then(
                 function(response) {
-                    WavedashJs.invokeCallback(method, response);
+                    WavedashJs.invokeCallback(method, response.data);
                 },
                 function(err) {
-                    WavedashJs.invokeCallback(method, err);
+                    console.log(err);
+                    WavedashJs.invokeCallback(method, null);
                 }
             );
         },

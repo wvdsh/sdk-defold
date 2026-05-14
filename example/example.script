@@ -6,9 +6,6 @@ local function handle_lobby_joined(self, payload)
 end
 
 function init(self)
-
-
-
 	wavedash.init(function(self, event, payload)
 		if event == wavedash.EVENT_LOBBY_JOINED then
 			handle_lobby_joined(self, payload)
@@ -53,10 +50,6 @@ function init(self)
 				print(friend.username)
 			end
 		end
-			
-		
-		
-		wavedash.request_stats_async()
 	end)
 	assert(coroutine.resume(co))
 end

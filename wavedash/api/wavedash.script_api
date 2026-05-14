@@ -1,0 +1,985 @@
+# This is a generated file. Do not modify. Created using https://github.com/britzl/generatedocs
+- name: wavedash
+  type: table
+  desc: Wavedash Defold API
+
+  members:
+  - name: init
+    type: function
+    desc: |
+      Initialize Wavedash.
+    parameters:
+    - name: callback
+      type: function
+
+  - name: ready_for_events
+    type: function
+    desc: |
+      Signal that the game is ready to receive events.
+
+  - name: update_load_progress_zero_to_one
+    type: function
+    desc: |
+      Update the load progress.
+    parameters:
+    - name: progress
+      type: number
+
+  - name: load_complete
+    type: function
+    desc: |
+      Signal that loading is complete.
+
+  - name: toggle_overlay
+    type: function
+    desc: |
+      Toggle the overlay.
+
+  - name: is_fullscreen
+    type: function
+    desc: |
+      Check if fullscreen is enabled.
+
+  - name: request_fullscreen_async
+    type: function
+    desc: |
+      Request fullscreen mode. This is an asynchronous function. The result will be delivered as an event with id 'requestFullscreen' or as a return value if the function is called from a coroutine.
+    parameters:
+    - name: fullscreen
+      type: boolean
+    returns:
+    - name: response
+      type: function
+      desc: |
+        Returns true if the host reports the fullscreen request
+        succeeded, false otherwise. (Note: Only if called from within a coroutine)
+        
+
+  - name: toggle_fullscreen_async
+    type: function
+    desc: |
+      Toggle fullscreen mode. This is an asynchronous function. The result will be delivered as an event with id 'toggleFullscreen' or as a return value if the function is called from a coroutine.
+    returns:
+    - name: response
+      type: function
+      desc: |
+        Returns true if the fullscreen toggle succeeded, false
+        otherwise. (Note: Only if called from within a coroutine)
+        
+
+  - name: get_user
+    type: function
+    desc: |
+      Get the current user.
+
+  - name: get_username
+    type: function
+    desc: |
+      Get a username.
+    parameters:
+    - name: user_id
+      type: string
+      optional: True
+
+  - name: get_user_id
+    type: function
+    desc: |
+      Get the current user id.
+    returns:
+    - name: user_id
+      type: string
+
+  - name: get_user_jwt_async
+    type: function
+    desc: |
+      Request a user JWT. This is an asynchronous function. The result will be delivered as an event with id 'getUserJwt' or as a return value if the function is called from a coroutine.
+    returns:
+    - name: response
+      type: function
+      desc: |
+        Returns The user's JWT signed by the Wavedash backend.
+        (Note: Only if called from within a coroutine)
+        
+
+  - name: get_launch_params
+    type: function
+    desc: |
+      Get launch parameters.
+
+  - name: list_friends_async
+    type: function
+    desc: |
+      List friends. This is an asynchronous function. The result will be delivered as an event with id 'listFriends' or as a return value if the function is called from a coroutine.
+    returns:
+    - name: response
+      type: function
+      desc: |
+        Returns the current user's friends. (Note: Only if called
+        from within a coroutine)
+        
+
+  - name: get_user_avatar_url
+    type: function
+    desc: |
+      Get a user avatar URL.
+    parameters:
+    - name: user_id
+      type: string
+    - name: size
+      type: number
+      optional: True
+
+  - name: get_leaderboard_async
+    type: function
+    desc: |
+      Get a leaderboard. This is an asynchronous function. The result will be delivered as an event with id 'getLeaderboard' or as a return value if the function is called from a coroutine.
+    parameters:
+    - name: name
+      type: string
+    returns:
+    - name: response
+      type: function
+      desc: |
+        Returns the leaderboard. (Note: Only if called from within
+        a coroutine)
+        
+
+  - name: get_or_create_leaderboard_async
+    type: function
+    desc: |
+      Get or create a leaderboard. This is an asynchronous function. The result will be delivered as an event with id 'getOrCreateLeaderboard' or as a return value if the function is called from a coroutine.
+    parameters:
+    - name: name
+      type: string
+    - name: sort_order
+      type: number
+    - name: display_type
+      type: number
+    returns:
+    - name: response
+      type: function
+      desc: |
+        Returns the leaderboard. (Note: Only if called from within
+        a coroutine)
+        
+
+  - name: get_leaderboard_entry_count
+    type: function
+    desc: |
+      Get leaderboard entry count.
+    parameters:
+    - name: leaderboard_id
+      type: string
+
+  - name: get_my_leaderboard_entries_async
+    type: function
+    desc: |
+      Get the current user's leaderboard entries. This is an asynchronous function. The result will be delivered as an event with id 'getMyLeaderboardEntries' or as a return value if the function is called from a coroutine.
+    parameters:
+    - name: leaderboard_id
+      type: string
+    returns:
+    - name: response
+      type: function
+      desc: |
+        Returns the current user's leaderboard entries. (Note: Only
+        if called from within a coroutine)
+        
+
+  - name: list_leaderboard_entries_around_user_async
+    type: function
+    desc: |
+      List leaderboard entries around a user. This is an asynchronous function. The result will be delivered as an event with id 'listLeaderboardEntriesAroundUser' or as a return value if the function is called from a coroutine.
+    parameters:
+    - name: leaderboard_id
+      type: string
+    - name: count_ahead
+      type: number
+    - name: count_behind
+      type: number
+    - name: friends_only
+      type: boolean
+      optional: True
+    returns:
+    - name: response
+      type: function
+      desc: |
+        Returns leaderboard entries around the current user. (Note:
+        Only if called from within a coroutine)
+        
+
+  - name: list_leaderboard_entries_async
+    type: function
+    desc: |
+      List leaderboard entries. This is an asynchronous function. The result will be delivered as an event with id 'listLeaderboardEntries' or as a return value if the function is called from a coroutine.
+    parameters:
+    - name: leaderboard_id
+      type: string
+    - name: offset
+      type: number
+    - name: limit
+      type: number
+    - name: friends_only
+      type: boolean
+      optional: True
+    returns:
+    - name: response
+      type: function
+      desc: |
+        Returns leaderboard entries. (Note: Only if called from
+        within a coroutine)
+        
+
+  - name: upload_leaderboard_score_async
+    type: function
+    desc: |
+      Upload a leaderboard score. This is an asynchronous function. The result will be delivered as an event with id 'uploadLeaderboardScore' or as a return value if the function is called from a coroutine.
+    parameters:
+    - name: leaderboard_id
+      type: string
+    - name: score
+      type: number
+    - name: keep_best
+      type: boolean
+    - name: ugc_id
+      type: string
+      optional: True
+    returns:
+    - name: response
+      type: function
+      desc: |
+        Returns the upserted leaderboard entry. Any `ugcId` values are
+        surfaced as strings. (Note: Only if called from within a
+        coroutine)
+        
+
+  - name: create_ugc_item_async
+    type: function
+    desc: |
+      Create a UGC item. This is an asynchronous function. The result will be delivered as an event with id 'createUGCItem' or as a return value if the function is called from a coroutine.
+    parameters:
+    - name: ugc_type
+      type: number
+    - name: title
+      type: string
+      optional: True
+    - name: description
+      type: string
+      optional: True
+    - name: visibility
+      type: number
+      optional: True
+    - name: file_path
+      type: string
+      optional: True
+    returns:
+    - name: response
+      type: function
+      desc: |
+        Returns the created UGC item id as a string. (Note: Only if called from within a
+        coroutine)
+        
+
+  - name: update_ugc_item_async
+    type: function
+    desc: |
+      Update a UGC item. This is an asynchronous function. The result will be delivered as an event with id 'updateUGCItem' or as a return value if the function is called from a coroutine.
+    parameters:
+    - name: ugc_id
+      type: string
+    - name: title
+      type: string
+      optional: True
+    - name: description
+      type: string
+      optional: True
+    - name: visibility
+      type: number
+      optional: True
+    - name: file_path
+      type: string
+      optional: True
+    returns:
+    - name: response
+      type: function
+      desc: |
+        Returns the updated UGC item id as a string. (Note: Only if called from within a
+        coroutine)
+        
+
+  - name: download_ugc_item_async
+    type: function
+    desc: |
+      Download a UGC item. This is an asynchronous function. The result will be delivered as an event with id 'downloadUGCItem' or as a return value if the function is called from a coroutine.
+    parameters:
+    - name: ugc_id
+      type: string
+    - name: file_path
+      type: string
+    returns:
+    - name: response
+      type: function
+      desc: |
+        Returns the downloaded UGC item id as a string. (Note: Only if called from within a
+        coroutine)
+        
+
+  - name: delete_remote_file_async
+    type: function
+    desc: |
+      Delete a remote file. This is an asynchronous function. The result will be delivered as an event with id 'deleteRemoteFile' or as a return value if the function is called from a coroutine.
+    parameters:
+    - name: file_path
+      type: string
+    returns:
+    - name: response
+      type: function
+      desc: |
+        Returns The path of the remote file that was deleted.
+        (Note: Only if called from within a coroutine)
+        
+
+  - name: download_remote_file_async
+    type: function
+    desc: |
+      Download a remote file. This is an asynchronous function. The result will be delivered as an event with id 'downloadRemoteFile' or as a return value if the function is called from a coroutine.
+    parameters:
+    - name: file_path
+      type: string
+    returns:
+    - name: response
+      type: function
+      desc: |
+        Returns The path of the local file that the remote file was
+        downloaded to. (Note: Only if called from within a coroutine)
+        
+
+  - name: upload_remote_file_async
+    type: function
+    desc: |
+      Upload a remote file. This is an asynchronous function. The result will be delivered as an event with id 'uploadRemoteFile' or as a return value if the function is called from a coroutine.
+    parameters:
+    - name: file_path
+      type: string
+    returns:
+    - name: response
+      type: function
+      desc: |
+        Returns The path of the remote file that the local file was
+        uploaded to. (Note: Only if called from within a coroutine)
+        
+
+  - name: list_remote_directory_async
+    type: function
+    desc: |
+      List a remote directory. This is an asynchronous function. The result will be delivered as an event with id 'listRemoteDirectory' or as a return value if the function is called from a coroutine.
+    parameters:
+    - name: path
+      type: string
+    returns:
+    - name: response
+      type: function
+      desc: |
+        Returns A list of metadata for each file in the remote
+        directory. (Note: Only if called from within a coroutine)
+        
+
+  - name: download_remote_directory_async
+    type: function
+    desc: |
+      Download a remote directory. This is an asynchronous function. The result will be delivered as an event with id 'downloadRemoteDirectory' or as a return value if the function is called from a coroutine.
+    parameters:
+    - name: path
+      type: string
+    returns:
+    - name: response
+      type: function
+      desc: |
+        Returns The path of the local directory that the remote
+        directory was downloaded to. (Note: Only if called from within a coroutine)
+        
+
+  - name: write_local_file_async
+    type: function
+    desc: |
+      Write a local file. This is an asynchronous function. The result will be delivered as an event with id 'writeLocalFile' or as a return value if the function is called from a coroutine.
+    parameters:
+    - name: file_path
+      type: string
+    - name: data
+      type: string
+    returns:
+    - name: response
+      type: function
+      desc: |
+        Returns true if the file was written successfully. (Note:
+        Only if called from within a coroutine)
+        
+
+  - name: read_local_file_async
+    type: function
+    desc: |
+      Read a local file. This is an asynchronous function. The result will be delivered as an event with id 'readLocalFile' or as a return value if the function is called from a coroutine.
+    parameters:
+    - name: file_path
+      type: string
+    returns:
+    - name: response
+      type: function
+      desc: |
+        Returns The data read from the local file (byte array).
+        (Note: Only if called from within a coroutine)
+        
+
+  - name: get_achievement
+    type: function
+    desc: |
+      Get an achievement.
+    parameters:
+    - name: identifier
+      type: string
+
+  - name: get_stat
+    type: function
+    desc: |
+      Get a stat.
+    parameters:
+    - name: identifier
+      type: string
+
+  - name: set_achievement
+    type: function
+    desc: |
+      Set an achievement.
+    parameters:
+    - name: identifier
+      type: string
+    - name: store_now
+      type: boolean
+      optional: True
+
+  - name: set_stat
+    type: function
+    desc: |
+      Set a stat.
+    parameters:
+    - name: identifier
+      type: string
+    - name: value
+      type: number
+    - name: store_now
+      type: boolean
+      optional: True
+
+  - name: request_stats_async
+    type: function
+    desc: |
+      Request stats. This is an asynchronous function. The result will be delivered as an event with id 'requestStats' or as a return value if the function is called from a coroutine.
+    returns:
+    - name: response
+      type: function
+      desc: |
+        Returns true if the stats were requested successfully.
+        (Note: Only if called from within a coroutine)
+        
+
+  - name: store_stats
+    type: function
+    desc: |
+      Store stats.
+
+  - name: get_p2p_max_payload_size
+    type: function
+    desc: |
+      Get the maximum P2P payload size.
+
+  - name: get_p2p_max_incoming_messages
+    type: function
+    desc: |
+      Get the maximum number of incoming P2P messages.
+
+  - name: get_p2p_outgoing_message_buffer
+    type: function
+    desc: |
+      Get the P2P outgoing message buffer.
+
+  - name: send_p2p_message
+    type: function
+    desc: |
+      Send a P2P message.
+    parameters:
+    - name: to_user_id
+      type: string
+      optional: True
+    - name: app_channel
+      type: number
+      optional: True
+    - name: reliable
+      type: boolean
+      optional: True
+    - name: payload
+      type: string
+    - name: payload_size
+      type: number
+      optional: True
+
+  - name: broadcast_p2p_message
+    type: function
+    desc: |
+      Broadcast a P2P message.
+    parameters:
+    - name: app_channel
+      type: number
+      optional: True
+    - name: reliable
+      type: boolean
+      optional: True
+    - name: payload
+      type: string
+    - name: payload_size
+      type: number
+      optional: True
+
+  - name: read_p2p_message_from_channel
+    type: function
+    desc: |
+      Read a P2P message from a channel.
+    parameters:
+    - name: app_channel
+      type: number
+
+  - name: drain_p2p_channel_to_buffer
+    type: function
+    desc: |
+      Drain a P2P channel to a buffer.
+    parameters:
+    - name: app_channel
+      type: number
+
+  - name: create_lobby_async
+    type: function
+    desc: |
+      Create a lobby. This is an asynchronous function. The result will be delivered as an event with id 'createLobby' or as a return value if the function is called from a coroutine.
+    parameters:
+    - name: visibility
+      type: number
+    - name: max_players
+      type: number
+    returns:
+    - name: response
+      type: function
+      desc: |
+        Returns the created lobby id as a string. Full lobby context is
+        provided via the LobbyJoined event. (Note: Only if called from within a coroutine)
+        
+
+  - name: join_lobby_async
+    type: function
+    desc: |
+      Join a lobby. This is an asynchronous function. The result will be delivered as an event with id 'joinLobby' or as a return value if the function is called from a coroutine.
+    parameters:
+    - name: lobby_id
+      type: string
+    returns:
+    - name: response
+      type: function
+      desc: |
+        Returns success/failure. Full lobby context is provided via
+        the LobbyJoined event. (Note: Only if called from within a coroutine)
+        
+
+  - name: list_available_lobbies_async
+    type: function
+    desc: |
+      List available lobbies. This is an asynchronous function. The result will be delivered as an event with id 'listAvailableLobbies' or as a return value if the function is called from a coroutine.
+    parameters:
+    - name: friends_only
+      type: boolean
+      optional: True
+    returns:
+    - name: response
+      type: function
+      desc: |
+        Returns the available lobbies. (Note: Only if called from
+        within a coroutine)
+        
+
+  - name: get_lobby_users
+    type: function
+    desc: |
+      Get lobby users.
+    parameters:
+    - name: lobby_id
+      type: string
+
+  - name: get_num_lobby_users
+    type: function
+    desc: |
+      Get the number of lobby users.
+    parameters:
+    - name: lobby_id
+      type: string
+
+  - name: get_lobby_host_id
+    type: function
+    desc: |
+      Get the lobby host id.
+    parameters:
+    - name: lobby_id
+      type: string
+    returns:
+    - name: host_id
+      type: string
+      desc: |
+        Returns the lobby host id as a string, or `nil` if no host is available.
+
+  - name: get_lobby_data
+    type: function
+    desc: |
+      Get lobby data.
+    parameters:
+    - name: lobby_id
+      type: string
+    - name: key
+      type: string
+
+  - name: set_lobby_data
+    type: function
+    desc: |
+      Set lobby data.
+    parameters:
+    - name: lobby_id
+      type: string
+    - name: key
+      type: string
+
+  - name: delete_lobby_data
+    type: function
+    desc: |
+      Delete lobby data.
+    parameters:
+    - name: lobby_id
+      type: string
+    - name: key
+      type: string
+
+  - name: leave_lobby_async
+    type: function
+    desc: |
+      Leave a lobby. This is an asynchronous function. The result will be delivered as an event with id 'leaveLobby' or as a return value if the function is called from a coroutine.
+    parameters:
+    - name: lobby_id
+      type: string
+    returns:
+    - name: response
+      type: function
+      desc: |
+        Returns the lobby id as a string. (Note: Only if called from within a
+        coroutine)
+        
+
+  - name: send_lobby_message
+    type: function
+    desc: |
+      Send a lobby message.
+    parameters:
+    - name: lobby_id
+      type: string
+    - name: message
+      type: string
+
+  - name: invite_user_to_lobby_async
+    type: function
+    desc: |
+      Invite a user to a lobby. This is an asynchronous function. The result will be delivered as an event with id 'inviteUserToLobby' or as a return value if the function is called from a coroutine.
+    parameters:
+    - name: lobby_id
+      type: string
+    - name: user_id
+      type: string
+    returns:
+    - name: response
+      type: function
+      desc: |
+        Returns success/failure. (Note: Only if called from within
+        a coroutine)
+        
+
+  - name: get_lobby_invite_link_async
+    type: function
+    desc: |
+      Get a lobby invite link. This is an asynchronous function. The result will be delivered as an event with id 'getLobbyInviteLink' or as a return value if the function is called from a coroutine.
+    parameters:
+    - name: copy_to_clipboard
+      type: boolean
+      optional: True
+    returns:
+    - name: response
+      type: function
+      desc: |
+        Returns the lobby invite link. (Note: Only if called from
+        within a coroutine)
+        
+
+  - name: update_user_presence_async
+    type: function
+    desc: |
+      Update user presence. This is an asynchronous function. The result will be delivered as an event with id 'updateUserPresence' or as a return value if the function is called from a coroutine.
+    parameters:
+    - name: data_json
+      type: string
+      optional: True
+    returns:
+    - name: response
+      type: function
+      desc: |
+        Returns true if the presence was updated successfully. (Note: Only
+        if called from within a coroutine)
+        
+
+  - name: ensure_gameplay_jwt_async
+    type: function
+    desc: |
+      Ensure a gameplay JWT is available. This is an asynchronous function. The result will be delivered as an event with id 'ensureGameplayJwt' or as a return value if the function is called from a coroutine.
+    returns:
+    - name: response
+      type: function
+      desc: |
+        Returns the cached gameplay JWT. (Note: Only if called from
+        within a coroutine)
+        
+
+  - name: EVENT_LOBBY_MESSAGE
+    type: number
+    desc: |
+      EVENT_LOBBY_MESSAGE
+
+  - name: EVENT_LOBBY_JOINED
+    type: number
+    desc: |
+      EVENT_LOBBY_JOINED
+
+  - name: EVENT_LOBBY_KICKED
+    type: number
+    desc: |
+      EVENT_LOBBY_KICKED
+
+  - name: EVENT_LOBBY_USERS_UPDATED
+    type: number
+    desc: |
+      EVENT_LOBBY_USERS_UPDATED
+
+  - name: EVENT_LOBBY_DATA_UPDATED
+    type: number
+    desc: |
+      EVENT_LOBBY_DATA_UPDATED
+
+  - name: EVENT_LOBBY_INVITE
+    type: number
+    desc: |
+      EVENT_LOBBY_INVITE
+
+  - name: EVENT_P2P_CONNECTION_ESTABLISHED
+    type: number
+    desc: |
+      EVENT_P2P_CONNECTION_ESTABLISHED
+
+  - name: EVENT_P2P_CONNECTION_FAILED
+    type: number
+    desc: |
+      EVENT_P2P_CONNECTION_FAILED
+
+  - name: EVENT_P2P_PEER_DISCONNECTED
+    type: number
+    desc: |
+      EVENT_P2P_PEER_DISCONNECTED
+
+  - name: EVENT_P2P_PEER_RECONNECTING
+    type: number
+    desc: |
+      EVENT_P2P_PEER_RECONNECTING
+
+  - name: EVENT_P2P_PEER_RECONNECTED
+    type: number
+    desc: |
+      EVENT_P2P_PEER_RECONNECTED
+
+  - name: EVENT_P2P_PACKET_DROPPED
+    type: number
+    desc: |
+      EVENT_P2P_PACKET_DROPPED
+
+  - name: EVENT_STATS_STORED
+    type: number
+    desc: |
+      EVENT_STATS_STORED
+
+  - name: EVENT_BACKEND_CONNECTED
+    type: number
+    desc: |
+      EVENT_BACKEND_CONNECTED
+
+  - name: EVENT_BACKEND_DISCONNECTED
+    type: number
+    desc: |
+      EVENT_BACKEND_DISCONNECTED
+
+  - name: EVENT_BACKEND_RECONNECTING
+    type: number
+    desc: |
+      EVENT_BACKEND_RECONNECTING
+
+  - name: EVENT_FULLSCREEN_CHANGED
+    type: number
+    desc: |
+      EVENT_FULLSCREEN_CHANGED
+
+  - name: LOBBY_VISIBILITY_PUBLIC
+    type: number
+    desc: |
+      LOBBY_VISIBILITY_PUBLIC
+
+  - name: LOBBY_VISIBILITY_FRIENDS_ONLY
+    type: number
+    desc: |
+      LOBBY_VISIBILITY_FRIENDS_ONLY
+
+  - name: LOBBY_VISIBILITY_PRIVATE
+    type: number
+    desc: |
+      LOBBY_VISIBILITY_PRIVATE
+
+  - name: LEADERBOARD_SORT_ORDER_ASC
+    type: number
+    desc: |
+      LEADERBOARD_SORT_ORDER_ASC
+
+  - name: LEADERBOARD_SORT_ORDER_DESC
+    type: number
+    desc: |
+      LEADERBOARD_SORT_ORDER_DESC
+
+  - name: LEADERBOARD_DISPLAY_TYPENUMERIC
+    type: number
+    desc: |
+      LEADERBOARD_DISPLAY_TYPENUMERIC
+
+  - name: LEADERBOARD_DISPLAY_TYPETIME_SECONDS
+    type: number
+    desc: |
+      LEADERBOARD_DISPLAY_TYPETIME_SECONDS
+
+  - name: LEADERBOARD_DISPLAY_TYPETIME_MILLISECONDS
+    type: number
+    desc: |
+      LEADERBOARD_DISPLAY_TYPETIME_MILLISECONDS
+
+  - name: LEADERBOARD_DISPLAY_TYPETIME_GAME_TICKS
+    type: number
+    desc: |
+      LEADERBOARD_DISPLAY_TYPETIME_GAME_TICKS
+
+  - name: UGC_TYPE_SCREENSHOT
+    type: number
+    desc: |
+      UGC_TYPE_SCREENSHOT
+
+  - name: UGC_TYPE_VIDEO
+    type: number
+    desc: |
+      UGC_TYPE_VIDEO
+
+  - name: UGC_TYPE_COMMUNITY
+    type: number
+    desc: |
+      UGC_TYPE_COMMUNITY
+
+  - name: UGC_TYPE_GAME_MANAGED
+    type: number
+    desc: |
+      UGC_TYPE_GAME_MANAGED
+
+  - name: UGC_TYPE_OTHER
+    type: number
+    desc: |
+      UGC_TYPE_OTHER
+
+  - name: UGC_VISIBILITY_PUBLIC
+    type: number
+    desc: |
+      UGC_VISIBILITY_PUBLIC
+
+  - name: UGC_VISIBILITY_FRIENDS_ONLY
+    type: number
+    desc: |
+      UGC_VISIBILITY_FRIENDS_ONLY
+
+  - name: UGC_VISIBILITY_PRIVATE
+    type: number
+    desc: |
+      UGC_VISIBILITY_PRIVATE
+
+  - name: AVATAR_SIZE_SMALL
+    type: number
+    desc: |
+      AVATAR_SIZE_SMALL
+
+  - name: AVATAR_SIZE_MEDIUM
+    type: number
+    desc: |
+      AVATAR_SIZE_MEDIUM
+
+  - name: AVATAR_SIZE_LARGE
+    type: number
+    desc: |
+      AVATAR_SIZE_LARGE
+
+  - name: LOBBY_KICKED_REASON_KICKED
+    type: number
+    desc: |
+      LOBBY_KICKED_REASON_KICKED
+
+  - name: LOBBY_KICKED_REASON_ERROR
+    type: number
+    desc: |
+      LOBBY_KICKED_REASON_ERROR
+
+  - name: LOBBY_USER_CHANGE_TYPE_JOINED
+    type: number
+    desc: |
+      LOBBY_USER_CHANGE_TYPE_JOINED
+
+  - name: LOBBY_USER_CHANGE_TYPE_LEFT
+    type: number
+    desc: |
+      LOBBY_USER_CHANGE_TYPE_LEFT
+
+  - name: P2P_PACKET_DROP_REASON_QUEUE_FULL
+    type: number
+    desc: |
+      P2P_PACKET_DROP_REASON_QUEUE_FULL
+
+  - name: P2P_PACKET_DROP_REASON_PAYLOAD_TOO_LARGE
+    type: number
+    desc: |
+      P2P_PACKET_DROP_REASON_PAYLOAD_TOO_LARGE
+
+  - name: P2P_PACKET_DROP_REASON_INVALID_PAYLOAD_SIZE
+    type: number
+    desc: |
+      P2P_PACKET_DROP_REASON_INVALID_PAYLOAD_SIZE
+
+  - name: P2P_PACKET_DROP_REASON_INVALID_CHANNEL
+    type: number
+    desc: |
+      P2P_PACKET_DROP_REASON_INVALID_CHANNEL
+
+  - name: P2P_PACKET_DROP_REASON_MALFORMED
+    type: number
+    desc: |
+      P2P_PACKET_DROP_REASON_MALFORMED
+
+  - name: P2P_PACKET_DROP_REASON_PEER_NOT_READY
+    type: number
+    desc: |
+      P2P_PACKET_DROP_REASON_PEER_NOT_READY

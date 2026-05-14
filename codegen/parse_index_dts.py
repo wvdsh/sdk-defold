@@ -270,7 +270,7 @@ def parse_arguments(parameters_text: str) -> list[dict[str, object]]:
             left = left[:-1].strip()
 
         if param_type.startswith("GenericId"):
-            param_type = "number"
+            param_type = "string"
 
         if param_type.startswith("Array"):
             param_type = "array"

@@ -402,6 +402,8 @@ int Wavedash_IsFullscreen(lua_State* L)
  * a coroutine.
  * @name request_fullscreen_async
  * @boolean fullscreen
+ * @return response Returns true if the host reports the fullscreen request
+ * succeeded, false otherwise. (Note: Only if called from within a coroutine)
  */
 int Wavedash_RequestFullscreenAsync(lua_State* L)
 {
@@ -418,6 +420,8 @@ int Wavedash_RequestFullscreenAsync(lua_State* L)
  * with id 'toggleFullscreen' or as a return value if the function is called from
  * a coroutine.
  * @name toggle_fullscreen_async
+ * @return response Returns true if the fullscreen toggle succeeded, false
+ * otherwise. (Note: Only if called from within a coroutine)
  */
 int Wavedash_ToggleFullscreenAsync(lua_State* L)
 {
@@ -468,6 +472,8 @@ int Wavedash_GetUserId(lua_State* L)
  * with id 'getUserJwt' or as a return value if the function is called from
  * a coroutine.
  * @name get_user_jwt_async
+ * @return response Returns The user's JWT signed by the Wavedash backend.
+ * (Note: Only if called from within a coroutine)
  */
 int Wavedash_GetUserJwtAsync(lua_State* L)
 {
@@ -495,6 +501,8 @@ int Wavedash_GetLaunchParams(lua_State* L)
  * with id 'listFriends' or as a return value if the function is called from
  * a coroutine.
  * @name list_friends_async
+ * @return response Returns the current user's friends. (Note: Only if called
+ * from within a coroutine)
  */
 int Wavedash_ListFriendsAsync(lua_State* L)
 {
@@ -525,6 +533,8 @@ int Wavedash_GetUserAvatarUrl(lua_State* L)
  * a coroutine.
  * @name get_leaderboard_async
  * @string name
+ * @return response Returns the leaderboard. (Note: Only if called from within
+ * a coroutine)
  */
 int Wavedash_GetLeaderboardAsync(lua_State* L)
 {
@@ -544,6 +554,8 @@ int Wavedash_GetLeaderboardAsync(lua_State* L)
  * @string name
  * @number sort_order
  * @number display_type
+ * @return response Returns the leaderboard. (Note: Only if called from within
+ * a coroutine)
  */
 int Wavedash_GetOrCreateLeaderboardAsync(lua_State* L)
 {
@@ -573,6 +585,8 @@ int Wavedash_GetLeaderboardEntryCount(lua_State* L)
  * a coroutine.
  * @name get_my_leaderboard_entries_async
  * @number leaderboard_id
+ * @return response Returns the current user's leaderboard entries. (Note: Only
+ * if called from within a coroutine)
  */
 int Wavedash_GetMyLeaderboardEntriesAsync(lua_State* L)
 {
@@ -593,6 +607,8 @@ int Wavedash_GetMyLeaderboardEntriesAsync(lua_State* L)
  * @number count_ahead
  * @number count_behind
  * @boolean friends_only?
+ * @return response Returns leaderboard entries around the current user. (Note:
+ * Only if called from within a coroutine)
  */
 int Wavedash_ListLeaderboardEntriesAroundUserAsync(lua_State* L)
 {
@@ -613,6 +629,8 @@ int Wavedash_ListLeaderboardEntriesAroundUserAsync(lua_State* L)
  * @number offset
  * @number limit
  * @boolean friends_only?
+ * @return response Returns leaderboard entries. (Note: Only if called from
+ * within a coroutine)
  */
 int Wavedash_ListLeaderboardEntriesAsync(lua_State* L)
 {
@@ -633,6 +651,8 @@ int Wavedash_ListLeaderboardEntriesAsync(lua_State* L)
  * @number score
  * @boolean keep_best
  * @number ugc_id?
+ * @return response Returns the upserted leaderboard entry. (Note: Only if
+ * called from within a coroutine)
  */
 int Wavedash_UploadLeaderboardScoreAsync(lua_State* L)
 {
@@ -654,6 +674,8 @@ int Wavedash_UploadLeaderboardScoreAsync(lua_State* L)
  * @string description?
  * @number visibility?
  * @string file_path?
+ * @return response Returns ugcId. (Note: Only if called from within a
+ * coroutine)
  */
 int Wavedash_CreateUGCItemAsync(lua_State* L)
 {
@@ -675,6 +697,8 @@ int Wavedash_CreateUGCItemAsync(lua_State* L)
  * @string description?
  * @number visibility?
  * @string file_path?
+ * @return response Returns ugcId. (Note: Only if called from within a
+ * coroutine)
  */
 int Wavedash_UpdateUGCItemAsync(lua_State* L)
 {
@@ -693,6 +717,8 @@ int Wavedash_UpdateUGCItemAsync(lua_State* L)
  * @name download_ugc_item_async
  * @number ugc_id
  * @string file_path
+ * @return response Returns ugcId. (Note: Only if called from within a
+ * coroutine)
  */
 int Wavedash_DownloadUGCItemAsync(lua_State* L)
 {
@@ -710,6 +736,8 @@ int Wavedash_DownloadUGCItemAsync(lua_State* L)
  * a coroutine.
  * @name delete_remote_file_async
  * @string file_path
+ * @return response Returns The path of the remote file that was deleted.
+ * (Note: Only if called from within a coroutine)
  */
 int Wavedash_DeleteRemoteFileAsync(lua_State* L)
 {
@@ -727,6 +755,8 @@ int Wavedash_DeleteRemoteFileAsync(lua_State* L)
  * a coroutine.
  * @name download_remote_file_async
  * @string file_path
+ * @return response Returns The path of the local file that the remote file was
+ * downloaded to. (Note: Only if called from within a coroutine)
  */
 int Wavedash_DownloadRemoteFileAsync(lua_State* L)
 {
@@ -744,6 +774,8 @@ int Wavedash_DownloadRemoteFileAsync(lua_State* L)
  * a coroutine.
  * @name upload_remote_file_async
  * @string file_path
+ * @return response Returns The path of the remote file that the local file was
+ * uploaded to. (Note: Only if called from within a coroutine)
  */
 int Wavedash_UploadRemoteFileAsync(lua_State* L)
 {
@@ -761,6 +793,8 @@ int Wavedash_UploadRemoteFileAsync(lua_State* L)
  * a coroutine.
  * @name list_remote_directory_async
  * @string path
+ * @return response Returns A list of metadata for each file in the remote
+ * directory. (Note: Only if called from within a coroutine)
  */
 int Wavedash_ListRemoteDirectoryAsync(lua_State* L)
 {
@@ -778,6 +812,8 @@ int Wavedash_ListRemoteDirectoryAsync(lua_State* L)
  * a coroutine.
  * @name download_remote_directory_async
  * @string path
+ * @return response Returns The path of the local directory that the remote
+ * directory was downloaded to. (Note: Only if called from within a coroutine)
  */
 int Wavedash_DownloadRemoteDirectoryAsync(lua_State* L)
 {
@@ -796,6 +832,8 @@ int Wavedash_DownloadRemoteDirectoryAsync(lua_State* L)
  * @name write_local_file_async
  * @string file_path
  * @string data
+ * @return response Returns true if the file was written successfully. (Note:
+ * Only if called from within a coroutine)
  */
 int Wavedash_WriteLocalFileAsync(lua_State* L)
 {
@@ -816,6 +854,8 @@ int Wavedash_WriteLocalFileAsync(lua_State* L)
  * a coroutine.
  * @name read_local_file_async
  * @string file_path
+ * @return response Returns The data read from the local file (byte array).
+ * (Note: Only if called from within a coroutine)
  */
 int Wavedash_ReadLocalFileAsync(lua_State* L)
 {
@@ -883,6 +923,8 @@ int Wavedash_SetStat(lua_State* L)
  * with id 'requestStats' or as a return value if the function is called from
  * a coroutine.
  * @name request_stats_async
+ * @return response Returns true if the stats were requested successfully.
+ * (Note: Only if called from within a coroutine)
  */
 int Wavedash_RequestStatsAsync(lua_State* L)
 {
@@ -1010,6 +1052,8 @@ int Wavedash_DrainP2PChannelToBuffer(lua_State* L)
  * @name create_lobby_async
  * @number visibility
  * @number max_players
+ * @return response Returns the created lobbyId. Full lobby context is provided
+ * via the LobbyJoined event. (Note: Only if called from within a coroutine)
  */
 int Wavedash_CreateLobbyAsync(lua_State* L)
 {
@@ -1027,6 +1071,8 @@ int Wavedash_CreateLobbyAsync(lua_State* L)
  * a coroutine.
  * @name join_lobby_async
  * @number lobby_id
+ * @return response Returns success/failure. Full lobby context is provided via
+ * the LobbyJoined event. (Note: Only if called from within a coroutine)
  */
 int Wavedash_JoinLobbyAsync(lua_State* L)
 {
@@ -1044,6 +1090,8 @@ int Wavedash_JoinLobbyAsync(lua_State* L)
  * a coroutine.
  * @name list_available_lobbies_async
  * @boolean friends_only?
+ * @return response Returns the available lobbies. (Note: Only if called from
+ * within a coroutine)
  */
 int Wavedash_ListAvailableLobbiesAsync(lua_State* L)
 {
@@ -1145,6 +1193,8 @@ int Wavedash_DeleteLobbyData(lua_State* L)
  * a coroutine.
  * @name leave_lobby_async
  * @number lobby_id
+ * @return response Returns the lobbyId. (Note: Only if called from within a
+ * coroutine)
  */
 int Wavedash_LeaveLobbyAsync(lua_State* L)
 {
@@ -1176,6 +1226,8 @@ int Wavedash_SendLobbyMessage(lua_State* L)
  * @name invite_user_to_lobby_async
  * @number lobby_id
  * @number user_id
+ * @return response Returns success/failure. (Note: Only if called from within
+ * a coroutine)
  */
 int Wavedash_InviteUserToLobbyAsync(lua_State* L)
 {
@@ -1193,6 +1245,8 @@ int Wavedash_InviteUserToLobbyAsync(lua_State* L)
  * a coroutine.
  * @name get_lobby_invite_link_async
  * @boolean copy_to_clipboard?
+ * @return response Returns the lobby invite link. (Note: Only if called from
+ * within a coroutine)
  */
 int Wavedash_GetLobbyInviteLinkAsync(lua_State* L)
 {
@@ -1228,6 +1282,8 @@ int Wavedash_UpdateUserPresenceAsync(lua_State* L)
  * with id 'ensureGameplayJwt' or as a return value if the function is called from
  * a coroutine.
  * @name ensure_gameplay_jwt_async
+ * @return response Returns the cached gameplay JWT. (Note: Only if called from
+ * within a coroutine)
  */
 int Wavedash_EnsureGameplayJwtAsync(lua_State* L)
 {

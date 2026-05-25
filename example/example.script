@@ -6,7 +6,7 @@ local function handle_lobby_joined(self, payload)
 end
 
 function init(self)
-	wavedash.init(function(self, event, payload)
+	wavedash.init({ debug = true, deferEvents = true }, function(self, event, payload)
 		if event == wavedash.EVENT_LOBBY_JOINED then
 			handle_lobby_joined(self, payload)
 		elseif event == wavedash.EVENT_BACKEND_CONNECTED then

@@ -113,9 +113,9 @@ var LibWavedash = {
         }
     },
 
-    WavedashJs_Init: function(eventCallback) {
+    WavedashJs_Init: function(config_json, eventCallback) {
         WavedashJs.eventCallback = eventCallback;
-        var result = WavedashJs.call("init", []);
+        var result = WavedashJs.call("init", [WavedashJs.optionalJson(config_json)]);
         WavedashJs.initEvents();
         return result ? 1 : 0;
     },

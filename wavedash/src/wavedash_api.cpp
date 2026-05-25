@@ -15,7 +15,7 @@
 typedef void (*OnEventCallback)(const char* event, const char* payload, uint32_t payload_length);
 
 extern "C" {
-    int WavedashJs_Init(OnEventCallback callback);
+    int WavedashJs_Init(const char* config_json, OnEventCallback callback);
     void WavedashJs_ReadyForEvents();
     void WavedashJs_UpdateLoadProgressZeroToOne(double progress);
     void WavedashJs_LoadComplete();
@@ -318,13 +318,23 @@ static const char* RawJsonStringArg(lua_State* L, int index)
 /**
  * Initialize Wavedash.
  * @name init
+ * @table config
  * @function callback
  */
 int Wavedash_Init(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 1);
-    g_EventCallback = dmScript::CreateCallback(L, 1);
-    lua_pushboolean(L, WavedashJs_Init(Wavedash_OnEventCallback));
+
+    if (lua_isnoneornil(L, 1))
+    {
+        return luaL_error(L, "Missing config");
+    }
+    char* json;
+    size_t json_size;
+    dmScript::LuaToJson(L, &json, &json_size);
+
+    g_EventCallback = dmScript::CreateCallback(L, 2);
+    lua_pushboolean(L, WavedashJs_Init(json, Wavedash_OnEventCallback));
     return 1;
 }
 

@@ -68,7 +68,9 @@ function init(self)
 		end
 
 		print("List UGC items")
-		local ugclist = wavedash.list_ugc_items_async({})
+		local ugclist = wavedash.list_ugc_items_async({
+			numItems = 2
+		})
 		if not ugclist.success then
 			print("Failed to list UGC items")
 			return

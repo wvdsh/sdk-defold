@@ -43,6 +43,8 @@ extern "C" {
     void WavedashJs_CreateUGCItemAsync(double ugc_type, const char* title, const char* description, double visibility, const char* file_path);
     void WavedashJs_UpdateUGCItemAsync(const char* ugc_id, const char* title, const char* description, double visibility, const char* file_path);
     void WavedashJs_DownloadUGCItemAsync(const char* ugc_id, const char* file_path);
+    void WavedashJs_DeleteUGCItemAsync(const char* ugc_id);
+    void WavedashJs_ListUGCItemsAsync(const char* filters_json);
     void WavedashJs_DeleteRemoteFileAsync(const char* file_path);
     void WavedashJs_DownloadRemoteFileAsync(const char* file_path);
     void WavedashJs_UploadRemoteFileAsync(const char* file_path);
@@ -61,8 +63,8 @@ extern "C" {
     double WavedashJs_GetP2PMaxPayloadSize();
     double WavedashJs_GetP2PMaxIncomingMessages();
     const char* WavedashJs_GetP2POutgoingMessageBuffer(uint32_t* out_length);
-    int WavedashJs_SendP2PMessage(const char* to_user_id, double app_channel, int reliable, const void* payload, uint32_t payload_length, double payload_size);
-    int WavedashJs_BroadcastP2PMessage(double app_channel, int reliable, const void* payload, uint32_t payload_length, double payload_size);
+    int WavedashJs_SendP2PMessage(const char* to_user_id, double app_channel, int reliable, const void* payload, uint32_t payload_length);
+    int WavedashJs_BroadcastP2PMessage(double app_channel, int reliable, const void* payload, uint32_t payload_length);
     const char* WavedashJs_ReadP2PMessageFromChannel(double app_channel);
     const char* WavedashJs_DrainP2PChannelToBuffer(double app_channel, uint32_t* out_length);
 
@@ -151,7 +153,8 @@ static void Wavedash_OnEventCallback(const char* event, const char* payload, uin
         int res = lua_resume(L, 1);
         if ((res != LUA_YIELD) && (res != 0))
         {
-            dmLogError("Coroutine resumed with error %d", res)
+            const char* error_message = luaL_checkstring(L, -1);
+            dmLogError("Coroutine resumed with error '%s' (%d)", error_message, res);
         }
         return;
     }
@@ -715,6 +718,50 @@ int Wavedash_DownloadUGCItemAsync(lua_State* L)
     return AwaitAsyncEvent(L, "downloadUGCItem");
 }
 
+
+/**
+ * Delete a UGC item.
+ * This is an asynchronous function. The result will be delivered as an event
+ * with id 'deleteUGCItem' or as a return value if the function is called from
+ * a coroutine.
+ * @name delete_ugc_item_async
+ * @string ugc_id
+ * @return response Returns the deleted UGC item id as a string. (Note:
+ * Only if called from within a coroutine)
+ */
+int Wavedash_DeleteUGCItemAsync(lua_State* L)
+{
+    {
+        DM_LUA_STACK_CHECK(L, 0);
+        WavedashJs_DeleteUGCItemAsync(luaL_checkstring(L, 1));
+    }
+    return AwaitAsyncEvent(L, "deleteUGCItem");
+}
+/**
+ * List UGC items.
+ * This is an asynchronous function. The result will be delivered as an event
+ * with id 'listUGCItems' or as a return value if the function is called from
+ * a coroutine.
+ * @name list_ugc_items_async
+ * @table filters
+ * @return response Returns The path of the remote file that was deleted.
+ * (Note: Only if called from within a coroutine)
+ */
+int Wavedash_ListUGCItemsAsync(lua_State* L)
+{
+    {
+        DM_LUA_STACK_CHECK(L, 0);
+        if (lua_isnoneornil(L, 1))
+        {
+            return luaL_error(L, "Missing filters");
+        }
+        char* json;
+        size_t json_size;
+        dmScript::LuaToJson(L, &json, &json_size);
+        WavedashJs_ListUGCItemsAsync(json);
+    }
+    return AwaitAsyncEvent(L, "listUGCItems");
+}
 /**
  * Delete a remote file.
  * This is an asynchronous function. The result will be delivered as an event
@@ -974,7 +1021,6 @@ int Wavedash_GetP2POutgoingMessageBuffer(lua_State* L)
  * @number app_channel?
  * @boolean reliable?
  * @string payload
- * @number payload_size?
  */
 int Wavedash_SendP2PMessage(lua_State* L)
 {
@@ -982,7 +1028,10 @@ int Wavedash_SendP2PMessage(lua_State* L)
 
     size_t payload_length = 0;
     const char* payload = luaL_checklstring(L, 4, &payload_length);
-    lua_pushboolean(L, WavedashJs_SendP2PMessage(OptionalStringArg(L, 1), OptionalNumberArg(L, 2), OptionalBoolArg(L, 3), payload, (uint32_t) payload_length, OptionalNumberArg(L, 5)));
+    const char* to_user_id = OptionalStringArg(L, 1);
+    double app_channel = OptionalNumberArg(L, 2);
+    bool reliable = OptionalBoolArg(L, 3);
+    lua_pushboolean(L, WavedashJs_SendP2PMessage(to_user_id, app_channel, reliable, payload, (uint32_t) payload_length));
     return 1;
 }
 
@@ -992,7 +1041,6 @@ int Wavedash_SendP2PMessage(lua_State* L)
  * @number app_channel?
  * @boolean reliable?
  * @string payload
- * @number payload_size?
  */
 int Wavedash_BroadcastP2PMessage(lua_State* L)
 {
@@ -1000,7 +1048,9 @@ int Wavedash_BroadcastP2PMessage(lua_State* L)
 
     size_t payload_length = 0;
     const char* payload = luaL_checklstring(L, 3, &payload_length);
-    lua_pushboolean(L, WavedashJs_BroadcastP2PMessage(OptionalNumberArg(L, 1), OptionalBoolArg(L, 2), payload, (uint32_t) payload_length, OptionalNumberArg(L, 4)));
+    double app_channel = OptionalNumberArg(L, 1);
+    bool reliable = OptionalBoolArg(L, 2);
+    lua_pushboolean(L, WavedashJs_BroadcastP2PMessage(app_channel, reliable, payload, (uint32_t) payload_length));
     return 1;
 }
 
@@ -1308,6 +1358,8 @@ static const luaL_reg Module_methods[] =
     {"create_ugc_item_async", Wavedash_CreateUGCItemAsync},
     {"update_ugc_item_async", Wavedash_UpdateUGCItemAsync},
     {"download_ugc_item_async", Wavedash_DownloadUGCItemAsync},
+    {"delete_ugc_item_async", Wavedash_DeleteUGCItemAsync},
+    {"list_ugc_items_async", Wavedash_ListUGCItemsAsync},
     {"delete_remote_file_async", Wavedash_DeleteRemoteFileAsync},
     {"download_remote_file_async", Wavedash_DownloadRemoteFileAsync},
     {"upload_remote_file_async", Wavedash_UploadRemoteFileAsync},

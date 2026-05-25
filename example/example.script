@@ -50,6 +50,32 @@ function init(self)
 				print(friend.username)
 			end
 		end
+
+		local path = "test/test.json"
+		local data = json.encode({ foo = "bar" })
+		print("Write local file", path)
+		local wrote = wavedash.write_local_file_async(path, data)
+		if not wrote then
+			print("Write file failed", path)
+			return
+		end
+
+		print("Create UGC item")
+		local ugcresponse = wavedash.create_ugc_item_async(wavedash.UGC_TYPE_COMMUNITY, nil, nil, wavedash.UGC_VISIBILITY_PUBLIC, path)
+		if not ugcresponse.success then
+			print("Failed to create UGC item from path", path)
+			return
+		end
+
+		print("List UGC items")
+		local ugclist = wavedash.list_ugc_items_async({})
+		if not ugclist.success then
+			print("Failed to list UGC items")
+			return
+		end
+		for i,item in ipairs(ugclist.data.page) do
+			pprint(item)
+		end
 	end)
 	assert(coroutine.resume(co))
 end

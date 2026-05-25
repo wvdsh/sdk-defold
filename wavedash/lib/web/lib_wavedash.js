@@ -40,6 +40,7 @@ var LibWavedash = {
         },
 
         call: function(method, args) {
+            console.assert(window.Wavedash[method], "Wavedash SDK does not have any method named '%s'", method);
             return window.Wavedash[method].apply(window.Wavedash, args || []);
         },
 
@@ -227,6 +228,12 @@ var LibWavedash = {
 
     WavedashJs_DownloadUGCItemAsync: function(ugcId, filePath) {
         WavedashJs.callPromise("downloadUGCItem", [UTF8ToString(ugcId), UTF8ToString(filePath)]);
+    },
+    WavedashJs_DeleteUGCItemAsync: function(ugcId) {
+        WavedashJs.callPromise("deleteUGCItem", [UTF8ToString(ugcId)]);
+    },
+    WavedashJs_ListUGCItemsAsync: function(filters_json) {
+        WavedashJs.callPromise("listUGCItems", [WavedashJs.optionalJson(filters_json)]);
     },
 
     WavedashJs_DeleteRemoteFileAsync: function(filePath) {

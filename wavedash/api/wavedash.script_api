@@ -85,9 +85,6 @@
     type: function
     desc: |
       Get the current user id.
-    returns:
-    - name: user_id
-      type: string
 
   - name: get_user_jwt_async
     type: function
@@ -248,9 +245,8 @@
     - name: response
       type: function
       desc: |
-        Returns the upserted leaderboard entry. Any `ugcId` values are
-        surfaced as strings. (Note: Only if called from within a
-        coroutine)
+        Returns the upserted leaderboard entry. (Note: Only if
+        called from within a coroutine)
         
 
   - name: create_ugc_item_async
@@ -276,8 +272,8 @@
     - name: response
       type: function
       desc: |
-        Returns the created UGC item id as a string. (Note: Only if called from within a
-        coroutine)
+        Returns the created UGC item id as a string. (Note: Only
+        if called from within a coroutine)
         
 
   - name: update_ugc_item_async
@@ -303,8 +299,8 @@
     - name: response
       type: function
       desc: |
-        Returns the updated UGC item id as a string. (Note: Only if called from within a
-        coroutine)
+        Returns the updated UGC item id as a string. (Note: Only
+        if called from within a coroutine)
         
 
   - name: download_ugc_item_async
@@ -320,8 +316,38 @@
     - name: response
       type: function
       desc: |
-        Returns the downloaded UGC item id as a string. (Note: Only if called from within a
-        coroutine)
+        Returns the downloaded UGC item id as a string. (Note:
+        Only if called from within a coroutine)
+        
+
+  - name: delete_ugc_item_async
+    type: function
+    desc: |
+      Delete a UGC item. This is an asynchronous function. The result will be delivered as an event with id 'deleteUGCItem' or as a return value if the function is called from a coroutine.
+    parameters:
+    - name: ugc_id
+      type: string
+    returns:
+    - name: response
+      type: function
+      desc: |
+        Returns the deleted UGC item id as a string. (Note:
+        Only if called from within a coroutine)
+        
+
+  - name: list_ugc_items
+    type: function
+    desc: |
+      List UGC items. This is an asynchronous function. The result will be delivered as an event with id 'listUGCItems' or as a return value if the function is called from a coroutine.
+    parameters:
+    - name: filters
+      type: table
+    returns:
+    - name: response
+      type: function
+      desc: |
+        Returns The path of the remote file that was deleted.
+        (Note: Only if called from within a coroutine)
         
 
   - name: delete_remote_file_async
@@ -519,9 +545,6 @@
       optional: True
     - name: payload
       type: string
-    - name: payload_size
-      type: number
-      optional: True
 
   - name: broadcast_p2p_message
     type: function
@@ -536,9 +559,6 @@
       optional: True
     - name: payload
       type: string
-    - name: payload_size
-      type: number
-      optional: True
 
   - name: read_p2p_message_from_channel
     type: function
@@ -569,8 +589,9 @@
     - name: response
       type: function
       desc: |
-        Returns the created lobby id as a string. Full lobby context is
-        provided via the LobbyJoined event. (Note: Only if called from within a coroutine)
+        Returns the created lobby id as a string. Full lobby
+        context is provided via the LobbyJoined event. (Note: Only if called from
+        within a coroutine)
         
 
   - name: join_lobby_async
@@ -627,11 +648,6 @@
     parameters:
     - name: lobby_id
       type: string
-    returns:
-    - name: host_id
-      type: string
-      desc: |
-        Returns the lobby host id as a string, or `nil` if no host is available.
 
   - name: get_lobby_data
     type: function
@@ -674,8 +690,8 @@
     - name: response
       type: function
       desc: |
-        Returns the lobby id as a string. (Note: Only if called from within a
-        coroutine)
+        Returns the lobby id as a string. (Note: Only if called
+        from within a coroutine)
         
 
   - name: send_lobby_message
@@ -983,3 +999,4 @@
     type: number
     desc: |
       P2P_PACKET_DROP_REASON_PEER_NOT_READY
+

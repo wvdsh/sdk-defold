@@ -32,6 +32,9 @@ extern "C" {
     void WavedashJs_ListFriendsAsync();
     const char* WavedashJs_GetUserAvatarUrl(const char* user_id, double size);
 
+    void WavedashJs_IsEntitledAsync(const char* content_identifier);
+    void WavedashJs_TriggerPaywallAsync(const char* content_identifier);
+
     void WavedashJs_GetLeaderboardAsync(const char* name);
     void WavedashJs_GetOrCreateLeaderboardAsync(const char* name, double sort_order, double display_type);
     double WavedashJs_GetLeaderboardEntryCount(const char* leaderboard_id);
@@ -523,6 +526,40 @@ int Wavedash_GetUserAvatarUrl(lua_State* L)
     DM_LUA_STACK_CHECK(L, 1);
     PushAndFreeString(L, WavedashJs_GetUserAvatarUrl(luaL_checkstring(L, 1), OptionalNumberArg(L, 2)));
     return 1;
+}
+
+/**
+ * Checks whether the player owns the given paid content for this game.
+ * @name is_entitled_async
+ * @string content_identifier
+ * @return response Returns true if the player owns the content. (Note:
+ * Only if called from within a coroutine)
+ */
+int Wavedash_IsEntitledAsync(lua_State* L)
+{
+    {
+        DM_LUA_STACK_CHECK(L, 0);
+        WavedashJs_IsEntitledAsync(luaL_checkstring(L, 1));
+    }
+    return AwaitAsyncEvent(L, "isEntitled");
+}
+
+/**
+ * Triggers the Wavedash-rendered paywall flow for the given content.
+ * Resolves immediately with true if the player already owns it; otherwise
+ * opens the paywall and resolves with whether the purchase was completed.
+ * @name trigger_paywall_async
+ * @string content_identifier
+ * @return response Returns true if the player owns the content after the
+ * flow completes. (Note: Only if called from within a coroutine)
+ */
+int Wavedash_TriggerPaywallAsync(lua_State* L)
+{
+    {
+        DM_LUA_STACK_CHECK(L, 0);
+        WavedashJs_TriggerPaywallAsync(luaL_checkstring(L, 1));
+    }
+    return AwaitAsyncEvent(L, "triggerPaywall");
 }
 
 /**
@@ -1358,6 +1395,8 @@ static const luaL_reg Module_methods[] =
     {"get_launch_params", Wavedash_GetLaunchParams},
     {"list_friends_async", Wavedash_ListFriendsAsync},
     {"get_user_avatar_url", Wavedash_GetUserAvatarUrl},
+    {"is_entitled_async", Wavedash_IsEntitledAsync},
+    {"trigger_paywall_async", Wavedash_TriggerPaywallAsync},
     {"get_leaderboard_async", Wavedash_GetLeaderboardAsync},
     {"get_or_create_leaderboard_async", Wavedash_GetOrCreateLeaderboardAsync},
     {"get_leaderboard_entry_count", Wavedash_GetLeaderboardEntryCount},

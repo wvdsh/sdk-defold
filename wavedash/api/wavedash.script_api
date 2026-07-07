@@ -126,6 +126,37 @@
       type: number
       optional: True
 
+
+   - name: is_entitled_async
+     type: function
+     desc: |
+       Checks whether the player owns the given paid content for this game. This is a UX hint, not a security check.
+     parameters:
+     - name: content_identifier
+       type: string
+     returns:
+     - name: response
+       type: function
+       desc: |
+         Returns true if the player owns the content.
+         (Note: Only if called from within a coroutine)
+         
+ 
+   - name: trigger_paywall_async
+     type: function
+     desc: |
+       Triggers the Wavedash-rendered paywall flow for the given content and returns whether the purchase was completed. Resolves immediately with true if the player already owns it.
+     parameters:
+     - name: content_identifier
+       type: string
+     returns:
+     - name: response
+       type: function
+       desc: |
+         Returns true if the player owns the content after the flow completes.
+         (Note: Only if called from within a coroutine)
+         
+
   - name: get_leaderboard_async
     type: function
     desc: |

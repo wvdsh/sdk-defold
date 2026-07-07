@@ -38,6 +38,16 @@ function init(self)
 			print("Created lobby with id", lobby.data)
 		end
 
+		local entitled = wavedash.is_entitled_async("bonus-level-pack")
+		if entitled.success and entitled.data then
+			print("Player already owns the bonus level pack")
+		else
+			local purchase = wavedash.trigger_paywall_async("bonus-level-pack")
+			if purchase.success and purchase.data then
+				print("Player purchased the bonus level pack")
+			end
+		end
+
 		local leaderboard = wavedash.get_leaderboard_async("high-scores")
 		if leaderboard.success then
 			pprint("Leaderboard", leaderboard)

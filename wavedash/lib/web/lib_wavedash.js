@@ -178,6 +178,14 @@ var LibWavedash = {
         return WavedashJs.allocString(WavedashJs.call("getUserAvatarUrl", [UTF8ToString(userId), WavedashJs.optionalNumber(size)]));
     },
 
+    WavedashJs_IsEntitledAsync: function(contentIdentifier) {
+        WavedashJs.callPromise("isEntitled", [UTF8ToString(contentIdentifier)]);
+    },
+ 
+    WavedashJs_TriggerPaywallAsync: function(contentIdentifier) {
+        WavedashJs.callPromise("triggerPaywall", [UTF8ToString(contentIdentifier)]);
+    },
+
     WavedashJs_GetLeaderboardAsync: function(name) {
         WavedashJs.callPromise("getLeaderboard", [UTF8ToString(name)]);
     },

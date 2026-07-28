@@ -31,6 +31,29 @@ static dmExtension::Result FinalizeWavedash(dmExtension::Params* params)
 	return dmExtension::RESULT_OK;
 }
 
-DM_DECLARE_EXTENSION(wavedash, LIB_NAME, AppInitializeWavedash, AppFinalizeWavedash, InitializeWavedash, 0, 0, FinalizeWavedash)
+#else
+
+static dmExtension::Result AppInitializeWavedash(dmExtension::AppParams* params)
+{
+    dmLogWarning("Registered %s (null) Extension", LIB_NAME);
+    return dmExtension::RESULT_OK;
+}
+
+static dmExtension::Result InitializeWavedash(dmExtension::Params* params)
+{
+    return dmExtension::RESULT_OK;
+}
+
+static dmExtension::Result AppFinalizeWavedash(dmExtension::AppParams* params)
+{
+    return dmExtension::RESULT_OK;
+}
+
+static dmExtension::Result FinalizeWavedash(dmExtension::Params* params)
+{
+    return dmExtension::RESULT_OK;
+}
 
 #endif
+
+DM_DECLARE_EXTENSION(wavedash, LIB_NAME, AppInitializeWavedash, AppFinalizeWavedash, InitializeWavedash, 0, 0, FinalizeWavedash)

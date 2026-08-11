@@ -3,6 +3,8 @@
 #if defined(DM_PLATFORM_HTML5)
 
 #include <cmath>
+#include <cstdio>
+#include <cstdlib>
 #include <cstring>
 #include <string>
 
@@ -38,7 +40,7 @@ extern "C" {
     void WavedashJs_GetMyLeaderboardEntriesAsync(const char* leaderboard_id);
     void WavedashJs_ListLeaderboardEntriesAroundUserAsync(const char* leaderboard_id, double count_ahead, double count_behind, int friends_only);
     void WavedashJs_ListLeaderboardEntriesAsync(const char* leaderboard_id, double offset, double limit, int friends_only);
-    void WavedashJs_UploadLeaderboardScoreAsync(const char* leaderboard_id, double score, int keep_best, const char* ugc_id);
+    void WavedashJs_UploadLeaderboardScoreAsync(const char* leaderboard_id, double score, int keep_best, const char* ugc_id, const char* metadata_json);
 
     void WavedashJs_CreateUGCItemAsync(double ugc_type, const char* title, const char* description, double visibility, const char* file_path);
     void WavedashJs_UpdateUGCItemAsync(const char* ugc_id, const char* title, const char* description, double visibility, const char* file_path);
@@ -243,7 +245,9 @@ static std::string EscapeJsonString(const char* value)
     std::string result;
     for (const char* p = value; *p; ++p)
     {
-        switch (*p)
+        // Read as unsigned so UTF-8 continuation bytes don't look like control characters
+        unsigned char c = (unsigned char) *p;
+        switch (c)
         {
             case '"':
                 result += "\\\"";
@@ -267,7 +271,16 @@ static std::string EscapeJsonString(const char* value)
                 result += "\\t";
                 break;
             default:
-                result += *p;
+                if (c < 0x20)
+                {
+                    char escape[7];
+                    std::snprintf(escape, sizeof(escape), "\\u%04x", c);
+                    result += escape;
+                }
+                else
+                {
+                    result += (char) c;
+                }
                 break;
         }
     }
@@ -297,6 +310,101 @@ static bool LuaValueToJsonLiteral(lua_State* L, int index, std::string& json)
             dmLogError("Unsupported Lua value for JSON literal at argument %d", index);
             return false;
     }
+}
+
+static bool AppendJsonNumber(std::string& json, double value)
+{
+    if (!std::isfinite(value))
+    {
+        return false;
+    }
+
+    char buffer[32];
+    if (value == std::floor(value) && std::fabs(value) < 1e15)
+    {
+        std::snprintf(buffer, sizeof(buffer), "%.0f", value);
+    }
+    else
+    {
+        // Shortest form that still reads back as the same double, so 0.1 is sent as
+        // "0.1" rather than "0.10000000000000001"
+        for (int precision = 15; precision <= 17; ++precision)
+        {
+            std::snprintf(buffer, sizeof(buffer), "%.*g", precision, value);
+            if (std::strtod(buffer, 0) == value)
+            {
+                break;
+            }
+        }
+    }
+    json += buffer;
+    return true;
+}
+
+// 'index' must be an absolute stack index, since lua_next() reads it while the stack grows.
+static bool LuaTableToMetadataJson(lua_State* L, int index, std::string& json, char* error, size_t error_size)
+{
+    if (!lua_istable(L, index))
+    {
+        std::snprintf(error, error_size, "expected a table, got a %s", luaL_typename(L, index));
+        return false;
+    }
+
+    json = "{";
+    bool first = true;
+
+    lua_pushnil(L);
+    while (lua_next(L, index) != 0)
+    {
+        // Key is at -2, value at -1. Only call lua_tostring() once the key is known to be
+        // a string: on a number key it converts in place, which breaks lua_next().
+        if (lua_type(L, -2) != LUA_TSTRING)
+        {
+            std::snprintf(error, error_size, "keys must be strings, found a %s key", luaL_typename(L, -2));
+            lua_pop(L, 2);
+            return false;
+        }
+
+        const char* key = lua_tostring(L, -2);
+
+        if (!first)
+        {
+            json += ",";
+        }
+        first = false;
+
+        json += "\"";
+        json += EscapeJsonString(key);
+        json += "\":";
+
+        int value_type = lua_type(L, -1);
+        if (value_type == LUA_TSTRING)
+        {
+            json += "\"";
+            json += EscapeJsonString(lua_tostring(L, -1));
+            json += "\"";
+        }
+        else if (value_type == LUA_TNUMBER)
+        {
+            if (!AppendJsonNumber(json, lua_tonumber(L, -1)))
+            {
+                std::snprintf(error, error_size, "value for '%s' is not a finite number", key);
+                lua_pop(L, 2);
+                return false;
+            }
+        }
+        else
+        {
+            std::snprintf(error, error_size, "value for '%s' is a %s, expected a string or number", key, luaL_typename(L, -1));
+            lua_pop(L, 2);
+            return false;
+        }
+
+        lua_pop(L, 1);
+    }
+
+    json += "}";
+    return true;
 }
 
 static const char* RawJsonStringArg(lua_State* L, int index)
@@ -642,6 +750,13 @@ int Wavedash_ListLeaderboardEntriesAsync(lua_State* L)
 
 /**
  * Upload a leaderboard score.
+ * Pass ugc_id to attach a UGC item, such as a replay, to the entry.
+ * Pass metadata to attach small key/value data to the entry: string keys with string
+ * or number values, for example { character = "knight", deaths = 3 }. Store larger
+ * payloads as UGC and attach them with ugc_id instead. Metadata belongs to the score
+ * it was submitted with: a score that gets written replaces it, and an empty table
+ * clears it. A score that keep_best rejects leaves the existing entry, metadata
+ * included, untouched. The returned entry carries the persisted metadata back.
  * This is an asynchronous function. The result will be delivered as an event
  * with id 'uploadLeaderboardScore' or as a return value if the function is called from
  * a coroutine.
@@ -650,15 +765,32 @@ int Wavedash_ListLeaderboardEntriesAsync(lua_State* L)
  * @number score
  * @boolean keep_best
  * @string ugc_id?
+ * @table metadata?
  * @return response Returns the upserted leaderboard entry. (Note: Only if
  * called from within a coroutine)
  */
 int Wavedash_UploadLeaderboardScoreAsync(lua_State* L)
 {
+    char metadata_error[192] = { 0 };
+
     {
         DM_LUA_STACK_CHECK(L, 0);
-        WavedashJs_UploadLeaderboardScoreAsync(luaL_checkstring(L, 1), luaL_checknumber(L, 2), lua_toboolean(L, 3) ? 1 : 0, OptionalStringArg(L, 4));
+
+        std::string metadata_json;
+        if (lua_isnoneornil(L, 5) || LuaTableToMetadataJson(L, 5, metadata_json, metadata_error, sizeof(metadata_error)))
+        {
+            // An empty table is sent as no metadata at all: every accepted score rewrites
+            // the entry's metadata, so omitting it clears what the previous score attached.
+            const char* metadata_arg = (metadata_json.empty() || metadata_json == "{}") ? 0 : metadata_json.c_str();
+            WavedashJs_UploadLeaderboardScoreAsync(luaL_checkstring(L, 1), luaL_checknumber(L, 2), lua_toboolean(L, 3) ? 1 : 0, OptionalStringArg(L, 4), metadata_arg);
+        }
     }
+
+    if (metadata_error[0])
+    {
+        return luaL_error(L, "upload_leaderboard_score_async: invalid metadata, %s", metadata_error);
+    }
+
     return AwaitAsyncEvent(L, "uploadLeaderboardScore");
 }
 

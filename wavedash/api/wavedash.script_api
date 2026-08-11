@@ -53,7 +53,7 @@
       desc: |
         Returns true if the host reports the fullscreen request
         succeeded, false otherwise. (Note: Only if called from within a coroutine)
-        
+
 
   - name: toggle_fullscreen_async
     type: function
@@ -65,7 +65,7 @@
       desc: |
         Returns true if the fullscreen toggle succeeded, false
         otherwise. (Note: Only if called from within a coroutine)
-        
+
 
   - name: get_user
     type: function
@@ -96,7 +96,7 @@
       desc: |
         Returns The user's JWT signed by the Wavedash backend.
         (Note: Only if called from within a coroutine)
-        
+
 
   - name: get_launch_params
     type: function
@@ -113,7 +113,7 @@
       desc: |
         Returns the current user's friends. (Note: Only if called
         from within a coroutine)
-        
+
 
   - name: get_user_avatar_url
     type: function
@@ -139,7 +139,7 @@
       desc: |
         Returns the leaderboard. (Note: Only if called from within
         a coroutine)
-        
+
 
   - name: get_or_create_leaderboard_async
     type: function
@@ -158,7 +158,7 @@
       desc: |
         Returns the leaderboard. (Note: Only if called from within
         a coroutine)
-        
+
 
   - name: get_leaderboard_entry_count
     type: function
@@ -181,7 +181,7 @@
       desc: |
         Returns the current user's leaderboard entries. (Note: Only
         if called from within a coroutine)
-        
+
 
   - name: list_leaderboard_entries_around_user_async
     type: function
@@ -203,7 +203,7 @@
       desc: |
         Returns leaderboard entries around the current user. (Note:
         Only if called from within a coroutine)
-        
+
 
   - name: list_leaderboard_entries_async
     type: function
@@ -225,12 +225,13 @@
       desc: |
         Returns leaderboard entries. (Note: Only if called from
         within a coroutine)
-        
+
 
   - name: upload_leaderboard_score_async
     type: function
     desc: |
-      Upload a leaderboard score. This is an asynchronous function. The result will be delivered as an event with id 'uploadLeaderboardScore' or as a return value if the function is called from a coroutine.
+      Upload a leaderboard score. Pass ugc_id to attach a UGC item, such as a replay, to the entry. Pass metadata to attach small key/value data to the entry: string keys with string or number values.
+      This is an asynchronous function. The result will be delivered as an event with id 'uploadLeaderboardScore' or as a return value if the function is called from a coroutine.
     parameters:
     - name: leaderboard_id
       type: string
@@ -241,13 +242,16 @@
     - name: ugc_id
       type: string
       optional: True
+    - name: metadata
+      type: table
+      optional: True
     returns:
     - name: response
       type: function
       desc: |
         Returns the upserted leaderboard entry. (Note: Only if
         called from within a coroutine)
-        
+
 
   - name: create_ugc_item_async
     type: function
@@ -274,7 +278,7 @@
       desc: |
         Returns the created UGC item id as a string. (Note: Only
         if called from within a coroutine)
-        
+
 
   - name: update_ugc_item_async
     type: function
@@ -301,7 +305,7 @@
       desc: |
         Returns the updated UGC item id as a string. (Note: Only
         if called from within a coroutine)
-        
+
 
   - name: download_ugc_item_async
     type: function
@@ -318,7 +322,7 @@
       desc: |
         Returns the downloaded UGC item id as a string. (Note:
         Only if called from within a coroutine)
-        
+
 
   - name: delete_ugc_item_async
     type: function
@@ -333,7 +337,7 @@
       desc: |
         Returns the deleted UGC item id as a string. (Note:
         Only if called from within a coroutine)
-        
+
 
   - name: list_ugc_items
     type: function
@@ -348,7 +352,7 @@
       desc: |
         Returns The path of the remote file that was deleted.
         (Note: Only if called from within a coroutine)
-        
+
 
   - name: delete_remote_file_async
     type: function
@@ -363,7 +367,7 @@
       desc: |
         Returns The path of the remote file that was deleted.
         (Note: Only if called from within a coroutine)
-        
+
 
   - name: download_remote_file_async
     type: function
@@ -378,7 +382,7 @@
       desc: |
         Returns The path of the local file that the remote file was
         downloaded to. (Note: Only if called from within a coroutine)
-        
+
 
   - name: upload_remote_file_async
     type: function
@@ -393,7 +397,7 @@
       desc: |
         Returns The path of the remote file that the local file was
         uploaded to. (Note: Only if called from within a coroutine)
-        
+
 
   - name: list_remote_directory_async
     type: function
@@ -408,7 +412,7 @@
       desc: |
         Returns A list of metadata for each file in the remote
         directory. (Note: Only if called from within a coroutine)
-        
+
 
   - name: download_remote_directory_async
     type: function
@@ -423,7 +427,7 @@
       desc: |
         Returns The path of the local directory that the remote
         directory was downloaded to. (Note: Only if called from within a coroutine)
-        
+
 
   - name: write_local_file_async
     type: function
@@ -440,7 +444,7 @@
       desc: |
         Returns true if the file was written successfully. (Note:
         Only if called from within a coroutine)
-        
+
 
   - name: read_local_file_async
     type: function
@@ -455,7 +459,7 @@
       desc: |
         Returns The data read from the local file (byte array).
         (Note: Only if called from within a coroutine)
-        
+
 
   - name: get_achievement
     type: function
@@ -507,7 +511,7 @@
       desc: |
         Returns true if the stats were requested successfully.
         (Note: Only if called from within a coroutine)
-        
+
 
   - name: store_stats
     type: function
@@ -592,7 +596,7 @@
         Returns the created lobby id as a string. Full lobby
         context is provided via the LobbyJoined event. (Note: Only if called from
         within a coroutine)
-        
+
 
   - name: join_lobby_async
     type: function
@@ -607,7 +611,7 @@
       desc: |
         Returns success/failure. Full lobby context is provided via
         the LobbyJoined event. (Note: Only if called from within a coroutine)
-        
+
 
   - name: list_available_lobbies_async
     type: function
@@ -623,7 +627,7 @@
       desc: |
         Returns the available lobbies. (Note: Only if called from
         within a coroutine)
-        
+
 
   - name: get_lobby_users
     type: function
@@ -692,7 +696,7 @@
       desc: |
         Returns the lobby id as a string. (Note: Only if called
         from within a coroutine)
-        
+
 
   - name: send_lobby_message
     type: function
@@ -719,7 +723,7 @@
       desc: |
         Returns success/failure. (Note: Only if called from within
         a coroutine)
-        
+
 
   - name: get_lobby_invite_link_async
     type: function
@@ -735,7 +739,7 @@
       desc: |
         Returns the lobby invite link. (Note: Only if called from
         within a coroutine)
-        
+
 
   - name: update_user_presence_async
     type: function
@@ -751,7 +755,7 @@
       desc: |
         Returns true if the presence was updated successfully. (Note: Only
         if called from within a coroutine)
-        
+
 
   - name: ensure_gameplay_jwt_async
     type: function
@@ -763,7 +767,7 @@
       desc: |
         Returns the cached gameplay JWT. (Note: Only if called from
         within a coroutine)
-        
+
 
   - name: EVENT_LOBBY_MESSAGE
     type: number
@@ -999,4 +1003,3 @@
     type: number
     desc: |
       P2P_PACKET_DROP_REASON_PEER_NOT_READY
-

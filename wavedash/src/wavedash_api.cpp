@@ -245,9 +245,7 @@ static std::string EscapeJsonString(const char* value)
     std::string result;
     for (const char* p = value; *p; ++p)
     {
-        // Read as unsigned so UTF-8 continuation bytes don't look like control characters
-        unsigned char c = (unsigned char) *p;
-        switch (c)
+        switch (*p)
         {
             case '"':
                 result += "\\\"";
@@ -271,16 +269,7 @@ static std::string EscapeJsonString(const char* value)
                 result += "\\t";
                 break;
             default:
-                if (c < 0x20)
-                {
-                    char escape[7];
-                    std::snprintf(escape, sizeof(escape), "\\u%04x", c);
-                    result += escape;
-                }
-                else
-                {
-                    result += (char) c;
-                }
+                result += *p;
                 break;
         }
     }

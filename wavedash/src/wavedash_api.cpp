@@ -312,101 +312,6 @@ static bool LuaValueToJsonLiteral(lua_State* L, int index, std::string& json)
     }
 }
 
-static bool AppendJsonNumber(std::string& json, double value)
-{
-    if (!std::isfinite(value))
-    {
-        return false;
-    }
-
-    char buffer[32];
-    if (value == std::floor(value) && std::fabs(value) < 1e15)
-    {
-        std::snprintf(buffer, sizeof(buffer), "%.0f", value);
-    }
-    else
-    {
-        // Shortest form that still reads back as the same double, so 0.1 is sent as
-        // "0.1" rather than "0.10000000000000001"
-        for (int precision = 15; precision <= 17; ++precision)
-        {
-            std::snprintf(buffer, sizeof(buffer), "%.*g", precision, value);
-            if (std::strtod(buffer, 0) == value)
-            {
-                break;
-            }
-        }
-    }
-    json += buffer;
-    return true;
-}
-
-// 'index' must be an absolute stack index, since lua_next() reads it while the stack grows.
-static bool LuaTableToMetadataJson(lua_State* L, int index, std::string& json, char* error, size_t error_size)
-{
-    if (!lua_istable(L, index))
-    {
-        std::snprintf(error, error_size, "expected a table, got a %s", luaL_typename(L, index));
-        return false;
-    }
-
-    json = "{";
-    bool first = true;
-
-    lua_pushnil(L);
-    while (lua_next(L, index) != 0)
-    {
-        // Key is at -2, value at -1. Only call lua_tostring() once the key is known to be
-        // a string: on a number key it converts in place, which breaks lua_next().
-        if (lua_type(L, -2) != LUA_TSTRING)
-        {
-            std::snprintf(error, error_size, "keys must be strings, found a %s key", luaL_typename(L, -2));
-            lua_pop(L, 2);
-            return false;
-        }
-
-        const char* key = lua_tostring(L, -2);
-
-        if (!first)
-        {
-            json += ",";
-        }
-        first = false;
-
-        json += "\"";
-        json += EscapeJsonString(key);
-        json += "\":";
-
-        int value_type = lua_type(L, -1);
-        if (value_type == LUA_TSTRING)
-        {
-            json += "\"";
-            json += EscapeJsonString(lua_tostring(L, -1));
-            json += "\"";
-        }
-        else if (value_type == LUA_TNUMBER)
-        {
-            if (!AppendJsonNumber(json, lua_tonumber(L, -1)))
-            {
-                std::snprintf(error, error_size, "value for '%s' is not a finite number", key);
-                lua_pop(L, 2);
-                return false;
-            }
-        }
-        else
-        {
-            std::snprintf(error, error_size, "value for '%s' is a %s, expected a string or number", key, luaL_typename(L, -1));
-            lua_pop(L, 2);
-            return false;
-        }
-
-        lua_pop(L, 1);
-    }
-
-    json += "}";
-    return true;
-}
-
 static const char* RawJsonStringArg(lua_State* L, int index)
 {
     if (lua_isnoneornil(L, index))
@@ -771,24 +676,46 @@ int Wavedash_ListLeaderboardEntriesAsync(lua_State* L)
  */
 int Wavedash_UploadLeaderboardScoreAsync(lua_State* L)
 {
-    char metadata_error[192] = { 0 };
+    bool metadata_failed = false;
 
     {
         DM_LUA_STACK_CHECK(L, 0);
 
-        std::string metadata_json;
-        if (lua_isnoneornil(L, 5) || LuaTableToMetadataJson(L, 5, metadata_json, metadata_error, sizeof(metadata_error)))
+        // Read the arguments before encoding, so an argument error cannot leak the buffer.
+        const char* leaderboard_id = luaL_checkstring(L, 1);
+        double score = luaL_checknumber(L, 2);
+        int keep_best = lua_toboolean(L, 3) ? 1 : 0;
+        const char* ugc_id = OptionalStringArg(L, 4);
+
+        char* metadata_json = 0;
+        size_t metadata_size = 0;
+        if (!lua_isnoneornil(L, 5))
+        {
+            // gettop() + 1 is an empty slot, so the encoder falls back to its default
+            // options. A value it cannot represent raises a Lua error from in here.
+            metadata_failed = dmScript::LuaToJson(L, 5, lua_gettop(L) + 1, &metadata_json, &metadata_size) < 0;
+        }
+
+        if (!metadata_failed)
         {
             // An empty table is sent as no metadata at all: every accepted score rewrites
             // the entry's metadata, so omitting it clears what the previous score attached.
-            const char* metadata_arg = (metadata_json.empty() || metadata_json == "{}") ? 0 : metadata_json.c_str();
-            WavedashJs_UploadLeaderboardScoreAsync(luaL_checkstring(L, 1), luaL_checknumber(L, 2), lua_toboolean(L, 3) ? 1 : 0, OptionalStringArg(L, 4), metadata_arg);
+            const char* metadata_arg = metadata_json;
+            if (metadata_arg && (strcmp(metadata_arg, "{}") == 0 || strcmp(metadata_arg, "[]") == 0))
+            {
+                metadata_arg = 0;
+            }
+
+            WavedashJs_UploadLeaderboardScoreAsync(leaderboard_id, score, keep_best, ugc_id, metadata_arg);
         }
+
+        free(metadata_json);
     }
 
-    if (metadata_error[0])
+    // Raised out here: luaL_error long-jumps, which would skip the free() above.
+    if (metadata_failed)
     {
-        return luaL_error(L, "upload_leaderboard_score_async: invalid metadata, %s", metadata_error);
+        return luaL_error(L, "upload_leaderboard_score_async: could not encode metadata as JSON");
     }
 
     return AwaitAsyncEvent(L, "uploadLeaderboardScore");

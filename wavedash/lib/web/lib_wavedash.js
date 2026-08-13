@@ -202,8 +202,8 @@ var LibWavedash = {
         WavedashJs.callPromise("listLeaderboardEntries", [UTF8ToString(leaderboardId), offset, limit, WavedashJs.optionalBool(friendsOnly)]);
     },
 
-    WavedashJs_UploadLeaderboardScoreAsync: function(leaderboardId, score, keepBest, ugcId) {
-        WavedashJs.callPromise("uploadLeaderboardScore", [UTF8ToString(leaderboardId), score, !!keepBest, WavedashJs.optionalString(ugcId)]);
+    WavedashJs_UploadLeaderboardScoreAsync: function(leaderboardId, score, keepBest, ugcId, metadataJson) {
+        WavedashJs.callPromise("uploadLeaderboardScore", [UTF8ToString(leaderboardId), score, !!keepBest, WavedashJs.optionalString(ugcId), WavedashJs.optionalJson(metadataJson)]);
     },
 
     WavedashJs_CreateUGCItemAsync: function(ugcType, title, description, visibility, filePath) {

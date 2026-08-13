@@ -41,6 +41,14 @@ function init(self)
 		local leaderboard = wavedash.get_leaderboard_async("high-scores")
 		if leaderboard.success then
 			pprint("Leaderboard", leaderboard)
+
+			local posted = wavedash.upload_leaderboard_score_async(leaderboard.data.id, 1000, true, nil, {
+				character = "knight",
+				deaths = 3
+			})
+			if posted.success then
+				pprint("Posted score", posted.data.metadata)
+			end
 		end
 
 		local friends = wavedash.list_friends_async()

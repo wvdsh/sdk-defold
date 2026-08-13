@@ -3,6 +3,8 @@
 #if defined(DM_PLATFORM_HTML5)
 
 #include <cmath>
+#include <cstdio>
+#include <cstdlib>
 #include <cstring>
 #include <string>
 
@@ -38,7 +40,7 @@ extern "C" {
     void WavedashJs_GetMyLeaderboardEntriesAsync(const char* leaderboard_id);
     void WavedashJs_ListLeaderboardEntriesAroundUserAsync(const char* leaderboard_id, double count_ahead, double count_behind, int friends_only);
     void WavedashJs_ListLeaderboardEntriesAsync(const char* leaderboard_id, double offset, double limit, int friends_only);
-    void WavedashJs_UploadLeaderboardScoreAsync(const char* leaderboard_id, double score, int keep_best, const char* ugc_id);
+    void WavedashJs_UploadLeaderboardScoreAsync(const char* leaderboard_id, double score, int keep_best, const char* ugc_id, const char* metadata_json);
 
     void WavedashJs_CreateUGCItemAsync(double ugc_type, const char* title, const char* description, double visibility, const char* file_path);
     void WavedashJs_UpdateUGCItemAsync(const char* ugc_id, const char* title, const char* description, double visibility, const char* file_path);
@@ -642,6 +644,13 @@ int Wavedash_ListLeaderboardEntriesAsync(lua_State* L)
 
 /**
  * Upload a leaderboard score.
+ * Pass ugc_id to attach a UGC item, such as a replay, to the entry.
+ * Pass metadata to attach small key/value data to the entry: string keys with string
+ * or number values, for example { character = "knight", deaths = 3 }. Store larger
+ * payloads as UGC and attach them with ugc_id instead. Metadata belongs to the score
+ * it was submitted with: a score that gets written replaces it, and an empty table
+ * clears it. A score that keep_best rejects leaves the existing entry, metadata
+ * included, untouched. The returned entry carries the persisted metadata back.
  * This is an asynchronous function. The result will be delivered as an event
  * with id 'uploadLeaderboardScore' or as a return value if the function is called from
  * a coroutine.
@@ -650,15 +659,54 @@ int Wavedash_ListLeaderboardEntriesAsync(lua_State* L)
  * @number score
  * @boolean keep_best
  * @string ugc_id?
+ * @table metadata?
  * @return response Returns the upserted leaderboard entry. (Note: Only if
  * called from within a coroutine)
  */
 int Wavedash_UploadLeaderboardScoreAsync(lua_State* L)
 {
+    bool metadata_failed = false;
+
     {
         DM_LUA_STACK_CHECK(L, 0);
-        WavedashJs_UploadLeaderboardScoreAsync(luaL_checkstring(L, 1), luaL_checknumber(L, 2), lua_toboolean(L, 3) ? 1 : 0, OptionalStringArg(L, 4));
+
+        // Read the arguments before encoding, so an argument error cannot leak the buffer.
+        const char* leaderboard_id = luaL_checkstring(L, 1);
+        double score = luaL_checknumber(L, 2);
+        int keep_best = lua_toboolean(L, 3) ? 1 : 0;
+        const char* ugc_id = OptionalStringArg(L, 4);
+
+        char* metadata_json = 0;
+        size_t metadata_size = 0;
+        if (!lua_isnoneornil(L, 5))
+        {
+            // gettop() + 1 is an empty slot, so the encoder falls back to its default
+            // options. A value it cannot represent raises a Lua error from in here.
+            metadata_failed = dmScript::LuaToJson(L, 5, lua_gettop(L) + 1, &metadata_json, &metadata_size) < 0;
+        }
+
+        if (!metadata_failed)
+        {
+            // An empty table is sent as no metadata at all: every accepted score rewrites
+            // the entry's metadata, so omitting it clears what the previous score attached.
+            const char* metadata_arg = metadata_json;
+            if (metadata_arg && (strcmp(metadata_arg, "{}") == 0 || strcmp(metadata_arg, "[]") == 0))
+            {
+                metadata_arg = 0;
+            }
+
+            WavedashJs_UploadLeaderboardScoreAsync(leaderboard_id, score, keep_best, ugc_id, metadata_arg);
+        }
+
+        free(metadata_json);
     }
+
+    // Raised out here: luaL_error long-jumps, which would skip the free() above.
+    if (metadata_failed)
+    {
+        return luaL_error(L, "upload_leaderboard_score_async: could not encode metadata as JSON");
+    }
+
     return AwaitAsyncEvent(L, "uploadLeaderboardScore");
 }
 

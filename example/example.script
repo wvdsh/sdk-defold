@@ -44,7 +44,8 @@ function init(self)
 
 			local posted = wavedash.upload_leaderboard_score_async(leaderboard.data.id, 1000, true, nil, {
 				character = "knight",
-				deaths = 3
+				deaths = 3,
+				no_hit = true
 			})
 			if posted.success then
 				pprint("Posted score", posted.data.metadata)

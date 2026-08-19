@@ -90,6 +90,19 @@ function init(self)
 		for i,item in ipairs(ugclist.data.page) do
 			pprint(item)
 		end
+
+		print("List entitlements")
+		local entitlements = wavedash.get_entitlements_async()
+		if entitlements.success then
+			for _,content_identifier in ipairs(entitlements.data) do
+				print("Owns:", content_identifier)
+			end
+		end
+
+		local owned = wavedash.is_entitled_async("full-version")
+		if owned.success and owned.data then
+			print("Full version unlocked")
+		end
 	end)
 	assert(coroutine.resume(co))
 end

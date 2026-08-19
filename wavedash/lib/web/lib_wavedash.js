@@ -51,7 +51,7 @@ var LibWavedash = {
                     WavedashJs.invokeCallback(method, response);
                 },
                 function(err) {
-                    WavedashJs.invokeCallback(method, response);
+                    WavedashJs.invokeCallback(method, { success: false, data: null, message: String(err) });
                 }
             );
         },
@@ -386,6 +386,18 @@ var LibWavedash = {
 
     WavedashJs_EnsureGameplayJwtAsync: function() {
         WavedashJs.callPromise("ensureGameplayJwt", []);
+    },
+
+    WavedashJs_IsEntitledAsync: function(contentIdentifier) {
+        WavedashJs.callPromise("isEntitled", [UTF8ToString(contentIdentifier)]);
+    },
+
+    WavedashJs_GetEntitlementsAsync: function() {
+        WavedashJs.callPromise("getEntitlements", []);
+    },
+
+    WavedashJs_TriggerPaywallAsync: function(contentIdentifier) {
+        WavedashJs.callPromise("triggerPaywall", [UTF8ToString(contentIdentifier)]);
     }
 }
 

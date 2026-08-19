@@ -85,6 +85,9 @@ extern "C" {
     void WavedashJs_GetLobbyInviteLinkAsync(int copy_to_clipboard);
     void WavedashJs_UpdateUserPresenceAsync(const char* data_json);
     void WavedashJs_EnsureGameplayJwtAsync();
+    void WavedashJs_IsEntitledAsync(const char* content_identifier);
+    void WavedashJs_GetEntitlementsAsync();
+    void WavedashJs_TriggerPaywallAsync(const char* content_identifier);
 
     void WavedashJs_Free(void* ptr);
 }
@@ -1389,6 +1392,67 @@ int Wavedash_EnsureGameplayJwtAsync(lua_State* L)
     return AwaitAsyncEvent(L, "ensureGameplayJwt");
 }
 
+/**
+ * Returns whether the player owns the given paid content. This is a UX hint,
+ * not a security check — Wavedash re-verifies ownership when serving the paid
+ * files. This is an asynchronous function. The result will be delivered as an
+ * event with id 'isEntitled' or as a return value if the function is called
+ * from a coroutine.
+ * @name is_entitled_async
+ * @string content_identifier
+ * @return response Returns whether the player owns the content in data. (Note:
+ * Only if called from within a coroutine)
+ */
+int Wavedash_IsEntitledAsync(lua_State* L)
+{
+    {
+        DM_LUA_STACK_CHECK(L, 0);
+        WavedashJs_IsEntitledAsync(luaL_checkstring(L, 1));
+    }
+    return AwaitAsyncEvent(L, "isEntitled");
+}
+
+/**
+ * Returns every paid content identifier the player owns for this game. This is
+ * a UX hint, not a security check — Wavedash re-verifies ownership when
+ * serving the paid files. This is an asynchronous function. The result will be
+ * delivered as an event with id 'getEntitlements' or as a return value if the
+ * function is called from a coroutine.
+ * @name get_entitlements_async
+ * @return response Returns the owned content identifiers in data. (Note: Only
+ * if called from within a coroutine)
+ */
+int Wavedash_GetEntitlementsAsync(lua_State* L)
+{
+    {
+        DM_LUA_STACK_CHECK(L, 0);
+        WavedashJs_GetEntitlementsAsync();
+    }
+    return AwaitAsyncEvent(L, "getEntitlements");
+}
+
+/**
+ * Open the Wavedash paywall for the given paid content. Resolves immediately
+ * with data true if the player already owns it; otherwise resolves with
+ * whether the purchase completed. Ownership refreshes automatically after a
+ * purchase, and the EntitlementsGranted event fires with the granted
+ * identifiers. This is an asynchronous function. The result will be delivered
+ * as an event with id 'triggerPaywall' or as a return value if the function is
+ * called from a coroutine.
+ * @name trigger_paywall_async
+ * @string content_identifier
+ * @return response Returns whether the purchase completed in data. (Note: Only
+ * if called from within a coroutine)
+ */
+int Wavedash_TriggerPaywallAsync(lua_State* L)
+{
+    {
+        DM_LUA_STACK_CHECK(L, 0);
+        WavedashJs_TriggerPaywallAsync(luaL_checkstring(L, 1));
+    }
+    return AwaitAsyncEvent(L, "triggerPaywall");
+}
+
 static const luaL_reg Module_methods[] =
 {
     {"init", Wavedash_Init},
@@ -1453,6 +1517,9 @@ static const luaL_reg Module_methods[] =
     {"get_lobby_invite_link_async", Wavedash_GetLobbyInviteLinkAsync},
     {"update_user_presence_async", Wavedash_UpdateUserPresenceAsync},
     {"ensure_gameplay_jwt_async", Wavedash_EnsureGameplayJwtAsync},
+    {"is_entitled_async", Wavedash_IsEntitledAsync},
+    {"get_entitlements_async", Wavedash_GetEntitlementsAsync},
+    {"trigger_paywall_async", Wavedash_TriggerPaywallAsync},
     {0, 0}
 };
 

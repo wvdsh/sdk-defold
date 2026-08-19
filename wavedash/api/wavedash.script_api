@@ -769,6 +769,48 @@
         within a coroutine)
 
 
+  - name: is_entitled_async
+    type: function
+    desc: |
+      Returns whether the player owns the given paid content. This is a UX hint, not a security check — Wavedash re-verifies ownership when serving the paid files. This is an asynchronous function. The result will be delivered as an event with id 'isEntitled' or as a return value if the function is called from a coroutine.
+    parameters:
+    - name: content_identifier
+      type: string
+    returns:
+    - name: response
+      type: function
+      desc: |
+        Returns whether the player owns the content in data. (Note:
+        Only if called from within a coroutine)
+
+
+  - name: get_entitlements_async
+    type: function
+    desc: |
+      Returns every paid content identifier the player owns for this game. This is a UX hint, not a security check — Wavedash re-verifies ownership when serving the paid files. This is an asynchronous function. The result will be delivered as an event with id 'getEntitlements' or as a return value if the function is called from a coroutine.
+    returns:
+    - name: response
+      type: function
+      desc: |
+        Returns the owned content identifiers in data. (Note: Only
+        if called from within a coroutine)
+
+
+  - name: trigger_paywall_async
+    type: function
+    desc: |
+      Open the Wavedash paywall for the given paid content. Resolves immediately with data true if the player already owns it; otherwise resolves with whether the purchase completed. Ownership refreshes automatically after a purchase, and the EntitlementsGranted event fires with the granted identifiers. This is an asynchronous function. The result will be delivered as an event with id 'triggerPaywall' or as a return value if the function is called from a coroutine.
+    parameters:
+    - name: content_identifier
+      type: string
+    returns:
+    - name: response
+      type: function
+      desc: |
+        Returns whether the purchase completed in data. (Note: Only
+        if called from within a coroutine)
+
+
   - name: EVENT_LOBBY_MESSAGE
     type: number
     desc: |

@@ -648,11 +648,11 @@ int Wavedash_ListLeaderboardEntriesAsync(lua_State* L)
 /**
  * Upload a leaderboard score.
  * Pass ugc_id to attach a UGC item, such as a replay, to the entry.
- * Pass metadata to attach small key/value data to the entry: string keys with string
- * or number values, for example { character = "knight", deaths = 3 }. Store larger
- * payloads as UGC and attach them with ugc_id instead. Metadata belongs to the score
- * it was submitted with: a score that gets written replaces it, and an empty table
- * clears it. A score that keep_best rejects leaves the existing entry, metadata
+ * Pass metadata to attach small key/value data to the entry: string keys with string,
+ * number or boolean values, for example { character = "knight", deaths = 3, no_hit = true }.
+ * Store larger payloads as UGC and attach them with ugc_id instead. Metadata belongs to
+ * the score it was submitted with: a score that gets written replaces it, and an empty
+ * table clears it. A score that keep_best rejects leaves the existing entry, metadata
  * included, untouched. The returned entry carries the persisted metadata back.
  * This is an asynchronous function. The result will be delivered as an event
  * with id 'uploadLeaderboardScore' or as a return value if the function is called from
@@ -1251,6 +1251,7 @@ int Wavedash_GetLobbyData(lua_State* L)
 
 /**
  * Set lobby data.
+ * value may be a string, a number or a boolean. Passing nil deletes the key.
  * @name set_lobby_data
  * @string lobby_id
  * @string key

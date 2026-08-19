@@ -230,7 +230,7 @@
   - name: upload_leaderboard_score_async
     type: function
     desc: |
-      Upload a leaderboard score. Pass ugc_id to attach a UGC item, such as a replay, to the entry. Pass metadata to attach small key/value data to the entry: string keys with string or number values.
+      Upload a leaderboard score. Pass ugc_id to attach a UGC item, such as a replay, to the entry. Pass metadata to attach small key/value data to the entry: string keys with string, number or boolean values.
       This is an asynchronous function. The result will be delivered as an event with id 'uploadLeaderboardScore' or as a return value if the function is called from a coroutine.
     parameters:
     - name: leaderboard_id
@@ -666,12 +666,14 @@
   - name: set_lobby_data
     type: function
     desc: |
-      Set lobby data.
+      Set lobby data. Passing nil deletes the key.
     parameters:
     - name: lobby_id
       type: string
     - name: key
       type: string
+    - name: value
+      type: [string, number, boolean]
 
   - name: delete_lobby_data
     type: function

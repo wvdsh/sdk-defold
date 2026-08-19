@@ -15,6 +15,10 @@ function init(self)
 			print("Backend disconnected")
 		elseif event == wavedash.EVENT_BACKEND_RECONNECTING then
 			print("Backend reconnecting")
+		elseif event == wavedash.EVENT_ENTITLEMENTS_GRANTED then
+			for _, content_identifier in ipairs(payload.contentIdentifiers) do
+				print("Purchased:", content_identifier)
+			end
 		else
 			print("Received event:", event)
 		end

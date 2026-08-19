@@ -1556,6 +1556,11 @@ void WavedashLuaInit(lua_State* L)
      */
     SETCONSTANT_STRING(EVENT_FULLSCREEN_CHANGED, "FullscreenChanged")
     /**
+     * EVENT_ENTITLEMENTS_GRANTED
+     * @field EVENT_ENTITLEMENTS_GRANTED
+     */
+    SETCONSTANT_STRING(EVENT_ENTITLEMENTS_GRANTED, "EntitlementsGranted")
+    /**
      * LOBBY_VISIBILITY_PUBLIC
      * @field LOBBY_VISIBILITY_PUBLIC
      */

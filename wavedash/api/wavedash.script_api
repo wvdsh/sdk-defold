@@ -854,6 +854,11 @@
     desc: |
       EVENT_FULLSCREEN_CHANGED
 
+  - name: EVENT_ENTITLEMENTS_GRANTED
+    type: number
+    desc: |
+      EVENT_ENTITLEMENTS_GRANTED
+
   - name: LOBBY_VISIBILITY_PUBLIC
     type: number
     desc: |

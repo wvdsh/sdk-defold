@@ -699,8 +699,9 @@ int Wavedash_UploadLeaderboardScoreAsync(lua_State* L)
         if (!lua_isnoneornil(L, 5))
         {
             lua_pushvalue(L, 5);
+            lua_insert(L, 1);
             metadata_failed = dmScript::LuaToJson(L, &metadata_json, &metadata_size) < 0;
-            lua_pop(L, 1);
+            lua_remove(L, 1);
         }
 
         if (!metadata_failed)

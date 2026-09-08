@@ -94,6 +94,7 @@ extern "C" {
 
 static dmScript::LuaCallbackInfo*   g_EventCallback = 0x0;
 static lua_State*                   g_AsyncThread = 0x0;
+static int                          g_AsyncThreadRef = LUA_NOREF;
 static char*                        g_AsyncEventId = 0;
 
 
@@ -131,14 +132,20 @@ static void DumpStack(lua_State* L)
 static int AwaitAsyncEvent(lua_State* L, char* eventId)
 {
     int is_main = lua_pushthread(L);
-    lua_pop(L, 1);
     if (is_main)
     {
+        lua_pop(L, 1);
         g_AsyncThread = 0;
         g_AsyncEventId = 0x0;
         return 0;
     }
 
+    if (g_AsyncThreadRef != LUA_NOREF)
+    {
+        dmLogWarning("Previous async call '%s' was still pending and will never resume", g_AsyncEventId);
+        dmScript::Unref(L, LUA_REGISTRYINDEX, g_AsyncThreadRef);
+    }
+    g_AsyncThreadRef = dmScript::Ref(L, LUA_REGISTRYINDEX);
     g_AsyncThread = L;
     g_AsyncEventId = eventId;
     return lua_yield(L, 0);
@@ -152,15 +159,18 @@ static void Wavedash_OnEventCallback(const char* event, const char* payload, uin
     if (g_AsyncThread && (strcmp(g_AsyncEventId, event) == 0))
     {
         lua_State* L = g_AsyncThread;
+        int ref = g_AsyncThreadRef;
         g_AsyncThread = 0x0;
+        g_AsyncThreadRef = LUA_NOREF;
         g_AsyncEventId = 0x0;
         dmScript::JsonToLua(L, payload, payload_length);
         int res = lua_resume(L, 1);
         if ((res != LUA_YIELD) && (res != 0))
         {
-            const char* error_message = luaL_checkstring(L, -1);
-            dmLogError("Coroutine resumed with error '%s' (%d)", error_message, res);
+            const char* error_message = lua_tostring(L, -1);
+            dmLogError("Coroutine resumed with error '%s' (%d)", error_message ? error_message : "?", res);
         }
+        dmScript::Unref(L, LUA_REGISTRYINDEX, ref);
         return;
     }
 

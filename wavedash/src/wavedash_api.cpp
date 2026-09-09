@@ -693,9 +693,10 @@ int Wavedash_UploadLeaderboardScoreAsync(lua_State* L)
         size_t metadata_size = 0;
         if (!lua_isnoneornil(L, 5))
         {
-            // gettop() + 1 is an empty slot, so the encoder falls back to its default
-            // options. A value it cannot represent raises a Lua error from in here.
-            metadata_failed = dmScript::LuaToJson(L, 5, lua_gettop(L) + 1, &metadata_json, &metadata_size) < 0;
+            lua_pushvalue(L, 5);
+            lua_insert(L, 1);
+            metadata_failed = dmScript::LuaToJson(L, &metadata_json, &metadata_size) < 0;
+            lua_remove(L, 1);
         }
 
         if (!metadata_failed)

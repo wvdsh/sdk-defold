@@ -135,15 +135,13 @@ static int AwaitAsyncEvent(lua_State* L, char* eventId)
     if (is_main)
     {
         lua_pop(L, 1);
-        g_AsyncThread = 0;
-        g_AsyncEventId = 0x0;
         return 0;
     }
 
     if (g_AsyncThreadRef != LUA_NOREF)
     {
         dmLogWarning("Previous async call '%s' was still pending and will never resume", g_AsyncEventId);
-        dmScript::Unref(L, LUA_REGISTRYINDEX, g_AsyncThreadRef);
+        dmScript::Unref(g_AsyncThread, LUA_REGISTRYINDEX, g_AsyncThreadRef);
     }
     g_AsyncThreadRef = dmScript::Ref(L, LUA_REGISTRYINDEX);
     g_AsyncThread = L;

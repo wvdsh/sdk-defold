@@ -14,7 +14,7 @@
  * @document
  */
 
-typedef void (*OnEventCallback)(const char* event, const char* payload, uint32_t payload_length);
+typedef void (*OnEventCallback)(const char* event, const char* payload, uint32_t payload_length, int request_id);
 
 extern "C" {
     int WavedashJs_Init(const char* config_json, OnEventCallback callback);
@@ -23,43 +23,43 @@ extern "C" {
     void WavedashJs_LoadComplete();
     void WavedashJs_ToggleOverlay();
     int WavedashJs_IsFullscreen();
-    void WavedashJs_RequestFullscreenAsync(int fullscreen);
-    void WavedashJs_ToggleFullscreenAsync();
+    int WavedashJs_RequestFullscreenAsync(int fullscreen);
+    int WavedashJs_ToggleFullscreenAsync();
 
     const char* WavedashJs_GetUser();
     const char* WavedashJs_GetUsername(const char* user_id);
     const char* WavedashJs_GetUserId();
-    void WavedashJs_GetUserJwtAsync();
+    int WavedashJs_GetUserJwtAsync();
     const char* WavedashJs_GetLaunchParams();
-    void WavedashJs_ListFriendsAsync();
+    int WavedashJs_ListFriendsAsync();
     const char* WavedashJs_GetUserAvatarUrl(const char* user_id, double size);
 
-    void WavedashJs_GetLeaderboardAsync(const char* name);
-    void WavedashJs_GetOrCreateLeaderboardAsync(const char* name, double sort_order, double display_type);
+    int WavedashJs_GetLeaderboardAsync(const char* name);
+    int WavedashJs_GetOrCreateLeaderboardAsync(const char* name, double sort_order, double display_type);
     double WavedashJs_GetLeaderboardEntryCount(const char* leaderboard_id);
-    void WavedashJs_GetMyLeaderboardEntriesAsync(const char* leaderboard_id);
-    void WavedashJs_ListLeaderboardEntriesAroundUserAsync(const char* leaderboard_id, double count_ahead, double count_behind, int friends_only);
-    void WavedashJs_ListLeaderboardEntriesAsync(const char* leaderboard_id, double offset, double limit, int friends_only);
-    void WavedashJs_UploadLeaderboardScoreAsync(const char* leaderboard_id, double score, int keep_best, const char* ugc_id, const char* metadata_json);
+    int WavedashJs_GetMyLeaderboardEntriesAsync(const char* leaderboard_id);
+    int WavedashJs_ListLeaderboardEntriesAroundUserAsync(const char* leaderboard_id, double count_ahead, double count_behind, int friends_only);
+    int WavedashJs_ListLeaderboardEntriesAsync(const char* leaderboard_id, double offset, double limit, int friends_only);
+    int WavedashJs_UploadLeaderboardScoreAsync(const char* leaderboard_id, double score, int keep_best, const char* ugc_id, const char* metadata_json);
 
-    void WavedashJs_CreateUGCItemAsync(double ugc_type, const char* title, const char* description, double visibility, const char* file_path);
-    void WavedashJs_UpdateUGCItemAsync(const char* ugc_id, const char* title, const char* description, double visibility, const char* file_path);
-    void WavedashJs_DownloadUGCItemAsync(const char* ugc_id, const char* file_path);
-    void WavedashJs_DeleteUGCItemAsync(const char* ugc_id);
-    void WavedashJs_ListUGCItemsAsync(const char* filters_json);
-    void WavedashJs_DeleteRemoteFileAsync(const char* file_path);
-    void WavedashJs_DownloadRemoteFileAsync(const char* file_path);
-    void WavedashJs_UploadRemoteFileAsync(const char* file_path);
-    void WavedashJs_ListRemoteDirectoryAsync(const char* path);
-    void WavedashJs_DownloadRemoteDirectoryAsync(const char* path);
-    void WavedashJs_WriteLocalFileAsync(const char* file_path, const void* data, uint32_t data_length);
-    const char* WavedashJs_ReadLocalFileAsync(const char* file_path);
+    int WavedashJs_CreateUGCItemAsync(double ugc_type, const char* title, const char* description, double visibility, const char* file_path);
+    int WavedashJs_UpdateUGCItemAsync(const char* ugc_id, const char* title, const char* description, double visibility, const char* file_path);
+    int WavedashJs_DownloadUGCItemAsync(const char* ugc_id, const char* file_path);
+    int WavedashJs_DeleteUGCItemAsync(const char* ugc_id);
+    int WavedashJs_ListUGCItemsAsync(const char* filters_json);
+    int WavedashJs_DeleteRemoteFileAsync(const char* file_path);
+    int WavedashJs_DownloadRemoteFileAsync(const char* file_path);
+    int WavedashJs_UploadRemoteFileAsync(const char* file_path);
+    int WavedashJs_ListRemoteDirectoryAsync(const char* path);
+    int WavedashJs_DownloadRemoteDirectoryAsync(const char* path);
+    int WavedashJs_WriteLocalFileAsync(const char* file_path, const void* data, uint32_t data_length);
+    int WavedashJs_ReadLocalFileAsync(const char* file_path);
 
     int WavedashJs_GetAchievement(const char* identifier);
     double WavedashJs_GetStat(const char* identifier);
     int WavedashJs_SetAchievement(const char* identifier, int store_now);
     int WavedashJs_SetStat(const char* identifier, double value, int store_now);
-    void WavedashJs_RequestStatsAsync();
+    int WavedashJs_RequestStatsAsync();
     int WavedashJs_StoreStats();
 
     double WavedashJs_GetP2PMaxPayloadSize();
@@ -70,98 +70,80 @@ extern "C" {
     const char* WavedashJs_ReadP2PMessageFromChannel(double app_channel);
     const char* WavedashJs_DrainP2PChannelToBuffer(double app_channel, uint32_t* out_length);
 
-    void WavedashJs_CreateLobbyAsync(double visibility, double max_players);
-    void WavedashJs_JoinLobbyAsync(const char* lobby_id);
-    void WavedashJs_ListAvailableLobbiesAsync(int friends_only);
+    int WavedashJs_CreateLobbyAsync(double visibility, double max_players);
+    int WavedashJs_JoinLobbyAsync(const char* lobby_id);
+    int WavedashJs_ListAvailableLobbiesAsync(int friends_only);
     const char* WavedashJs_GetLobbyUsers(const char* lobby_id);
     double WavedashJs_GetNumLobbyUsers(const char* lobby_id);
     const char* WavedashJs_GetLobbyHostId(const char* lobby_id);
     const char* WavedashJs_GetLobbyData(const char* lobby_id, const char* key);
     int WavedashJs_SetLobbyData(const char* lobby_id, const char* key, const char* value_json);
     int WavedashJs_DeleteLobbyData(const char* lobby_id, const char* key);
-    void WavedashJs_LeaveLobbyAsync(const char* lobby_id);
+    int WavedashJs_LeaveLobbyAsync(const char* lobby_id);
     int WavedashJs_SendLobbyMessage(const char* lobby_id, const char* message);
-    void WavedashJs_InviteUserToLobbyAsync(const char* lobby_id, const char* user_id);
-    void WavedashJs_GetLobbyInviteLinkAsync(int copy_to_clipboard);
-    void WavedashJs_UpdateUserPresenceAsync(const char* data_json);
-    void WavedashJs_EnsureGameplayJwtAsync();
-    void WavedashJs_IsEntitledAsync(const char* content_identifier);
-    void WavedashJs_GetEntitlementsAsync();
-    void WavedashJs_TriggerPaywallAsync(const char* content_identifier);
+    int WavedashJs_InviteUserToLobbyAsync(const char* lobby_id, const char* user_id);
+    int WavedashJs_GetLobbyInviteLinkAsync(int copy_to_clipboard);
+    int WavedashJs_UpdateUserPresenceAsync(const char* data_json);
+    int WavedashJs_EnsureGameplayJwtAsync();
+    int WavedashJs_IsEntitledAsync(const char* content_identifier);
+    int WavedashJs_GetEntitlementsAsync();
+    int WavedashJs_TriggerPaywallAsync(const char* content_identifier);
 
     void WavedashJs_Free(void* ptr);
 }
 
 static dmScript::LuaCallbackInfo*   g_EventCallback = 0x0;
-static lua_State*                   g_AsyncThread = 0x0;
-static char*                        g_AsyncEventId = 0;
 
-
-static void DumpStack(lua_State* L)
+struct AsyncAwait
 {
-    dmLogInfo("Stack:");
-    for (int i = 1; i <= lua_gettop(L); i++)
-    {
-        int type = lua_type(L, i);
-        const char* name = lua_typename(L, type);
-        switch (type)
-        {
-            case LUA_TNIL:
-            case LUA_TTABLE:
-            case LUA_TFUNCTION:
-            case LUA_TUSERDATA:
-            case LUA_TTHREAD:
-            case LUA_TLIGHTUSERDATA:
-            default:
-                dmLogInfo("%d = %s", i, name);
-                break;
-            case LUA_TNUMBER:
-                dmLogInfo("%d = %f (%s)", i, luaL_checknumber(L, i), name);
-                break;
-            case LUA_TBOOLEAN:
-                dmLogInfo("%d = %d (%s)", i, lua_toboolean(L, i), name);
-                break;
-            case LUA_TSTRING:
-                dmLogInfo("%d = %s (%s)", i, luaL_checkstring(L, i), name);
-                break;
-        }
-    }
-}
+    int        request_id;
+    lua_State* thread;
+    int        ref;
+};
 
-static int AwaitAsyncEvent(lua_State* L, char* eventId)
+static dmArray<AsyncAwait> g_PendingAsync;
+
+
+static int AwaitAsyncEvent(lua_State* L, int request_id)
 {
     int is_main = lua_pushthread(L);
-    lua_pop(L, 1);
-    if (is_main)
+    if (is_main || request_id == 0)
     {
-        g_AsyncThread = 0;
-        g_AsyncEventId = 0x0;
+        lua_pop(L, 1);
         return 0;
     }
 
-    g_AsyncThread = L;
-    g_AsyncEventId = eventId;
+    if (g_PendingAsync.Full())
+    {
+        g_PendingAsync.SetCapacity(g_PendingAsync.Capacity() ? g_PendingAsync.Capacity() * 2 : 4);
+    }
+    AsyncAwait await = { request_id, L, dmScript::Ref(L, LUA_REGISTRYINDEX) };
+    g_PendingAsync.Push(await);
     return lua_yield(L, 0);
 }
 
 
-static void Wavedash_OnEventCallback(const char* event, const char* payload, uint32_t payload_length)
+static void Wavedash_OnEventCallback(const char* event, const char* payload, uint32_t payload_length, int request_id)
 {
-    // resume the coroutine if we have one and the event is matching the one we
-    // are waiting for
-    if (g_AsyncThread && (strcmp(g_AsyncEventId, event) == 0))
+    if (request_id != 0)
     {
-        lua_State* L = g_AsyncThread;
-        g_AsyncThread = 0x0;
-        g_AsyncEventId = 0x0;
-        dmScript::JsonToLua(L, payload, payload_length);
-        int res = lua_resume(L, 1);
-        if ((res != LUA_YIELD) && (res != 0))
+        for (uint32_t i = 0; i < g_PendingAsync.Size(); ++i)
         {
-            const char* error_message = luaL_checkstring(L, -1);
-            dmLogError("Coroutine resumed with error '%s' (%d)", error_message, res);
+            if (g_PendingAsync[i].request_id == request_id)
+            {
+                AsyncAwait await = g_PendingAsync[i];
+                g_PendingAsync.EraseSwap(i);
+                dmScript::JsonToLua(await.thread, payload, payload_length);
+                int res = lua_resume(await.thread, 1);
+                if ((res != LUA_YIELD) && (res != 0))
+                {
+                    const char* error_message = lua_tostring(await.thread, -1);
+                    dmLogError("Coroutine resumed with error '%s' (%d)", error_message ? error_message : "?", res);
+                }
+                dmScript::Unref(await.thread, LUA_REGISTRYINDEX, await.ref);
+                return;
+            }
         }
-        return;
     }
 
     if (!dmScript::IsCallbackValid(g_EventCallback))
@@ -411,11 +393,12 @@ int Wavedash_IsFullscreen(lua_State* L)
  */
 int Wavedash_RequestFullscreenAsync(lua_State* L)
 {
+    int request_id = 0;
     {
         DM_LUA_STACK_CHECK(L, 0);
-        WavedashJs_RequestFullscreenAsync(lua_toboolean(L, 1) ? 1 : 0);
+        request_id = WavedashJs_RequestFullscreenAsync(lua_toboolean(L, 1) ? 1 : 0);
     }
-    return AwaitAsyncEvent(L, "requestFullscreen");
+    return AwaitAsyncEvent(L, request_id);
 }
 
 /**
@@ -429,11 +412,12 @@ int Wavedash_RequestFullscreenAsync(lua_State* L)
  */
 int Wavedash_ToggleFullscreenAsync(lua_State* L)
 {
+    int request_id = 0;
     {
         DM_LUA_STACK_CHECK(L, 0);
-        WavedashJs_ToggleFullscreenAsync();
+        request_id = WavedashJs_ToggleFullscreenAsync();
     }
-    return AwaitAsyncEvent(L, "toggleFullscreen");
+    return AwaitAsyncEvent(L, request_id);
 }
 
 /**
@@ -481,11 +465,12 @@ int Wavedash_GetUserId(lua_State* L)
  */
 int Wavedash_GetUserJwtAsync(lua_State* L)
 {
+    int request_id = 0;
     {
         DM_LUA_STACK_CHECK(L, 0);
-        WavedashJs_GetUserJwtAsync();
+        request_id = WavedashJs_GetUserJwtAsync();
     }
-    return AwaitAsyncEvent(L, "getUserJwt");
+    return AwaitAsyncEvent(L, request_id);
 }
 
 /**
@@ -510,11 +495,12 @@ int Wavedash_GetLaunchParams(lua_State* L)
  */
 int Wavedash_ListFriendsAsync(lua_State* L)
 {
+    int request_id = 0;
     {
         DM_LUA_STACK_CHECK(L, 0);
-        WavedashJs_ListFriendsAsync();
+        request_id = WavedashJs_ListFriendsAsync();
     }
-    return AwaitAsyncEvent(L, "listFriends");
+    return AwaitAsyncEvent(L, request_id);
 }
 
 /**
@@ -542,11 +528,12 @@ int Wavedash_GetUserAvatarUrl(lua_State* L)
  */
 int Wavedash_GetLeaderboardAsync(lua_State* L)
 {
+    int request_id = 0;
     {
         DM_LUA_STACK_CHECK(L, 0);
-        WavedashJs_GetLeaderboardAsync(luaL_checkstring(L, 1));
+        request_id = WavedashJs_GetLeaderboardAsync(luaL_checkstring(L, 1));
     }
-    return AwaitAsyncEvent(L, "getLeaderboard");
+    return AwaitAsyncEvent(L, request_id);
 }
 
 /**
@@ -563,11 +550,12 @@ int Wavedash_GetLeaderboardAsync(lua_State* L)
  */
 int Wavedash_GetOrCreateLeaderboardAsync(lua_State* L)
 {
+    int request_id = 0;
     {
         DM_LUA_STACK_CHECK(L, 0);
-        WavedashJs_GetOrCreateLeaderboardAsync(luaL_checkstring(L, 1), luaL_checknumber(L, 2), luaL_checknumber(L, 3));
+        request_id = WavedashJs_GetOrCreateLeaderboardAsync(luaL_checkstring(L, 1), luaL_checknumber(L, 2), luaL_checknumber(L, 3));
     }
-    return AwaitAsyncEvent(L, "getOrCreateLeaderboard");
+    return AwaitAsyncEvent(L, request_id);
 }
 
 /**
@@ -594,11 +582,12 @@ int Wavedash_GetLeaderboardEntryCount(lua_State* L)
  */
 int Wavedash_GetMyLeaderboardEntriesAsync(lua_State* L)
 {
+    int request_id = 0;
     {
         DM_LUA_STACK_CHECK(L, 0);
-        WavedashJs_GetMyLeaderboardEntriesAsync(luaL_checkstring(L, 1));
+        request_id = WavedashJs_GetMyLeaderboardEntriesAsync(luaL_checkstring(L, 1));
     }
-    return AwaitAsyncEvent(L, "getMyLeaderboardEntries");
+    return AwaitAsyncEvent(L, request_id);
 }
 
 /**
@@ -616,11 +605,12 @@ int Wavedash_GetMyLeaderboardEntriesAsync(lua_State* L)
  */
 int Wavedash_ListLeaderboardEntriesAroundUserAsync(lua_State* L)
 {
+    int request_id = 0;
     {
         DM_LUA_STACK_CHECK(L, 0);
-        WavedashJs_ListLeaderboardEntriesAroundUserAsync(luaL_checkstring(L, 1), luaL_checknumber(L, 2), luaL_checknumber(L, 3), OptionalBoolArg(L, 4));
+        request_id = WavedashJs_ListLeaderboardEntriesAroundUserAsync(luaL_checkstring(L, 1), luaL_checknumber(L, 2), luaL_checknumber(L, 3), OptionalBoolArg(L, 4));
     }
-    return AwaitAsyncEvent(L, "listLeaderboardEntriesAroundUser");
+    return AwaitAsyncEvent(L, request_id);
 }
 
 /**
@@ -638,11 +628,12 @@ int Wavedash_ListLeaderboardEntriesAroundUserAsync(lua_State* L)
  */
 int Wavedash_ListLeaderboardEntriesAsync(lua_State* L)
 {
+    int request_id = 0;
     {
         DM_LUA_STACK_CHECK(L, 0);
-        WavedashJs_ListLeaderboardEntriesAsync(luaL_checkstring(L, 1), luaL_checknumber(L, 2), luaL_checknumber(L, 3), OptionalBoolArg(L, 4));
+        request_id = WavedashJs_ListLeaderboardEntriesAsync(luaL_checkstring(L, 1), luaL_checknumber(L, 2), luaL_checknumber(L, 3), OptionalBoolArg(L, 4));
     }
-    return AwaitAsyncEvent(L, "listLeaderboardEntries");
+    return AwaitAsyncEvent(L, request_id);
 }
 
 /**
@@ -668,6 +659,7 @@ int Wavedash_ListLeaderboardEntriesAsync(lua_State* L)
  */
 int Wavedash_UploadLeaderboardScoreAsync(lua_State* L)
 {
+    int request_id = 0;
     bool metadata_failed = false;
 
     {
@@ -683,9 +675,10 @@ int Wavedash_UploadLeaderboardScoreAsync(lua_State* L)
         size_t metadata_size = 0;
         if (!lua_isnoneornil(L, 5))
         {
-            // gettop() + 1 is an empty slot, so the encoder falls back to its default
-            // options. A value it cannot represent raises a Lua error from in here.
-            metadata_failed = dmScript::LuaToJson(L, 5, lua_gettop(L) + 1, &metadata_json, &metadata_size) < 0;
+            lua_pushvalue(L, 5);
+            lua_insert(L, 1);
+            metadata_failed = dmScript::LuaToJson(L, &metadata_json, &metadata_size) < 0;
+            lua_remove(L, 1);
         }
 
         if (!metadata_failed)
@@ -698,7 +691,7 @@ int Wavedash_UploadLeaderboardScoreAsync(lua_State* L)
                 metadata_arg = 0;
             }
 
-            WavedashJs_UploadLeaderboardScoreAsync(leaderboard_id, score, keep_best, ugc_id, metadata_arg);
+            request_id = WavedashJs_UploadLeaderboardScoreAsync(leaderboard_id, score, keep_best, ugc_id, metadata_arg);
         }
 
         free(metadata_json);
@@ -710,7 +703,7 @@ int Wavedash_UploadLeaderboardScoreAsync(lua_State* L)
         return luaL_error(L, "upload_leaderboard_score_async: could not encode metadata as JSON");
     }
 
-    return AwaitAsyncEvent(L, "uploadLeaderboardScore");
+    return AwaitAsyncEvent(L, request_id);
 }
 
 /**
@@ -729,11 +722,12 @@ int Wavedash_UploadLeaderboardScoreAsync(lua_State* L)
  */
 int Wavedash_CreateUGCItemAsync(lua_State* L)
 {
+    int request_id = 0;
     {
         DM_LUA_STACK_CHECK(L, 0);
-        WavedashJs_CreateUGCItemAsync(luaL_checknumber(L, 1), OptionalStringArg(L, 2), OptionalStringArg(L, 3), OptionalNumberArg(L, 4), OptionalStringArg(L, 5));
+        request_id = WavedashJs_CreateUGCItemAsync(luaL_checknumber(L, 1), OptionalStringArg(L, 2), OptionalStringArg(L, 3), OptionalNumberArg(L, 4), OptionalStringArg(L, 5));
     }
-    return AwaitAsyncEvent(L, "createUGCItem");
+    return AwaitAsyncEvent(L, request_id);
 }
 
 /**
@@ -752,11 +746,12 @@ int Wavedash_CreateUGCItemAsync(lua_State* L)
  */
 int Wavedash_UpdateUGCItemAsync(lua_State* L)
 {
+    int request_id = 0;
     {
         DM_LUA_STACK_CHECK(L, 0);
-        WavedashJs_UpdateUGCItemAsync(luaL_checkstring(L, 1), OptionalStringArg(L, 2), OptionalStringArg(L, 3), OptionalNumberArg(L, 4), OptionalStringArg(L, 5));
+        request_id = WavedashJs_UpdateUGCItemAsync(luaL_checkstring(L, 1), OptionalStringArg(L, 2), OptionalStringArg(L, 3), OptionalNumberArg(L, 4), OptionalStringArg(L, 5));
     }
-    return AwaitAsyncEvent(L, "updateUGCItem");
+    return AwaitAsyncEvent(L, request_id);
 }
 
 /**
@@ -772,11 +767,12 @@ int Wavedash_UpdateUGCItemAsync(lua_State* L)
  */
 int Wavedash_DownloadUGCItemAsync(lua_State* L)
 {
+    int request_id = 0;
     {
         DM_LUA_STACK_CHECK(L, 0);
-        WavedashJs_DownloadUGCItemAsync(luaL_checkstring(L, 1), luaL_checkstring(L, 2));
+        request_id = WavedashJs_DownloadUGCItemAsync(luaL_checkstring(L, 1), luaL_checkstring(L, 2));
     }
-    return AwaitAsyncEvent(L, "downloadUGCItem");
+    return AwaitAsyncEvent(L, request_id);
 }
 
 
@@ -792,11 +788,12 @@ int Wavedash_DownloadUGCItemAsync(lua_State* L)
  */
 int Wavedash_DeleteUGCItemAsync(lua_State* L)
 {
+    int request_id = 0;
     {
         DM_LUA_STACK_CHECK(L, 0);
-        WavedashJs_DeleteUGCItemAsync(luaL_checkstring(L, 1));
+        request_id = WavedashJs_DeleteUGCItemAsync(luaL_checkstring(L, 1));
     }
-    return AwaitAsyncEvent(L, "deleteUGCItem");
+    return AwaitAsyncEvent(L, request_id);
 }
 /**
  * List UGC items.
@@ -810,6 +807,7 @@ int Wavedash_DeleteUGCItemAsync(lua_State* L)
  */
 int Wavedash_ListUGCItemsAsync(lua_State* L)
 {
+    int request_id = 0;
     {
         DM_LUA_STACK_CHECK(L, 0);
         if (lua_isnoneornil(L, 1))
@@ -819,9 +817,9 @@ int Wavedash_ListUGCItemsAsync(lua_State* L)
         char* json;
         size_t json_size;
         dmScript::LuaToJson(L, &json, &json_size);
-        WavedashJs_ListUGCItemsAsync(json);
+        request_id = WavedashJs_ListUGCItemsAsync(json);
     }
-    return AwaitAsyncEvent(L, "listUGCItems");
+    return AwaitAsyncEvent(L, request_id);
 }
 /**
  * Delete a remote file.
@@ -835,11 +833,12 @@ int Wavedash_ListUGCItemsAsync(lua_State* L)
  */
 int Wavedash_DeleteRemoteFileAsync(lua_State* L)
 {
+    int request_id = 0;
     {
         DM_LUA_STACK_CHECK(L, 0);
-        WavedashJs_DeleteRemoteFileAsync(luaL_checkstring(L, 1));
+        request_id = WavedashJs_DeleteRemoteFileAsync(luaL_checkstring(L, 1));
     }
-    return AwaitAsyncEvent(L, "deleteRemoteFile");
+    return AwaitAsyncEvent(L, request_id);
 }
 
 /**
@@ -854,11 +853,12 @@ int Wavedash_DeleteRemoteFileAsync(lua_State* L)
  */
 int Wavedash_DownloadRemoteFileAsync(lua_State* L)
 {
+    int request_id = 0;
     {
         DM_LUA_STACK_CHECK(L, 0);
-        WavedashJs_DownloadRemoteFileAsync(luaL_checkstring(L, 1));
+        request_id = WavedashJs_DownloadRemoteFileAsync(luaL_checkstring(L, 1));
     }
-    return AwaitAsyncEvent(L, "downloadRemoteFile");
+    return AwaitAsyncEvent(L, request_id);
 }
 
 /**
@@ -873,11 +873,12 @@ int Wavedash_DownloadRemoteFileAsync(lua_State* L)
  */
 int Wavedash_UploadRemoteFileAsync(lua_State* L)
 {
+    int request_id = 0;
     {
         DM_LUA_STACK_CHECK(L, 0);
-        WavedashJs_UploadRemoteFileAsync(luaL_checkstring(L, 1));
+        request_id = WavedashJs_UploadRemoteFileAsync(luaL_checkstring(L, 1));
     }
-    return AwaitAsyncEvent(L, "uploadRemoteFile");
+    return AwaitAsyncEvent(L, request_id);
 }
 
 /**
@@ -892,11 +893,12 @@ int Wavedash_UploadRemoteFileAsync(lua_State* L)
  */
 int Wavedash_ListRemoteDirectoryAsync(lua_State* L)
 {
+    int request_id = 0;
     {
         DM_LUA_STACK_CHECK(L, 0);
-        WavedashJs_ListRemoteDirectoryAsync(luaL_checkstring(L, 1));
+        request_id = WavedashJs_ListRemoteDirectoryAsync(luaL_checkstring(L, 1));
     }
-    return AwaitAsyncEvent(L, "listRemoteDirectory");
+    return AwaitAsyncEvent(L, request_id);
 }
 
 /**
@@ -911,11 +913,12 @@ int Wavedash_ListRemoteDirectoryAsync(lua_State* L)
  */
 int Wavedash_DownloadRemoteDirectoryAsync(lua_State* L)
 {
+    int request_id = 0;
     {
         DM_LUA_STACK_CHECK(L, 0);
-        WavedashJs_DownloadRemoteDirectoryAsync(luaL_checkstring(L, 1));
+        request_id = WavedashJs_DownloadRemoteDirectoryAsync(luaL_checkstring(L, 1));
     }
-    return AwaitAsyncEvent(L, "downloadRemoteDirectory");
+    return AwaitAsyncEvent(L, request_id);
 }
 
 /**
@@ -931,14 +934,15 @@ int Wavedash_DownloadRemoteDirectoryAsync(lua_State* L)
  */
 int Wavedash_WriteLocalFileAsync(lua_State* L)
 {
+    int request_id = 0;
     {
         DM_LUA_STACK_CHECK(L, 0);
 
         size_t data_length = 0;
         const char* data = luaL_checklstring(L, 2, &data_length);
-        WavedashJs_WriteLocalFileAsync(luaL_checkstring(L, 1), data, (uint32_t) data_length);
+        request_id = WavedashJs_WriteLocalFileAsync(luaL_checkstring(L, 1), data, (uint32_t) data_length);
     }
-    return AwaitAsyncEvent(L, "writeLocalFile");
+    return AwaitAsyncEvent(L, request_id);
 }
 
 /**
@@ -953,11 +957,12 @@ int Wavedash_WriteLocalFileAsync(lua_State* L)
  */
 int Wavedash_ReadLocalFileAsync(lua_State* L)
 {
+    int request_id = 0;
     {
         DM_LUA_STACK_CHECK(L, 0);
-        WavedashJs_ReadLocalFileAsync(luaL_checkstring(L, 1));
+        request_id = WavedashJs_ReadLocalFileAsync(luaL_checkstring(L, 1));
     }
-    return AwaitAsyncEvent(L, "readLocalFile");
+    return AwaitAsyncEvent(L, request_id);
 }
 
 /**
@@ -1022,11 +1027,12 @@ int Wavedash_SetStat(lua_State* L)
  */
 int Wavedash_RequestStatsAsync(lua_State* L)
 {
+    int request_id = 0;
     {
         DM_LUA_STACK_CHECK(L, 0);
-        WavedashJs_RequestStatsAsync();
+        request_id = WavedashJs_RequestStatsAsync();
     }
-    return AwaitAsyncEvent(L, "requestStats");
+    return AwaitAsyncEvent(L, request_id);
 }
 
 /**
@@ -1155,11 +1161,12 @@ int Wavedash_DrainP2PChannelToBuffer(lua_State* L)
  */
 int Wavedash_CreateLobbyAsync(lua_State* L)
 {
+    int request_id = 0;
     {
         DM_LUA_STACK_CHECK(L, 0);
-        WavedashJs_CreateLobbyAsync(luaL_checknumber(L, 1), OptionalNumberArg(L, 2));
+        request_id = WavedashJs_CreateLobbyAsync(luaL_checknumber(L, 1), OptionalNumberArg(L, 2));
     }
-    return AwaitAsyncEvent(L, "createLobby");
+    return AwaitAsyncEvent(L, request_id);
 }
 
 /**
@@ -1174,11 +1181,12 @@ int Wavedash_CreateLobbyAsync(lua_State* L)
  */
 int Wavedash_JoinLobbyAsync(lua_State* L)
 {
+    int request_id = 0;
     {
         DM_LUA_STACK_CHECK(L, 0);
-        WavedashJs_JoinLobbyAsync(luaL_checkstring(L, 1));
+        request_id = WavedashJs_JoinLobbyAsync(luaL_checkstring(L, 1));
     }
-    return AwaitAsyncEvent(L, "joinLobby");
+    return AwaitAsyncEvent(L, request_id);
 }
 
 /**
@@ -1193,11 +1201,12 @@ int Wavedash_JoinLobbyAsync(lua_State* L)
  */
 int Wavedash_ListAvailableLobbiesAsync(lua_State* L)
 {
+    int request_id = 0;
     {
         DM_LUA_STACK_CHECK(L, 0);
-        WavedashJs_ListAvailableLobbiesAsync(OptionalBoolArg(L, 1));
+        request_id = WavedashJs_ListAvailableLobbiesAsync(OptionalBoolArg(L, 1));
     }
-    return AwaitAsyncEvent(L, "listAvailableLobbies");
+    return AwaitAsyncEvent(L, request_id);
 }
 
 /**
@@ -1297,11 +1306,12 @@ int Wavedash_DeleteLobbyData(lua_State* L)
  */
 int Wavedash_LeaveLobbyAsync(lua_State* L)
 {
+    int request_id = 0;
     {
         DM_LUA_STACK_CHECK(L, 0);
-        WavedashJs_LeaveLobbyAsync(luaL_checkstring(L, 1));
+        request_id = WavedashJs_LeaveLobbyAsync(luaL_checkstring(L, 1));
     }
-    return AwaitAsyncEvent(L, "leaveLobby");
+    return AwaitAsyncEvent(L, request_id);
 }
 
 /**
@@ -1330,11 +1340,12 @@ int Wavedash_SendLobbyMessage(lua_State* L)
  */
 int Wavedash_InviteUserToLobbyAsync(lua_State* L)
 {
+    int request_id = 0;
     {
         DM_LUA_STACK_CHECK(L, 0);
-        WavedashJs_InviteUserToLobbyAsync(luaL_checkstring(L, 1), luaL_checkstring(L, 2));
+        request_id = WavedashJs_InviteUserToLobbyAsync(luaL_checkstring(L, 1), luaL_checkstring(L, 2));
     }
-    return AwaitAsyncEvent(L, "inviteUserToLobby");
+    return AwaitAsyncEvent(L, request_id);
 }
 
 /**
@@ -1349,11 +1360,12 @@ int Wavedash_InviteUserToLobbyAsync(lua_State* L)
  */
 int Wavedash_GetLobbyInviteLinkAsync(lua_State* L)
 {
+    int request_id = 0;
     {
         DM_LUA_STACK_CHECK(L, 0);
-        WavedashJs_GetLobbyInviteLinkAsync(OptionalBoolArg(L, 1));
+        request_id = WavedashJs_GetLobbyInviteLinkAsync(OptionalBoolArg(L, 1));
     }
-    return AwaitAsyncEvent(L, "getLobbyInviteLink");
+    return AwaitAsyncEvent(L, request_id);
 }
 
 /**
@@ -1368,11 +1380,12 @@ int Wavedash_GetLobbyInviteLinkAsync(lua_State* L)
  */
 int Wavedash_UpdateUserPresenceAsync(lua_State* L)
 {
+    int request_id = 0;
     {
         DM_LUA_STACK_CHECK(L, 0);
-        WavedashJs_UpdateUserPresenceAsync(RawJsonStringArg(L, 1));
+        request_id = WavedashJs_UpdateUserPresenceAsync(RawJsonStringArg(L, 1));
     }
-    return AwaitAsyncEvent(L, "updateUserPresence");
+    return AwaitAsyncEvent(L, request_id);
 }
 
 /**
@@ -1386,11 +1399,12 @@ int Wavedash_UpdateUserPresenceAsync(lua_State* L)
  */
 int Wavedash_EnsureGameplayJwtAsync(lua_State* L)
 {
+    int request_id = 0;
     {
         DM_LUA_STACK_CHECK(L, 0);
-        WavedashJs_EnsureGameplayJwtAsync();
+        request_id = WavedashJs_EnsureGameplayJwtAsync();
     }
-    return AwaitAsyncEvent(L, "ensureGameplayJwt");
+    return AwaitAsyncEvent(L, request_id);
 }
 
 /**
@@ -1406,11 +1420,12 @@ int Wavedash_EnsureGameplayJwtAsync(lua_State* L)
  */
 int Wavedash_IsEntitledAsync(lua_State* L)
 {
+    int request_id = 0;
     {
         DM_LUA_STACK_CHECK(L, 0);
-        WavedashJs_IsEntitledAsync(luaL_checkstring(L, 1));
+        request_id = WavedashJs_IsEntitledAsync(luaL_checkstring(L, 1));
     }
-    return AwaitAsyncEvent(L, "isEntitled");
+    return AwaitAsyncEvent(L, request_id);
 }
 
 /**
@@ -1425,11 +1440,12 @@ int Wavedash_IsEntitledAsync(lua_State* L)
  */
 int Wavedash_GetEntitlementsAsync(lua_State* L)
 {
+    int request_id = 0;
     {
         DM_LUA_STACK_CHECK(L, 0);
-        WavedashJs_GetEntitlementsAsync();
+        request_id = WavedashJs_GetEntitlementsAsync();
     }
-    return AwaitAsyncEvent(L, "getEntitlements");
+    return AwaitAsyncEvent(L, request_id);
 }
 
 /**
@@ -1447,11 +1463,12 @@ int Wavedash_GetEntitlementsAsync(lua_State* L)
  */
 int Wavedash_TriggerPaywallAsync(lua_State* L)
 {
+    int request_id = 0;
     {
         DM_LUA_STACK_CHECK(L, 0);
-        WavedashJs_TriggerPaywallAsync(luaL_checkstring(L, 1));
+        request_id = WavedashJs_TriggerPaywallAsync(luaL_checkstring(L, 1));
     }
-    return AwaitAsyncEvent(L, "triggerPaywall");
+    return AwaitAsyncEvent(L, request_id);
 }
 
 static const luaL_reg Module_methods[] =

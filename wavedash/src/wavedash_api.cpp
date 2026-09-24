@@ -273,8 +273,13 @@ static bool LuaValueToJsonLiteral(lua_State* L, int index, std::string& json)
             json = lua_toboolean(L, index) ? "true" : "false";
             return true;
         case LUA_TNUMBER:
-            json = std::to_string(lua_tonumber(L, index));
+        {
+            // %.17g round-trips a double exactly; std::to_string rounds to 6 decimals.
+            char buf[32];
+            snprintf(buf, sizeof(buf), "%.17g", lua_tonumber(L, index));
+            json = buf;
             return true;
+        }
         case LUA_TSTRING:
             json = "\"";
             json += EscapeJsonString(lua_tostring(L, index));

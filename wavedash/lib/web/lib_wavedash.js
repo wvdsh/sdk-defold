@@ -213,13 +213,23 @@ var LibWavedash = {
     },
 
     WavedashJs_UpdateUGCItemAsync: function(ugcId, title, description, visibility, filePath) {
-        return WavedashJs.callPromise("updateUGCItem", [
-            UTF8ToString(ugcId),
-            WavedashJs.optionalString(title),
-            WavedashJs.optionalString(description),
-            WavedashJs.optionalNumber(visibility),
-            WavedashJs.optionalString(filePath)
-        ]);
+        // The JS SDK takes updateUGCItem(ugcId, updates), so build the updates
+        // object from the positional Lua arguments.
+        var updates = {};
+        var t = WavedashJs.optionalString(title);
+        var d = WavedashJs.optionalString(description);
+        var v = WavedashJs.optionalNumber(visibility);
+        var f = WavedashJs.optionalString(filePath);
+        // Back-compat: a lone JSON object string in the title slot is passed
+        // through as the updates object (the JS SDK parses string updates).
+        if (t !== undefined && d === undefined && v === undefined && f === undefined && /^\s*\{/.test(t)) {
+            return WavedashJs.callPromise("updateUGCItem", [UTF8ToString(ugcId), t]);
+        }
+        if (t !== undefined) updates.title = t;
+        if (d !== undefined) updates.description = d;
+        if (v !== undefined) updates.visibility = v;
+        if (f !== undefined) updates.filePath = f;
+        return WavedashJs.callPromise("updateUGCItem", [UTF8ToString(ugcId), updates]);
     },
 
     WavedashJs_DownloadUGCItemAsync: function(ugcId, filePath) {

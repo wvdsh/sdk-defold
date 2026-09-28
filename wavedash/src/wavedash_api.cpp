@@ -274,17 +274,12 @@ static bool LuaValueToJsonLiteral(lua_State* L, int index, std::string& json)
             return true;
         case LUA_TNUMBER:
         {
-            // %.17g round-trips a double exactly; std::to_string rounds to 6 decimals.
+            // %.17g round-trips any double; std::to_string rounded to 6 decimals.
             lua_Number n = lua_tonumber(L, index);
-            if (!std::isfinite(n))
-            {
-                dmLogError("NaN and infinite numbers can't be sent to Wavedash (argument %d)", index);
-                return false;
-            }
             char buf[32];
             snprintf(buf, sizeof(buf), "%.17g", n);
             json = buf;
-            return true;
+            return std::isfinite(n); // NaN/Infinity aren't valid JSON
         }
         case LUA_TSTRING:
             json = "\"";

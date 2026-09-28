@@ -215,7 +215,6 @@ var LibWavedash = {
     },
 
     WavedashJs_UpdateUGCItemAsync: function(ugcId, title, description, visibility, filePath) {
-        // The JS SDK takes updateUGCItem(ugcId, updates); undefined fields are left unchanged.
         return WavedashJs.callPromise("updateUGCItem", [UTF8ToString(ugcId), {
             title: WavedashJs.optionalString(title),
             description: WavedashJs.optionalString(description),

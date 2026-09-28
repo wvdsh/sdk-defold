@@ -9,6 +9,8 @@
     desc: |
       Initialize Wavedash.
     parameters:
+    - name: config
+      type: table
     - name: callback
       type: function
 
@@ -339,7 +341,7 @@
         Only if called from within a coroutine)
 
 
-  - name: list_ugc_items
+  - name: list_ugc_items_async
     type: function
     desc: |
       List UGC items. This is an asynchronous function. The result will be delivered as an event with id 'listUGCItems' or as a return value if the function is called from a coroutine.
@@ -350,7 +352,7 @@
     - name: response
       type: function
       desc: |
-        Returns The path of the remote file that was deleted.
+        Returns a page of UGC items ({ page, isDone, continueCursor }).
         (Note: Only if called from within a coroutine)
 
 

@@ -275,8 +275,14 @@ static bool LuaValueToJsonLiteral(lua_State* L, int index, std::string& json)
         case LUA_TNUMBER:
         {
             // %.17g round-trips a double exactly; std::to_string rounds to 6 decimals.
+            lua_Number n = lua_tonumber(L, index);
+            if (!std::isfinite(n))
+            {
+                dmLogError("NaN and infinite numbers can't be sent to Wavedash (argument %d)", index);
+                return false;
+            }
             char buf[32];
-            snprintf(buf, sizeof(buf), "%.17g", lua_tonumber(L, index));
+            snprintf(buf, sizeof(buf), "%.17g", n);
             json = buf;
             return true;
         }
@@ -807,7 +813,7 @@ int Wavedash_DeleteUGCItemAsync(lua_State* L)
  * a coroutine.
  * @name list_ugc_items_async
  * @table filters
- * @return response Returns The path of the remote file that was deleted.
+ * @return response Returns a page of UGC items ({ page, isDone, continueCursor }).
  * (Note: Only if called from within a coroutine)
  */
 int Wavedash_ListUGCItemsAsync(lua_State* L)

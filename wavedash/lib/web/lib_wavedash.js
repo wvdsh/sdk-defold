@@ -111,8 +111,10 @@ var LibWavedash = {
 
     WavedashJs_Init: function(config_json, eventCallback) {
         WavedashJs.eventCallback = eventCallback;
-        var result = WavedashJs.call("init", [WavedashJs.optionalJson(config_json)]);
+        // Register listeners before init(): without deferEvents, init() flushes
+        // queued events immediately and they'd be lost otherwise.
         WavedashJs.initEvents();
+        var result = WavedashJs.call("init", [WavedashJs.optionalJson(config_json)]);
         return result ? 1 : 0;
     },
 

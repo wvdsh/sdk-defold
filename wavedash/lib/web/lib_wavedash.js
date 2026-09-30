@@ -111,8 +111,8 @@ var LibWavedash = {
 
     WavedashJs_Init: function(config_json, eventCallback) {
         WavedashJs.eventCallback = eventCallback;
-        var result = WavedashJs.call("init", [WavedashJs.optionalJson(config_json)]);
         WavedashJs.initEvents();
+        var result = WavedashJs.call("init", [WavedashJs.optionalJson(config_json)]);
         return result ? 1 : 0;
     },
 
@@ -213,13 +213,12 @@ var LibWavedash = {
     },
 
     WavedashJs_UpdateUGCItemAsync: function(ugcId, title, description, visibility, filePath) {
-        return WavedashJs.callPromise("updateUGCItem", [
-            UTF8ToString(ugcId),
-            WavedashJs.optionalString(title),
-            WavedashJs.optionalString(description),
-            WavedashJs.optionalNumber(visibility),
-            WavedashJs.optionalString(filePath)
-        ]);
+        return WavedashJs.callPromise("updateUGCItem", [UTF8ToString(ugcId), {
+            title: WavedashJs.optionalString(title),
+            description: WavedashJs.optionalString(description),
+            visibility: WavedashJs.optionalNumber(visibility),
+            filePath: WavedashJs.optionalString(filePath)
+        }]);
     },
 
     WavedashJs_DownloadUGCItemAsync: function(ugcId, filePath) {

@@ -273,8 +273,14 @@ static bool LuaValueToJsonLiteral(lua_State* L, int index, std::string& json)
             json = lua_toboolean(L, index) ? "true" : "false";
             return true;
         case LUA_TNUMBER:
-            json = std::to_string(lua_tonumber(L, index));
-            return true;
+        {
+            // %.17g round-trips any double; std::to_string rounded to 6 decimals.
+            lua_Number n = lua_tonumber(L, index);
+            char buf[32];
+            snprintf(buf, sizeof(buf), "%.17g", n);
+            json = buf;
+            return std::isfinite(n); // NaN/Infinity aren't valid JSON
+        }
         case LUA_TSTRING:
             json = "\"";
             json += EscapeJsonString(lua_tostring(L, index));
@@ -802,7 +808,7 @@ int Wavedash_DeleteUGCItemAsync(lua_State* L)
  * a coroutine.
  * @name list_ugc_items_async
  * @table filters
- * @return response Returns The path of the remote file that was deleted.
+ * @return response Returns a page of UGC items ({ page, isDone, continueCursor }).
  * (Note: Only if called from within a coroutine)
  */
 int Wavedash_ListUGCItemsAsync(lua_State* L)

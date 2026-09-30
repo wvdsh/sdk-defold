@@ -928,7 +928,7 @@
   - name: EVENT_ENTITLEMENTS_GRANTED
     type: number
     desc: |
-      Deprecated: handle EVENT_PURCHASE_COMPLETED instead, which also covers consumables. Reading it logs a warning once.
+      Deprecated: handle EVENT_PURCHASE_COMPLETED instead, which also covers consumables.
 
   - name: EVENT_PURCHASE_COMPLETED
     type: number

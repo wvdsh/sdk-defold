@@ -1895,7 +1895,7 @@ void WavedashLuaInit(lua_State* L)
 
     /**
      * Deprecated: handle EVENT_PURCHASE_COMPLETED instead, which also covers
-     * consumables. Reading it logs a warning once.
+     * consumables.
      * @field EVENT_ENTITLEMENTS_GRANTED
      */
     lua_newtable(L);

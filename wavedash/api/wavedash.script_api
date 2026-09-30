@@ -801,7 +801,7 @@
   - name: trigger_paywall_async
     type: function
     desc: |
-      Open the Wavedash paywall for the given paid content. Resolves immediately with data true if the player already owns it; otherwise resolves with whether the purchase completed. Ownership refreshes automatically after a purchase, and the EntitlementsGranted event fires with the granted identifiers. This is an asynchronous function. The result will be delivered as an event with id 'triggerPaywall' or as a return value if the function is called from a coroutine.
+      Open the Wavedash paywall for the given paid content. Resolves immediately with data true if the player already owns it; otherwise resolves with whether the purchase completed. Handle the purchase itself in the PurchaseCompleted event, which also covers purchases made outside the game. This is an asynchronous function. The result will be delivered as an event with id 'triggerPaywall' or as a return value if the function is called from a coroutine.
     parameters:
     - name: content_identifier
       type: string
@@ -811,6 +811,33 @@
       desc: |
         Returns whether the purchase completed in data. (Note: Only
         if called from within a coroutine)
+
+
+  - name: get_unfulfilled_purchases_async
+    type: function
+    desc: |
+      Consumable purchases the game hasn't fulfilled, oldest first, each shaped like the PurchaseCompleted payload. These already arrive as PurchaseCompleted events at launch, but each purchase fires once per session: use this to retry one whose fulfill_purchase_async call failed. This is an asynchronous function. The result will be delivered as an event with id 'getUnfulfilledPurchases' or as a return value if the function is called from a coroutine.
+    returns:
+    - name: response
+      type: function
+      desc: |
+        Returns the unfulfilled purchases in data. (Note: Only if
+        called from within a coroutine)
+
+
+  - name: fulfill_purchase_async
+    type: function
+    desc: |
+      Mark a consumable purchase fulfilled once the grant is saved, so it stops being redelivered. A game's backend can do the same with POST /api/purchases/{purchaseId}/fulfill and the purchase's receiptJwt; both are idempotent, so calling either or both is safe. Resolves with a status in data: FULFILLED, ALREADY_FULFILLED (also success), or NOT_FOUND (unknown or refunded: don't grant it). This is an asynchronous function. The result will be delivered as an event with id 'fulfillPurchase' or as a return value if the function is called from a coroutine.
+    parameters:
+    - name: purchase_id
+      type: string
+    returns:
+    - name: response
+      type: function
+      desc: |
+        Returns { status } in data. (Note: Only if called from
+        within a coroutine)
 
 
   - name: EVENT_LOBBY_MESSAGE
@@ -901,7 +928,37 @@
   - name: EVENT_ENTITLEMENTS_GRANTED
     type: number
     desc: |
-      EVENT_ENTITLEMENTS_GRANTED
+      Deprecated: handle EVENT_PURCHASE_COMPLETED instead, which also covers consumables. Reading it logs a warning once.
+
+  - name: EVENT_PURCHASE_COMPLETED
+    type: number
+    desc: |
+      Fired once per purchase made while the game is running (in-game paywall, game page, gift, another tab), plus, at launch, once per consumable still unfulfilled. Payload: { purchaseId, contentIdentifier, type, fulfilled, purchasedAt, receiptJwt }. Durables arrive with fulfilled true, already granted. For a consumable, grant it, then call fulfill_purchase_async(purchaseId); until then it's redelivered every launch, so dedupe on purchaseId if you persist grants.
+
+  - name: PAID_CONTENT_TYPE_DURABLE
+    type: string
+    desc: |
+      type field on the EVENT_PURCHASE_COMPLETED payload for content purchased once that never expires.
+
+  - name: PAID_CONTENT_TYPE_CONSUMABLE
+    type: string
+    desc: |
+      type field on the EVENT_PURCHASE_COMPLETED payload for content that can be purchased repeatedly and is fulfilled by the game.
+
+  - name: FULFILL_PURCHASE_STATUS_FULFILLED
+    type: string
+    desc: |
+      fulfill_purchase_async status: marked fulfilled by this call.
+
+  - name: FULFILL_PURCHASE_STATUS_ALREADY_FULFILLED
+    type: string
+    desc: |
+      fulfill_purchase_async status: also success. The game or its backend fulfilled it earlier, or it's a durable.
+
+  - name: FULFILL_PURCHASE_STATUS_NOT_FOUND
+    type: string
+    desc: |
+      fulfill_purchase_async status: unknown purchase, or it was refunded. Don't grant it.
 
   - name: LOBBY_VISIBILITY_PUBLIC
     type: number

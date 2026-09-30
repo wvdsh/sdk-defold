@@ -21,14 +21,26 @@ var LibWavedash = {
         },
 
         initEvents: function() {
-            for (var key in window.Wavedash.Events) {
-                if (!window.Wavedash.Events.hasOwnProperty(key)) {
+            var events = window.Wavedash.Events;
+            // EntitlementsGranted is deprecated, and subscribing to it makes the
+            // JS SDK warn in every game. Derive it from each durable
+            // PurchaseCompleted instead, so games still handling it keep
+            // working. An SDK without PurchaseCompleted gets the real event.
+            var deriveEntitlementsGranted = !!events.PURCHASE_COMPLETED;
+            for (var key in events) {
+                if (!events.hasOwnProperty(key)) {
                     continue;
                 }
 
-                const event = window.Wavedash.Events[key];
+                const event = events[key];
+                if (deriveEntitlementsGranted && event === events.ENTITLEMENTS_GRANTED) {
+                    continue;
+                }
                 window.Wavedash.on(event, function(payload) {
                     WavedashJs.invokeCallback(event, payload);
+                    if (deriveEntitlementsGranted && event === events.PURCHASE_COMPLETED && payload.type === "DURABLE") {
+                        WavedashJs.invokeCallback(events.ENTITLEMENTS_GRANTED, { contentIdentifiers: [payload.contentIdentifier] });
+                    }
                 });
             }
         },
@@ -393,6 +405,14 @@ var LibWavedash = {
 
     WavedashJs_TriggerPaywallAsync: function(contentIdentifier) {
         return WavedashJs.callPromise("triggerPaywall", [UTF8ToString(contentIdentifier)]);
+    },
+
+    WavedashJs_GetUnfulfilledPurchasesAsync: function() {
+        return WavedashJs.callPromise("getUnfulfilledPurchases", []);
+    },
+
+    WavedashJs_FulfillPurchaseAsync: function(purchaseId) {
+        return WavedashJs.callPromise("fulfillPurchase", [UTF8ToString(purchaseId)]);
     }
 }
 

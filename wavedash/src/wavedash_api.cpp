@@ -88,11 +88,14 @@ extern "C" {
     int WavedashJs_IsEntitledAsync(const char* content_identifier);
     int WavedashJs_GetEntitlementsAsync();
     int WavedashJs_TriggerPaywallAsync(const char* content_identifier);
+    int WavedashJs_GetUnfulfilledPurchasesAsync();
+    int WavedashJs_FulfillPurchaseAsync(const char* purchase_id);
 
     void WavedashJs_Free(void* ptr);
 }
 
 static dmScript::LuaCallbackInfo*   g_EventCallback = 0x0;
+static bool                         g_WarnedEntitlementsGranted = false;
 
 struct AsyncAwait
 {
@@ -1451,9 +1454,9 @@ int Wavedash_GetEntitlementsAsync(lua_State* L)
 /**
  * Open the Wavedash paywall for the given paid content. Resolves immediately
  * with data true if the player already owns it; otherwise resolves with
- * whether the purchase completed. Ownership refreshes automatically after a
- * purchase, and the EntitlementsGranted event fires with the granted
- * identifiers. This is an asynchronous function. The result will be delivered
+ * whether the purchase completed. Handle the purchase itself in the
+ * PurchaseCompleted event, which also covers purchases made outside the game.
+ * This is an asynchronous function. The result will be delivered
  * as an event with id 'triggerPaywall' or as a return value if the function is
  * called from a coroutine.
  * @name trigger_paywall_async
@@ -1469,6 +1472,73 @@ int Wavedash_TriggerPaywallAsync(lua_State* L)
         request_id = WavedashJs_TriggerPaywallAsync(luaL_checkstring(L, 1));
     }
     return AwaitAsyncEvent(L, request_id);
+}
+
+/**
+ * Consumable purchases the game hasn't fulfilled, oldest first, each shaped
+ * like the PurchaseCompleted payload. These already arrive as PurchaseCompleted
+ * events at launch, but each purchase fires once per session: use this to
+ * retry one whose fulfill_purchase_async call failed. This is an asynchronous
+ * function. The result will be delivered as an event with id
+ * 'getUnfulfilledPurchases' or as a return value if the function is called
+ * from a coroutine.
+ * @name get_unfulfilled_purchases_async
+ * @return response Returns the unfulfilled purchases in data. (Note: Only if
+ * called from within a coroutine)
+ */
+int Wavedash_GetUnfulfilledPurchasesAsync(lua_State* L)
+{
+    int request_id = 0;
+    {
+        DM_LUA_STACK_CHECK(L, 0);
+        request_id = WavedashJs_GetUnfulfilledPurchasesAsync();
+    }
+    return AwaitAsyncEvent(L, request_id);
+}
+
+/**
+ * Mark a consumable purchase fulfilled once the grant is saved, so it stops
+ * being redelivered. A game's backend can do the same with
+ * POST /api/purchases/{purchaseId}/fulfill and the purchase's receiptJwt; both
+ * are idempotent, so calling either or both is safe. Resolves with a status in
+ * data: FULFILLED, ALREADY_FULFILLED (also success), or NOT_FOUND (unknown or
+ * refunded: don't grant it). This is an asynchronous function. The result will
+ * be delivered as an event with id 'fulfillPurchase' or as a return value if
+ * the function is called from a coroutine.
+ * @name fulfill_purchase_async
+ * @string purchase_id
+ * @return response Returns { status } in data. (Note: Only if called from
+ * within a coroutine)
+ */
+int Wavedash_FulfillPurchaseAsync(lua_State* L)
+{
+    int request_id = 0;
+    {
+        DM_LUA_STACK_CHECK(L, 0);
+        request_id = WavedashJs_FulfillPurchaseAsync(luaL_checkstring(L, 1));
+    }
+    return AwaitAsyncEvent(L, request_id);
+}
+
+/**
+ * Serves deprecated module fields. EVENT_ENTITLEMENTS_GRANTED lives here rather
+ * than as a plain field so the first read can log the deprecation.
+ */
+static int Wavedash_DeprecatedIndex(lua_State* L)
+{
+    const char* key = lua_type(L, 2) == LUA_TSTRING ? lua_tostring(L, 2) : 0;
+    if (key && strcmp(key, "EVENT_ENTITLEMENTS_GRANTED") == 0)
+    {
+        if (!g_WarnedEntitlementsGranted)
+        {
+            g_WarnedEntitlementsGranted = true;
+            dmLogWarning("wavedash.EVENT_ENTITLEMENTS_GRANTED is deprecated. Handle wavedash.EVENT_PURCHASE_COMPLETED instead, which also covers consumables.");
+        }
+        lua_pushstring(L, "EntitlementsGranted");
+        return 1;
+    }
+    lua_pushnil(L);
+    return 1;
 }
 
 static const luaL_reg Module_methods[] =
@@ -1538,6 +1608,8 @@ static const luaL_reg Module_methods[] =
     {"is_entitled_async", Wavedash_IsEntitledAsync},
     {"get_entitlements_async", Wavedash_GetEntitlementsAsync},
     {"trigger_paywall_async", Wavedash_TriggerPaywallAsync},
+    {"get_unfulfilled_purchases_async", Wavedash_GetUnfulfilledPurchasesAsync},
+    {"fulfill_purchase_async", Wavedash_FulfillPurchaseAsync},
     {0, 0}
 };
 
@@ -1641,10 +1713,35 @@ void WavedashLuaInit(lua_State* L)
      */
     SETCONSTANT_STRING(EVENT_FULLSCREEN_CHANGED, "FullscreenChanged")
     /**
-     * EVENT_ENTITLEMENTS_GRANTED
-     * @field EVENT_ENTITLEMENTS_GRANTED
+     * EVENT_PURCHASE_COMPLETED
+     * @field EVENT_PURCHASE_COMPLETED
      */
-    SETCONSTANT_STRING(EVENT_ENTITLEMENTS_GRANTED, "EntitlementsGranted")
+    SETCONSTANT_STRING(EVENT_PURCHASE_COMPLETED, "PurchaseCompleted")
+    /**
+     * PAID_CONTENT_TYPE_DURABLE
+     * @field PAID_CONTENT_TYPE_DURABLE
+     */
+    SETCONSTANT_STRING(PAID_CONTENT_TYPE_DURABLE, "DURABLE")
+    /**
+     * PAID_CONTENT_TYPE_CONSUMABLE
+     * @field PAID_CONTENT_TYPE_CONSUMABLE
+     */
+    SETCONSTANT_STRING(PAID_CONTENT_TYPE_CONSUMABLE, "CONSUMABLE")
+    /**
+     * FULFILL_PURCHASE_STATUS_FULFILLED
+     * @field FULFILL_PURCHASE_STATUS_FULFILLED
+     */
+    SETCONSTANT_STRING(FULFILL_PURCHASE_STATUS_FULFILLED, "FULFILLED")
+    /**
+     * FULFILL_PURCHASE_STATUS_ALREADY_FULFILLED
+     * @field FULFILL_PURCHASE_STATUS_ALREADY_FULFILLED
+     */
+    SETCONSTANT_STRING(FULFILL_PURCHASE_STATUS_ALREADY_FULFILLED, "ALREADY_FULFILLED")
+    /**
+     * FULFILL_PURCHASE_STATUS_NOT_FOUND
+     * @field FULFILL_PURCHASE_STATUS_NOT_FOUND
+     */
+    SETCONSTANT_STRING(FULFILL_PURCHASE_STATUS_NOT_FOUND, "NOT_FOUND")
     /**
      * LOBBY_VISIBILITY_PUBLIC
      * @field LOBBY_VISIBILITY_PUBLIC
@@ -1795,6 +1892,16 @@ void WavedashLuaInit(lua_State* L)
      * @field P2P_PACKET_DROP_REASON_PEER_NOT_READY
      */
     SETCONSTANT_STRING(P2P_PACKET_DROP_REASON_PEER_NOT_READY, "PEER_NOT_READY")
+
+    /**
+     * Deprecated: handle EVENT_PURCHASE_COMPLETED instead, which also covers
+     * consumables. Reading it logs a warning once.
+     * @field EVENT_ENTITLEMENTS_GRANTED
+     */
+    lua_newtable(L);
+    lua_pushcfunction(L, Wavedash_DeprecatedIndex);
+    lua_setfield(L, -2, "__index");
+    lua_setmetatable(L, -2);
 
     lua_pop(L, 1);
     assert(top == lua_gettop(L));

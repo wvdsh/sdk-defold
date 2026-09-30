@@ -5,6 +5,24 @@ local function handle_lobby_joined(self, payload)
 	end
 end
 
+local function handle_purchase_completed(self, purchase)
+	if purchase.type == wavedash.PAID_CONTENT_TYPE_DURABLE then
+		-- Already granted: is_entitled_async is true and the paid files load.
+		print("Unlocked:", purchase.contentIdentifier)
+		return
+	end
+	-- Consumable: grant it and save, then fulfill so it isn't redelivered
+	-- at next launch.
+	print("Granting:", purchase.contentIdentifier, purchase.purchaseId)
+	local co = coroutine.create(function()
+		local result = wavedash.fulfill_purchase_async(purchase.purchaseId)
+		if result.success then
+			print("Fulfill status:", result.data.status)
+		end
+	end)
+	assert(coroutine.resume(co))
+end
+
 function init(self)
 	wavedash.init({ debug = true, deferEvents = true }, function(self, event, payload)
 		if event == wavedash.EVENT_LOBBY_JOINED then
@@ -15,10 +33,8 @@ function init(self)
 			print("Backend disconnected")
 		elseif event == wavedash.EVENT_BACKEND_RECONNECTING then
 			print("Backend reconnecting")
-		elseif event == wavedash.EVENT_ENTITLEMENTS_GRANTED then
-			for _, content_identifier in ipairs(payload.contentIdentifiers) do
-				print("Purchased:", content_identifier)
-			end
+		elseif event == wavedash.EVENT_PURCHASE_COMPLETED then
+			handle_purchase_completed(self, payload)
 		else
 			print("Received event:", event)
 		end

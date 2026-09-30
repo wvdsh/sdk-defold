@@ -935,12 +935,12 @@
     desc: |
       Fired once per purchase made while the game is running (in-game paywall, game page, gift, another tab), plus, at launch, once per consumable still unfulfilled. Payload: { purchaseId, contentIdentifier, type, fulfilled, purchasedAt, receiptJwt }. Durables arrive with fulfilled true, already granted. For a consumable, grant it, then call fulfill_purchase_async(purchaseId); until then it's redelivered every launch, so dedupe on purchaseId if you persist grants.
 
-  - name: PAID_CONTENT_TYPE_DURABLE
+  - name: PURCHASE_TYPE_DURABLE
     type: string
     desc: |
       type field on the EVENT_PURCHASE_COMPLETED payload for content purchased once that never expires.
 
-  - name: PAID_CONTENT_TYPE_CONSUMABLE
+  - name: PURCHASE_TYPE_CONSUMABLE
     type: string
     desc: |
       type field on the EVENT_PURCHASE_COMPLETED payload for content that can be purchased repeatedly and is fulfilled by the game.

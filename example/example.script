@@ -6,7 +6,7 @@ local function handle_lobby_joined(self, payload)
 end
 
 local function handle_purchase_completed(self, purchase)
-	if purchase.type == wavedash.PAID_CONTENT_TYPE_DURABLE then
+	if purchase.type == wavedash.PURCHASE_TYPE_DURABLE then
 		-- Already granted: is_entitled_async is true and the paid files load.
 		print("Unlocked:", purchase.contentIdentifier)
 		return

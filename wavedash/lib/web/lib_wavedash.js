@@ -392,6 +392,14 @@ var LibWavedash = {
 
     WavedashJs_TriggerPaywallAsync: function(contentIdentifier) {
         return WavedashJs.callPromise("triggerPaywall", [UTF8ToString(contentIdentifier)]);
+    },
+
+    WavedashJs_GetUnfulfilledPurchasesAsync: function() {
+        return WavedashJs.callPromise("getUnfulfilledPurchases", []);
+    },
+
+    WavedashJs_FulfillPurchaseAsync: function(purchaseId) {
+        return WavedashJs.callPromise("fulfillPurchase", [UTF8ToString(purchaseId)]);
     }
 }
 

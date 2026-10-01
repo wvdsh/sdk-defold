@@ -95,7 +95,6 @@ extern "C" {
 }
 
 static dmScript::LuaCallbackInfo*   g_EventCallback = 0x0;
-static bool                         g_WarnedEntitlementsGranted = false;
 
 struct AsyncAwait
 {
@@ -1520,27 +1519,6 @@ int Wavedash_FulfillPurchaseAsync(lua_State* L)
     return AwaitAsyncEvent(L, request_id);
 }
 
-/**
- * Serves deprecated module fields. EVENT_ENTITLEMENTS_GRANTED lives here rather
- * than as a plain field so the first read can log the deprecation.
- */
-static int Wavedash_DeprecatedIndex(lua_State* L)
-{
-    const char* key = lua_type(L, 2) == LUA_TSTRING ? lua_tostring(L, 2) : 0;
-    if (key && strcmp(key, "EVENT_ENTITLEMENTS_GRANTED") == 0)
-    {
-        if (!g_WarnedEntitlementsGranted)
-        {
-            g_WarnedEntitlementsGranted = true;
-            dmLogWarning("wavedash.EVENT_ENTITLEMENTS_GRANTED is deprecated. Handle wavedash.EVENT_PURCHASE_COMPLETED instead, which also covers consumables.");
-        }
-        lua_pushstring(L, "EntitlementsGranted");
-        return 1;
-    }
-    lua_pushnil(L);
-    return 1;
-}
-
 static const luaL_reg Module_methods[] =
 {
     {"init", Wavedash_Init},
@@ -1712,6 +1690,12 @@ void WavedashLuaInit(lua_State* L)
      * @field EVENT_FULLSCREEN_CHANGED
      */
     SETCONSTANT_STRING(EVENT_FULLSCREEN_CHANGED, "FullscreenChanged")
+    /**
+     * Deprecated: handle EVENT_PURCHASE_COMPLETED instead, which also covers
+     * consumables.
+     * @field EVENT_ENTITLEMENTS_GRANTED
+     */
+    SETCONSTANT_STRING(EVENT_ENTITLEMENTS_GRANTED, "EntitlementsGranted")
     /**
      * EVENT_PURCHASE_COMPLETED
      * @field EVENT_PURCHASE_COMPLETED
@@ -1892,16 +1876,6 @@ void WavedashLuaInit(lua_State* L)
      * @field P2P_PACKET_DROP_REASON_PEER_NOT_READY
      */
     SETCONSTANT_STRING(P2P_PACKET_DROP_REASON_PEER_NOT_READY, "PEER_NOT_READY")
-
-    /**
-     * Deprecated: handle EVENT_PURCHASE_COMPLETED instead, which also covers
-     * consumables.
-     * @field EVENT_ENTITLEMENTS_GRANTED
-     */
-    lua_newtable(L);
-    lua_pushcfunction(L, Wavedash_DeprecatedIndex);
-    lua_setfield(L, -2, "__index");
-    lua_setmetatable(L, -2);
 
     lua_pop(L, 1);
     assert(top == lua_gettop(L));

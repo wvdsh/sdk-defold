@@ -88,6 +88,14 @@
     desc: |
       Get the current user id.
 
+  - name: get_user_language
+    type: function
+    desc: |
+      Get the saved game language as a BCP 47 tag, such as en or en-US. Returns en when unset.
+    returns:
+    - name: language
+      type: string
+
   - name: get_user_jwt_async
     type: function
     desc: |

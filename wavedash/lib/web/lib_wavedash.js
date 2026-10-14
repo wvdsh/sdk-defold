@@ -158,6 +158,10 @@ var LibWavedash = {
         return WavedashJs.allocString(WavedashJs.call("getUserId", []));
     },
 
+    WavedashJs_GetUserLanguage: function() {
+        return WavedashJs.allocString(WavedashJs.call("getUserLanguage", []));
+    },
+
     WavedashJs_GetUserJwtAsync: function() {
         return WavedashJs.callPromise("getUserJwt", []);
     },

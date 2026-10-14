@@ -29,6 +29,7 @@ extern "C" {
     const char* WavedashJs_GetUser();
     const char* WavedashJs_GetUsername(const char* user_id);
     const char* WavedashJs_GetUserId();
+    const char* WavedashJs_GetUserLanguage();
     int WavedashJs_GetUserJwtAsync();
     const char* WavedashJs_GetLaunchParams();
     int WavedashJs_ListFriendsAsync();
@@ -448,6 +449,13 @@ int Wavedash_GetUsername(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 1);
     PushAndFreeString(L, WavedashJs_GetUsername(OptionalStringArg(L, 1)));
+    return 1;
+}
+
+int Wavedash_GetUserLanguage(lua_State* L)
+{
+    DM_LUA_STACK_CHECK(L, 1);
+    PushAndFreeString(L, WavedashJs_GetUserLanguage());
     return 1;
 }
 
@@ -1538,6 +1546,7 @@ static const luaL_reg Module_methods[] =
     {"get_user", Wavedash_GetUser},
     {"get_username", Wavedash_GetUsername},
     {"get_user_id", Wavedash_GetUserId},
+    {"get_user_language", Wavedash_GetUserLanguage},
     {"get_user_jwt_async", Wavedash_GetUserJwtAsync},
     {"get_launch_params", Wavedash_GetLaunchParams},
     {"list_friends_async", Wavedash_ListFriendsAsync},

@@ -91,7 +91,7 @@
   - name: get_user_language
     type: function
     desc: |
-      Get the saved game language code, such as en, pt-BR, or zh-TW. Returns en when unset.
+      Get the saved game language code, such as en, pt-BR, or zh-TW. Defaults to en.
     returns:
     - name: language
       type: string

@@ -159,7 +159,14 @@ var LibWavedash = {
     },
 
     WavedashJs_GetUserLanguage: function() {
-        return WavedashJs.allocString(WavedashJs.call("getUserLanguage", []));
+        if (typeof window !== "undefined" && window.Wavedash &&
+            typeof window.Wavedash.getUserLanguage === "function") {
+            var language = WavedashJs.call("getUserLanguage", []);
+            if (typeof language === "string" && language.length > 0) {
+                return WavedashJs.allocString(language);
+            }
+        }
+        return WavedashJs.allocString("en");
     },
 
     WavedashJs_GetUserJwtAsync: function() {

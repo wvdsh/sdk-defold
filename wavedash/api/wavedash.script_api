@@ -72,7 +72,7 @@
   - name: get_user
     type: function
     desc: |
-      Get the current user, including their saved language code in the language field.
+      Get the current user.
 
   - name: get_username
     type: function
@@ -91,7 +91,7 @@
   - name: get_user_language
     type: function
     desc: |
-      Get the current user's saved language code. Compare it with LANGUAGE_CODE_* constants. The same code is available as get_user().language. The saved default is LANGUAGE_CODE_ENGLISH.
+      Get the current user's preferred language code, such as "en" or "pt-BR". Compare it with the LANGUAGE_CODE_* constants.
     returns:
     - name: language
       type: string

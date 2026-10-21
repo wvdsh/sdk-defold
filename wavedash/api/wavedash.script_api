@@ -88,6 +88,14 @@
     desc: |
       Get the current user id.
 
+  - name: get_user_language
+    type: function
+    desc: |
+      Get the current user's preferred language code, such as "en" or "pt-BR". Compare it with the LANGUAGE_CODE_* constants.
+    returns:
+    - name: language
+      type: string
+
   - name: get_user_jwt_async
     type: function
     desc: |
@@ -961,6 +969,191 @@
     type: string
     desc: |
       fulfill_purchase_async status: unknown purchase, or it was refunded. Don't grant it.
+
+  - name: LANGUAGE_CODE_ARABIC
+    type: string
+    desc: |
+      Language code: ar.
+
+  - name: LANGUAGE_CODE_BULGARIAN
+    type: string
+    desc: |
+      Language code: bg.
+
+  - name: LANGUAGE_CODE_CATALAN
+    type: string
+    desc: |
+      Language code: ca.
+
+  - name: LANGUAGE_CODE_CHINESE_SIMPLIFIED
+    type: string
+    desc: |
+      Language code: zh-CN.
+
+  - name: LANGUAGE_CODE_CHINESE_TRADITIONAL
+    type: string
+    desc: |
+      Language code: zh-TW.
+
+  - name: LANGUAGE_CODE_CROATIAN
+    type: string
+    desc: |
+      Language code: hr.
+
+  - name: LANGUAGE_CODE_CZECH
+    type: string
+    desc: |
+      Language code: cs.
+
+  - name: LANGUAGE_CODE_DANISH
+    type: string
+    desc: |
+      Language code: da.
+
+  - name: LANGUAGE_CODE_DUTCH
+    type: string
+    desc: |
+      Language code: nl.
+
+  - name: LANGUAGE_CODE_ENGLISH
+    type: string
+    desc: |
+      Language code: en.
+
+  - name: LANGUAGE_CODE_ESPERANTO
+    type: string
+    desc: |
+      Language code: eo.
+
+  - name: LANGUAGE_CODE_FINNISH
+    type: string
+    desc: |
+      Language code: fi.
+
+  - name: LANGUAGE_CODE_FRENCH
+    type: string
+    desc: |
+      Language code: fr.
+
+  - name: LANGUAGE_CODE_GALICIAN
+    type: string
+    desc: |
+      Language code: gl.
+
+  - name: LANGUAGE_CODE_GERMAN
+    type: string
+    desc: |
+      Language code: de.
+
+  - name: LANGUAGE_CODE_GREEK
+    type: string
+    desc: |
+      Language code: el.
+
+  - name: LANGUAGE_CODE_HUNGARIAN
+    type: string
+    desc: |
+      Language code: hu.
+
+  - name: LANGUAGE_CODE_INDONESIAN
+    type: string
+    desc: |
+      Language code: id.
+
+  - name: LANGUAGE_CODE_ITALIAN
+    type: string
+    desc: |
+      Language code: it.
+
+  - name: LANGUAGE_CODE_JAPANESE
+    type: string
+    desc: |
+      Language code: ja.
+
+  - name: LANGUAGE_CODE_KOREAN
+    type: string
+    desc: |
+      Language code: ko.
+
+  - name: LANGUAGE_CODE_LATVIAN
+    type: string
+    desc: |
+      Language code: lv.
+
+  - name: LANGUAGE_CODE_LITHUANIAN
+    type: string
+    desc: |
+      Language code: lt.
+
+  - name: LANGUAGE_CODE_MALAY
+    type: string
+    desc: |
+      Language code: ms.
+
+  - name: LANGUAGE_CODE_NORWEGIAN
+    type: string
+    desc: |
+      Language code: no.
+
+  - name: LANGUAGE_CODE_POLISH
+    type: string
+    desc: |
+      Language code: pl.
+
+  - name: LANGUAGE_CODE_PORTUGUESE
+    type: string
+    desc: |
+      Language code: pt.
+
+  - name: LANGUAGE_CODE_PORTUGUESE_BRAZIL
+    type: string
+    desc: |
+      Language code: pt-BR.
+
+  - name: LANGUAGE_CODE_ROMANIAN
+    type: string
+    desc: |
+      Language code: ro.
+
+  - name: LANGUAGE_CODE_RUSSIAN
+    type: string
+    desc: |
+      Language code: ru.
+
+  - name: LANGUAGE_CODE_SPANISH
+    type: string
+    desc: |
+      Language code: es.
+
+  - name: LANGUAGE_CODE_SPANISH_LATIN_AMERICA
+    type: string
+    desc: |
+      Language code: es-419.
+
+  - name: LANGUAGE_CODE_SWEDISH
+    type: string
+    desc: |
+      Language code: sv.
+
+  - name: LANGUAGE_CODE_THAI
+    type: string
+    desc: |
+      Language code: th.
+
+  - name: LANGUAGE_CODE_TURKISH
+    type: string
+    desc: |
+      Language code: tr.
+
+  - name: LANGUAGE_CODE_UKRAINIAN
+    type: string
+    desc: |
+      Language code: uk.
+
+  - name: LANGUAGE_CODE_VIETNAMESE
+    type: string
+    desc: |
+      Language code: vi.
 
   - name: LOBBY_VISIBILITY_PUBLIC
     type: number

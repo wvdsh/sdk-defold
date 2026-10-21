@@ -29,6 +29,7 @@ extern "C" {
     const char* WavedashJs_GetUser();
     const char* WavedashJs_GetUsername(const char* user_id);
     const char* WavedashJs_GetUserId();
+    const char* WavedashJs_GetUserLanguage();
     int WavedashJs_GetUserJwtAsync();
     const char* WavedashJs_GetLaunchParams();
     int WavedashJs_ListFriendsAsync();
@@ -448,6 +449,13 @@ int Wavedash_GetUsername(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 1);
     PushAndFreeString(L, WavedashJs_GetUsername(OptionalStringArg(L, 1)));
+    return 1;
+}
+
+int Wavedash_GetUserLanguage(lua_State* L)
+{
+    DM_LUA_STACK_CHECK(L, 1);
+    PushAndFreeString(L, WavedashJs_GetUserLanguage());
     return 1;
 }
 
@@ -1538,6 +1546,7 @@ static const luaL_reg Module_methods[] =
     {"get_user", Wavedash_GetUser},
     {"get_username", Wavedash_GetUsername},
     {"get_user_id", Wavedash_GetUserId},
+    {"get_user_language", Wavedash_GetUserLanguage},
     {"get_user_jwt_async", Wavedash_GetUserJwtAsync},
     {"get_launch_params", Wavedash_GetLaunchParams},
     {"list_friends_async", Wavedash_ListFriendsAsync},
@@ -1610,6 +1619,44 @@ void WavedashLuaInit(lua_State* L)
     int top = lua_gettop(L);
 
     luaL_register(L, "wavedash", Module_methods);
+
+    SETCONSTANT_STRING(LANGUAGE_CODE_ARABIC, "ar")
+    SETCONSTANT_STRING(LANGUAGE_CODE_BULGARIAN, "bg")
+    SETCONSTANT_STRING(LANGUAGE_CODE_CATALAN, "ca")
+    SETCONSTANT_STRING(LANGUAGE_CODE_CHINESE_SIMPLIFIED, "zh-CN")
+    SETCONSTANT_STRING(LANGUAGE_CODE_CHINESE_TRADITIONAL, "zh-TW")
+    SETCONSTANT_STRING(LANGUAGE_CODE_CROATIAN, "hr")
+    SETCONSTANT_STRING(LANGUAGE_CODE_CZECH, "cs")
+    SETCONSTANT_STRING(LANGUAGE_CODE_DANISH, "da")
+    SETCONSTANT_STRING(LANGUAGE_CODE_DUTCH, "nl")
+    SETCONSTANT_STRING(LANGUAGE_CODE_ENGLISH, "en")
+    SETCONSTANT_STRING(LANGUAGE_CODE_ESPERANTO, "eo")
+    SETCONSTANT_STRING(LANGUAGE_CODE_FINNISH, "fi")
+    SETCONSTANT_STRING(LANGUAGE_CODE_FRENCH, "fr")
+    SETCONSTANT_STRING(LANGUAGE_CODE_GALICIAN, "gl")
+    SETCONSTANT_STRING(LANGUAGE_CODE_GERMAN, "de")
+    SETCONSTANT_STRING(LANGUAGE_CODE_GREEK, "el")
+    SETCONSTANT_STRING(LANGUAGE_CODE_HUNGARIAN, "hu")
+    SETCONSTANT_STRING(LANGUAGE_CODE_INDONESIAN, "id")
+    SETCONSTANT_STRING(LANGUAGE_CODE_ITALIAN, "it")
+    SETCONSTANT_STRING(LANGUAGE_CODE_JAPANESE, "ja")
+    SETCONSTANT_STRING(LANGUAGE_CODE_KOREAN, "ko")
+    SETCONSTANT_STRING(LANGUAGE_CODE_LATVIAN, "lv")
+    SETCONSTANT_STRING(LANGUAGE_CODE_LITHUANIAN, "lt")
+    SETCONSTANT_STRING(LANGUAGE_CODE_MALAY, "ms")
+    SETCONSTANT_STRING(LANGUAGE_CODE_NORWEGIAN, "no")
+    SETCONSTANT_STRING(LANGUAGE_CODE_POLISH, "pl")
+    SETCONSTANT_STRING(LANGUAGE_CODE_PORTUGUESE, "pt")
+    SETCONSTANT_STRING(LANGUAGE_CODE_PORTUGUESE_BRAZIL, "pt-BR")
+    SETCONSTANT_STRING(LANGUAGE_CODE_ROMANIAN, "ro")
+    SETCONSTANT_STRING(LANGUAGE_CODE_RUSSIAN, "ru")
+    SETCONSTANT_STRING(LANGUAGE_CODE_SPANISH, "es")
+    SETCONSTANT_STRING(LANGUAGE_CODE_SPANISH_LATIN_AMERICA, "es-419")
+    SETCONSTANT_STRING(LANGUAGE_CODE_SWEDISH, "sv")
+    SETCONSTANT_STRING(LANGUAGE_CODE_THAI, "th")
+    SETCONSTANT_STRING(LANGUAGE_CODE_TURKISH, "tr")
+    SETCONSTANT_STRING(LANGUAGE_CODE_UKRAINIAN, "uk")
+    SETCONSTANT_STRING(LANGUAGE_CODE_VIETNAMESE, "vi")
 
     /**
      * EVENT_LOBBY_MESSAGE
